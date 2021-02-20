@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>ADB命令相关记录</title>
+    <url>/2020/08/08/ADB%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
+<li>adb devices          <code>显示连接到计算机的设备</code></li>
+<li>adb  [-s] shell        <code>进入设备的shell界面</code></li>
+<li>adb kill-server       <code>终止adb服务进程</code></li>
+<li>adb start-server     <code>重启adb服务进程</code></li>
+<li>adb connect ip       <code>连接到指定的ip,配合无线调试</code></li>
+</ul>
+<h5 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h5><ul>
+<li>adb  shell pm    <code>和包相关的操作</code></li>
+<li>adb shell pm path 包名         <code>打印出给定包名对应应用的apk路径</code><pre><code>- adb shell pm list packages    ```列出包相关的信息，参考[-f] [-d] [-e] [-s] [-3] [-i] [-l] [-u] [-U]……```
+- adb shell pm list permissions     ```列出权限相关的```
+- adb install apk文件       ```安装apk```
+- adb uninstall 包名        ```卸载apk```
+- adb shell pm start 包名/启动activity       ```启动apk```
+- adb shell pm clear 包名      ```清除apk数据```
+</code></pre>
+</li>
+</ul>
+<h5 id="内存、进程相关"><a href="#内存、进程相关" class="headerlink" title="内存、进程相关"></a>内存、进程相关</h5><ul>
+<li>adb  shell dumpsys cupinfo     <code>查看CPU信息</code></li>
+<li>adb shell dumpsys meminfo  [包名]   <code>查看应用的内存信息</code></li>
+<li>adb shell top          <code>查看设备cpu和内存占用情况</code></li>
+<li>adb shell top -m 2       <code>查看占用内存前2的app</code></li>
+<li>adb shell ps | grep[findStr] 关键字         <code>查看某一程序进程</code></li>
+<li>adb shell ps -x [PID]        <code>查看指定进程状态</code></li>
+<li>adb shell kill [PID]        <code>杀死进程</code></li>
+<li>adb shell top -n 1       <code>刷新一次内存信息，然后返回</code></li>
+<li>adb shell cat /proc/meminfo     <code>查看当前内存占用</code></li>
+</ul>
+<h5 id="Android四大组件"><a href="#Android四大组件" class="headerlink" title="Android四大组件"></a>Android四大组件</h5><p>![image-20201022173705225](/Users/libo/Library/Application Support/typora-user-images/image-20201022173705225.png)</p>
+<ul>
+<li>adb shell dumpsys activity top      <code>查看栈顶Activity</code></li>
+<li>adb shell dumpsys activity activities | grep mResumedActivity   <code>查看当前正在显示的activity</code></li>
+<li>adb shell am      <code>和activity相关 start、force-stop 包名、kill-all、kill 包名</code></li>
+<li>adb shell service list     <code>查看后台services信息</code></li>
+<li>adb shell dumpsys notification      <code>获取通知信息</code></li>
+</ul>
+<h5 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h5><ul>
+<li>adb shell cd  <code>进入某个目录</code></li>
+<li>adb shell ls -a   <code>查看这个目录下的文件</code></li>
+<li>adb pull 远程路径(手机) 本地路径(电脑) <code>手机复制文件出来</code></li>
+<li>adb push 本地路径(电脑)  远程路径(手机)  <code>向手机发送文件</code></li>
+<li>adb shell makedir   <code>创建一个文件夹</code></li>
+<li>adb shell cat      ````查看文件内容```</li>
+</ul>
+<h5 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screencap -p &#x2F;sdcard&#x2F;sc.png</span><br></pre></td></tr></table></figure>
+<h5 id="视频录制"><a href="#视频录制" class="headerlink" title="视频录制"></a>视频录制</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screenrecord &#x2F;sdcard&#x2F;filename.mp4</span><br></pre></td></tr></table></figure>
+<h5 id="获取手机中的apk"><a href="#获取手机中的apk" class="headerlink" title="获取手机中的apk"></a>获取手机中的apk</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity   --获取包名</span><br><span class="line">adb shell pm path com.aoyindsptv.phonelive --获取安装包地址</span><br><span class="line">adb pull 安装包地址  电脑地址</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.jianshu.com/p/0693b841c83b">参考</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/02/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+</search>
