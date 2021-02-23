@@ -198,7 +198,7 @@
 <p>你也可以选择在行首加井号表示不同级别的标题 (H1-H6)，例如：# H1, ## H2, ### H3，#### H4。</p>
 <h3 id="3-外链接"><a href="#3-外链接" class="headerlink" title="3. 外链接"></a>3. 外链接</h3><p>使用 [描述](链接地址) 为文字增加外链接。</p>
 <p>示例：</p>
-<p>这是去往 <a href="http://ghosertblog.github.com/">本人博客</a> 的链接。</p>
+<p>这是去往 <a href="https://boundless1024.com/">本人博客</a> 的链接。</p>
 <h3 id="4-无序列表"><a href="#4-无序列表" class="headerlink" title="4. 无序列表"></a>4. 无序列表</h3><p>使用 *，+，- 表示无序列表。</p>
 <p>示例：</p>
 <ul>
@@ -325,8 +325,8 @@
 <p>即显示人人的图标： <i class="icon-renren icon-2x"></i></p>
 <p>更多的图标和玩法可以参看 <a href="http://fortawesome.github.io/Font-Awesome/3.2.1/icons/">font-awesome</a> 官方网站。</p>
 <h3 id="16-待办事宜-Todo-列表"><a href="#16-待办事宜-Todo-列表" class="headerlink" title="16. 待办事宜 Todo 列表"></a>16. 待办事宜 Todo 列表</h3><p>使用带有 [ ] 或 [x] （未完成或已完成）项的列表语法撰写一个待办事宜列表，并且支持子列表嵌套以及混用Markdown语法，例如：</p>
-<pre><code>- [ ] **Cmd Markdown 开发**
-    - [ ] 改进 Cmd 渲染算法，使用局部渲染技术提高渲染效率
+<pre><code>- [ ] **Markdown 开发**
+    - [ ] 改进 xxxx 渲染算法，使用局部渲染技术提高渲染效率
     - [ ] 支持以 PDF 格式导出文稿
     - [x] 新增Todo列表功能 [语法参考](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments)
     - [x] 改进 LaTex 功能
@@ -339,8 +339,8 @@
 </code></pre>
 <p>对应显示如下待办事宜 Todo 列表：</p>
 <ul>
-<li><input disabled="" type="checkbox"> <strong>Cmd Markdown 开发</strong><ul>
-<li><input disabled="" type="checkbox"> 改进 Cmd 渲染算法，使用局部渲染技术提高渲染效率</li>
+<li><input disabled="" type="checkbox"> <strong>Markdown 开发</strong><ul>
+<li><input disabled="" type="checkbox"> 改进 xxxx 渲染算法，使用局部渲染技术提高渲染效率</li>
 <li><input disabled="" type="checkbox"> 支持以 PDF 格式导出文稿</li>
 <li><input checked="" disabled="" type="checkbox"> 新增Todo列表功能 <a href="https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments">语法参考</a></li>
 <li><input checked="" disabled="" type="checkbox"> 改进 LaTex 功能<ul>
