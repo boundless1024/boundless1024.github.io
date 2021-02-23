@@ -1,47 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>android library上传</title>
-    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
-<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
-<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
-</li>
-<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
-</li>
-<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
-</li>
-<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
-</li>
-</ol>
-<p>参考</p>
-<ol>
-<li><p><a href="https://bintray.com/">参考1</a></p>
-</li>
-<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>library</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>adb命令相关记录</title>
     <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
@@ -133,6 +92,47 @@
       <tags>
         <tag>android</tag>
         <tag>adb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>android library上传</title>
+    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
+<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
+<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
+</li>
+<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
+</li>
+<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
+</li>
+<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
+</li>
+</ol>
+<p>参考</p>
+<ol>
+<li><p><a href="https://bintray.com/">参考1</a></p>
+</li>
+<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>library</tag>
       </tags>
   </entry>
   <entry>
@@ -325,7 +325,7 @@
 <p>即显示人人的图标： <i class="icon-renren icon-2x"></i></p>
 <p>更多的图标和玩法可以参看 <a href="http://fortawesome.github.io/Font-Awesome/3.2.1/icons/">font-awesome</a> 官方网站。</p>
 <h3 id="16-待办事宜-Todo-列表"><a href="#16-待办事宜-Todo-列表" class="headerlink" title="16. 待办事宜 Todo 列表"></a>16. 待办事宜 Todo 列表</h3><p>使用带有 [ ] 或 [x] （未完成或已完成）项的列表语法撰写一个待办事宜列表，并且支持子列表嵌套以及混用Markdown语法，例如：</p>
-<pre><code>- [ ] **Markdown 开发**
+<pre><code>- [ ] ** Markdown 开发**
     - [ ] 改进 xxxx 渲染算法，使用局部渲染技术提高渲染效率
     - [ ] 支持以 PDF 格式导出文稿
     - [x] 新增Todo列表功能 [语法参考](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments)
@@ -339,7 +339,7 @@
 </code></pre>
 <p>对应显示如下待办事宜 Todo 列表：</p>
 <ul>
-<li><input disabled="" type="checkbox"> <strong>Markdown 开发</strong><ul>
+<li><input disabled="" type="checkbox"> ** Markdown 开发**<ul>
 <li><input disabled="" type="checkbox"> 改进 xxxx 渲染算法，使用局部渲染技术提高渲染效率</li>
 <li><input disabled="" type="checkbox"> 支持以 PDF 格式导出文稿</li>
 <li><input checked="" disabled="" type="checkbox"> 新增Todo列表功能 <a href="https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments">语法参考</a></li>
