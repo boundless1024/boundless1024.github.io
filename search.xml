@@ -1,64 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>android library上传</title>
-    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
-<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
-<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
-</li>
-<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
-</li>
-<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
-</li>
-<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
-</li>
-</ol>
-<p>参考</p>
-<ol>
-<li><p><a href="https://bintray.com/">参考1</a></p>
-</li>
-<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>library</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>adb命令相关记录</title>
     <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
@@ -153,8 +95,139 @@
       </tags>
   </entry>
   <entry>
+    <title>android library上传</title>
+    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
+<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
+<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
+</li>
+<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
+</li>
+<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
+</li>
+<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
+</li>
+</ol>
+<p>参考</p>
+<ol>
+<li><p><a href="https://bintray.com/">参考1</a></p>
+</li>
+<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>library</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cross platform 个人认知</title>
+    <url>/2021/01/02/cross-platform/</url>
+    <content><![CDATA[<h2 id="跨平台"><a href="#跨平台" class="headerlink" title="跨平台"></a>跨平台</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">目前流行的跨平台WebApp开发技术的特点,使用 HTML5 + CSS + JavaScript 开发、跨平台重用代码、丰富的UI库、提供访问设备原生API的 JavaScript API 包装器、提供打包、部署的工具或服务……，Cordova、Ionic、AppCan、DCloud、APICloud、React Native、Flutter</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Cordova"><a href="#Cordova" class="headerlink" title="Cordova"></a>Cordova</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Cordova是Apache软件基金会的一个产品。其前身是PhoneGap，由Nitobi开发，2011年10月，Adobe收购了Nitobi，并且PhoneGap项目也被贡献给Apache软件基金会。Apache在2012年12月，发布了Cordova。</span><br></pre></td></tr></table></figure>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>开源免费，发展早，社区生态成熟、资源多，插件丰富。</li>
+<li>支持离线场景应用，开发工具选择空间大</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>在低端设备上，由于webview性能的原因，使用其他UI框架和JavaScript框架时，体验不好， 只提供基础访问设备的接口。</li>
+</ul>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="http://cordova.axuer.com/docs/zh-cn/latest/">中文文档</a> </p>
+<h2 id="Ionic"><a href="#Ionic" class="headerlink" title="Ionic"></a>Ionic</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Ionic是一个开源的移动应用程序开发框架，它可以轻松地使用web技术构建高质量的跨平台的移动应用。可以让我们快速开发移动App、移动端WEB页面、微信公众平台应用，混合app web页面。</span><br></pre></td></tr></table></figure>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>基于 Cordova</li>
+<li>漂亮的界面，追求性能，专注原生，免费开源</li>
+<li>Angular JS MVVM 开发理念，数据双向绑定</li>
+<li>继承自 Cordova，可以使用 Cordova 的插件</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>Angular JS 学习路线陡峭</li>
+<li>Ionic 框架相比于原生的 Cordova 有所差异，Cordova 某些官方插件可能不适用于Ionic</li>
+</ul>
+<h4 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h4><p><a href="http://www.ionic.wang/">中文文档</a></p>
+<h3 id="AppCan"><a href="#AppCan" class="headerlink" title="AppCan"></a>AppCan</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AppCan作为中国Hybrid混合应用开发、移动平台、移动云平台的倡导者，以“免费+开源+开放”的互联网模式，为广大开发者提供一站式的移动应用开发支持服务。通过AppCan IDE集成开发系统、云端打包器等，快速开发出Android、iOS、WP平台上的移动应用。</span><br></pre></td></tr></table></figure>
+<h4 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>提供一体化解决方案，方便环境搭建、开发、调试、发布</li>
+<li>框架自带UI包，包含常用控件样式，框架对UI、动画渲染进行过优化，反应速度快</li>
+<li>支持本地打包、云端打包</li>
+</ul>
+<h4 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>不开源，无法修改、优化底层代码，文档偏少，分大众版和企业版，大众版免费，但功能有缺失</li>
+<li>……</li>
+</ul>
+<h4 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.appcan.cn/">AppCan官网</a></p>
+<h2 id="DCloud"><a href="#DCloud" class="headerlink" title="DCloud"></a>DCloud</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DCloud大部分产品开源，W3C会员单位，HTML5中国产业联盟的发起公司之一。旗下产品有：HBuilder、Uni-app、5+Runtime、MUI等</span><br></pre></td></tr></table></figure>
+<h4 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>国内厂商，中文文档，MUI 更贴近国内App使用习惯，提供模块的详细例子，如登录，个人中心</li>
+<li>对HTML5的性能、工具、能力都做了深入扩展，提供 IDE 、云服务等帮助节省时间</li>
+</ul>
+<h4 id="缺点-3"><a href="#缺点-3" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>部分操作需要具备原生开发经验，如离线打包App</li>
+<li>新产品仍然有bug，还需改进</li>
+</ul>
+<h4 id="参考-3"><a href="#参考-3" class="headerlink" title="参考"></a>参考</h4><p><a href="https://dcloud.io/">DCloud官网</a><br><img src="https://i.loli.net/2021/02/24/3xCWRHbwt8p5JYV.png" alt="DCloud学习路线"></p>
+<h3 id="APICloud"><a href="#APICloud" class="headerlink" title="APICloud"></a>APICloud</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">APICloud提供原生应用的功能模块（设备访问，界面布局，开放SDK等），开发者可以通过JS调用。前端工程师负责页面布局，UI展现，及简单的交互，原生模块负责性能方面和功能实现，两者结合形成一个完整的应用。同时APICloud提供了云数据库的功能，前端不必了解PHP，Node.js等后端语言，通过JS接口或Restful API实现数据库的增删改查。 </span><br><span class="line">但是APICloud的更新速度很快，版本不太稳定。而且，它是为不懂APP开发的人士准备的，不适合科技公司和程序员。</span><br></pre></td></tr></table></figure>
+<h4 id="优点-4"><a href="#优点-4" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>不懂原生开发，不懂后台语言就可完成APP</li>
+</ul>
+<h4 id="缺点-4"><a href="#缺点-4" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>更新速度快，版本不够稳定</li>
+<li>面向不懂App开发人群，不适合程序员和科技公司，过度依赖会降低技术水平</li>
+<li>名声不好，涉嫌抄袭DCloud大量代码，<a href="https://www.zhihu.com/question/30994540?sort">参考</a></li>
+</ul>
+<h4 id="参考-4"><a href="#参考-4" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.apicloud.com/">APICloud</a></p>
+<h2 id="React-Native"><a href="#React-Native" class="headerlink" title="React Native"></a>React Native</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">能够在Javascript和React的基础上获得完全一致的开发体验，构建世界一流的原生APP。</span><br><span class="line">仅需学习一次，编写任何平台。(Learn once, write anywhere)。</span><br></pre></td></tr></table></figure>
+<h4 id="优点-5"><a href="#优点-5" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>性能体验高于Hybrid,与原生体验差不多</li>
+<li>开发人员可以做到,一次学习,跨平台开发</li>
+</ul>
+<h4 id="缺点-5"><a href="#缺点-5" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>初次学习成本高</li>
+<li>必须在不同平台下写两套代码，依赖暴露的接口</li>
+</ul>
+<h4 id="参考-5"><a href="#参考-5" class="headerlink" title="参考"></a>参考</h4><p><a href="https://reactnative.cn/">RN中文</a></p>
+<h3 id="Flutter"><a href="#Flutter" class="headerlink" title="Flutter"></a>Flutter</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Flutter是谷歌的移动UI框架，可以快速在iOS和Android上构建高质量的原生用户界面。 Flutter可以与现有的代码一起工作。在全世界，Flutter正在被越来越多的开发者和组织使用，并且Flutter是完全免费、开源的。</span><br></pre></td></tr></table></figure>
+<h4 id="优点-6"><a href="#优点-6" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>性能与原生体验差不多</li>
+<li>热重载，丰富的控件以及开发工具</li>
+</ul>
+<h4 id="缺点-6"><a href="#缺点-6" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li>代码嵌套地狱，Dart语言虽然易学易用，也需要一定的学习成本</li>
+<li>架构和状态管理模式还不够成熟</li>
+</ul>
+<h4 id="参考-6"><a href="#参考-6" class="headerlink" title="参考"></a>参考</h4><p><a href="https://flutterchina.club/">Flutter中文</a></p>
+<h3 id="其他参考"><a href="#其他参考" class="headerlink" title="其他参考"></a>其他参考</h3><p><a href="https://www.cnblogs.com/pangguoming/p/9296512.html">https://www.cnblogs.com/pangguoming/p/9296512.html</a></p>
+<p><a href="https://www.cnblogs.com/songxingzheng/p/6482697.html">https://www.cnblogs.com/songxingzheng/p/6482697.html</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>flutter</tag>
+        <tag>dcloud</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>frida安装</title>
-    <url>/2021/01/02/frida%E5%AE%89%E8%A3%85/</url>
+    <url>/2021/01/02/frida-install/</url>
     <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
 <p><a href="https://www.python.org/getit/">python官网</a></p>
 <p>下面的操作都在python3下操作</p>
@@ -179,6 +252,45 @@
       </categories>
       <tags>
         <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello Hexo</title>
+    <url>/2020/12/12/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<div class="justified-gallery"><p><img src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg"><br><img src="https://i.loli.net/2019/12/25/ryLVePaqkYm4TEK.jpg"><br><img src="https://i.loli.net/2019/12/25/gEy5Zc1Ai6VuO4N.jpg"><br><img src="https://i.loli.net/2019/12/25/d6QHbytlSYO4FBG.jpg"><br><img src="https://i.loli.net/2019/12/25/6nepIJ1xTgufatZ.jpg"><br><img src="https://i.loli.net/2019/12/25/E7Jvr4eIPwUNmzq.jpg"><br><img src="https://i.loli.net/2019/12/25/mh19anwBSWIkGlH.jpg"><br><img src="https://i.loli.net/2019/12/25/2tu9JC8ewpBFagv.jpg"></p>
+          </div>
+]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>other</tag>
       </tags>
   </entry>
   <entry>
@@ -361,28 +473,6 @@
       <tags>
         <tag>markdown</tag>
         <tag>md</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello Hexo</title>
-    <url>/2020/12/12/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<div class="justified-gallery"><p><img src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg"><br><img src="https://i.loli.net/2019/12/25/ryLVePaqkYm4TEK.jpg"><br><img src="https://i.loli.net/2019/12/25/gEy5Zc1Ai6VuO4N.jpg"><br><img src="https://i.loli.net/2019/12/25/d6QHbytlSYO4FBG.jpg"><br><img src="https://i.loli.net/2019/12/25/6nepIJ1xTgufatZ.jpg"><br><img src="https://i.loli.net/2019/12/25/E7Jvr4eIPwUNmzq.jpg"><br><img src="https://i.loli.net/2019/12/25/mh19anwBSWIkGlH.jpg"><br><img src="https://i.loli.net/2019/12/25/2tu9JC8ewpBFagv.jpg"></p>
-          </div>
-]]></content>
-      <categories>
-        <category>other</category>
-      </categories>
-      <tags>
-        <tag>other</tag>
       </tags>
   </entry>
 </search>
