@@ -136,12 +136,30 @@
       </tags>
   </entry>
   <entry>
+    <title>android10创建文件失败</title>
+    <url>/2021/01/11/android10-create-file/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
+<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
+<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
+<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>cross platform 个人认知</title>
     <url>/2021/01/02/cross-platform/</url>
-    <content><![CDATA[<h2 id="跨平台"><a href="#跨平台" class="headerlink" title="跨平台"></a>跨平台</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">目前流行的跨平台WebApp开发技术的特点,使用 HTML5 + CSS + JavaScript 开发、跨平台重用代码、丰富的UI库、提供访问设备原生API的 JavaScript API 包装器、提供打包、部署的工具或服务……，Cordova、Ionic、AppCan、DCloud、APICloud、React Native、Flutter</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h2 id="跨平台"><a href="#跨平台" class="headerlink" title="跨平台"></a>跨平台</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">目前流行的跨平台WebApp开发技术的特点,使用 HTML5 + CSS + JavaScript 开发、跨平台重用代码、丰富的</span><br><span class="line">UI库、提供访问设备原生API的 JavaScript API 包装器、提供打包、部署的工具或服务……，Cordova、Ionic、</span><br><span class="line">AppCan、DCloud、APICloud、React Native、Flutter</span><br></pre></td></tr></table></figure>
 
 
-<h3 id="Cordova"><a href="#Cordova" class="headerlink" title="Cordova"></a>Cordova</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Cordova是Apache软件基金会的一个产品。其前身是PhoneGap，由Nitobi开发，2011年10月，Adobe收购了Nitobi，并且PhoneGap项目也被贡献给Apache软件基金会。Apache在2012年12月，发布了Cordova。</span><br></pre></td></tr></table></figure>
+<h3 id="Cordova"><a href="#Cordova" class="headerlink" title="Cordova"></a>Cordova</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Cordova是Apache软件基金会的一个产品。其前身是PhoneGap，由Nitobi开发，2011年10月，</span><br><span class="line">Adobe收购了Nitobi，并且PhoneGap项目也被贡献给Apache软件基金会。Apache在2012年12月，发布了Cordova。</span><br></pre></td></tr></table></figure>
 <h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
 <li>开源免费，发展早，社区生态成熟、资源多，插件丰富。</li>
 <li>支持离线场景应用，开发工具选择空间大</li>
@@ -150,7 +168,7 @@
 <li>在低端设备上，由于webview性能的原因，使用其他UI框架和JavaScript框架时，体验不好， 只提供基础访问设备的接口。</li>
 </ul>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="http://cordova.axuer.com/docs/zh-cn/latest/">中文文档</a> </p>
-<h2 id="Ionic"><a href="#Ionic" class="headerlink" title="Ionic"></a>Ionic</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Ionic是一个开源的移动应用程序开发框架，它可以轻松地使用web技术构建高质量的跨平台的移动应用。可以让我们快速开发移动App、移动端WEB页面、微信公众平台应用，混合app web页面。</span><br></pre></td></tr></table></figure>
+<h2 id="Ionic"><a href="#Ionic" class="headerlink" title="Ionic"></a>Ionic</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Ionic是一个开源的移动应用程序开发框架，它可以轻松地使用web技术构建高质量的跨平台的移动应用。可以让我们</span><br><span class="line">快速开发移动App、移动端WEB页面、微信公众平台应用，混合app web页面。</span><br></pre></td></tr></table></figure>
 <h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul>
 <li>基于 Cordova</li>
 <li>漂亮的界面，追求性能，专注原生，免费开源</li>
@@ -162,7 +180,7 @@
 <li>Ionic 框架相比于原生的 Cordova 有所差异，Cordova 某些官方插件可能不适用于Ionic</li>
 </ul>
 <h4 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h4><p><a href="http://www.ionic.wang/">中文文档</a></p>
-<h3 id="AppCan"><a href="#AppCan" class="headerlink" title="AppCan"></a>AppCan</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AppCan作为中国Hybrid混合应用开发、移动平台、移动云平台的倡导者，以“免费+开源+开放”的互联网模式，为广大开发者提供一站式的移动应用开发支持服务。通过AppCan IDE集成开发系统、云端打包器等，快速开发出Android、iOS、WP平台上的移动应用。</span><br></pre></td></tr></table></figure>
+<h3 id="AppCan"><a href="#AppCan" class="headerlink" title="AppCan"></a>AppCan</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AppCan作为中国Hybrid混合应用开发、移动平台、移动云平台的倡导者，以“免费+开源+开放”的互联网模式，为广大</span><br><span class="line">开发者提供一站式的移动应用开发支持服务。通过AppCan IDE集成开发系统、云端打包器等，快速开发出Android、</span><br><span class="line">iOS、WP平台上的移动应用。</span><br></pre></td></tr></table></figure>
 <h4 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h4><ul>
 <li>提供一体化解决方案，方便环境搭建、开发、调试、发布</li>
 <li>框架自带UI包，包含常用控件样式，框架对UI、动画渲染进行过优化，反应速度快</li>
@@ -173,7 +191,7 @@
 <li>……</li>
 </ul>
 <h4 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.appcan.cn/">AppCan官网</a></p>
-<h2 id="DCloud"><a href="#DCloud" class="headerlink" title="DCloud"></a>DCloud</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DCloud大部分产品开源，W3C会员单位，HTML5中国产业联盟的发起公司之一。旗下产品有：HBuilder、Uni-app、5+Runtime、MUI等</span><br></pre></td></tr></table></figure>
+<h2 id="DCloud"><a href="#DCloud" class="headerlink" title="DCloud"></a>DCloud</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DCloud大部分产品开源，W3C会员单位，HTML5中国产业联盟的发起公司之一。旗下产品有：HBuilder、Uni-app、</span><br><span class="line">5+Runtime、MUI等</span><br></pre></td></tr></table></figure>
 <h4 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h4><ul>
 <li>国内厂商，中文文档，MUI 更贴近国内App使用习惯，提供模块的详细例子，如登录，个人中心</li>
 <li>对HTML5的性能、工具、能力都做了深入扩展，提供 IDE 、云服务等帮助节省时间</li>
@@ -183,7 +201,7 @@
 <li>新产品仍然有bug，还需改进</li>
 </ul>
 <h4 id="参考-3"><a href="#参考-3" class="headerlink" title="参考"></a>参考</h4><p><a href="https://dcloud.io/">DCloud官网</a><br><img src="https://i.loli.net/2021/02/24/3xCWRHbwt8p5JYV.png" alt="DCloud学习路线"></p>
-<h3 id="APICloud"><a href="#APICloud" class="headerlink" title="APICloud"></a>APICloud</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">APICloud提供原生应用的功能模块（设备访问，界面布局，开放SDK等），开发者可以通过JS调用。前端工程师负责页面布局，UI展现，及简单的交互，原生模块负责性能方面和功能实现，两者结合形成一个完整的应用。同时APICloud提供了云数据库的功能，前端不必了解PHP，Node.js等后端语言，通过JS接口或Restful API实现数据库的增删改查。 </span><br><span class="line">但是APICloud的更新速度很快，版本不太稳定。而且，它是为不懂APP开发的人士准备的，不适合科技公司和程序员。</span><br></pre></td></tr></table></figure>
+<h3 id="APICloud"><a href="#APICloud" class="headerlink" title="APICloud"></a>APICloud</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">APICloud提供原生应用的功能模块（设备访问，界面布局，开放SDK等），开发者可以通过JS用。前端工程师负责页面</span><br><span class="line">布局，UI展现，及简单的交互，原生模块负责性能方面和功能实现，两者结合形成一个完整的应用。同时APICloud提供</span><br><span class="line">了云数据库的功能，前端不必了解PHP，Node.js等后端语言，通过JS接口或Restful API实现数据库的增删改查。 </span><br><span class="line">但是APICloud的更新速度很快，版本不太稳定。而且，它是为不懂APP开发的人士准备的，不适合科技公司和程序员。</span><br></pre></td></tr></table></figure>
 <h4 id="优点-4"><a href="#优点-4" class="headerlink" title="优点"></a>优点</h4><ul>
 <li>不懂原生开发，不懂后台语言就可完成APP</li>
 </ul>
@@ -193,7 +211,7 @@
 <li>名声不好，涉嫌抄袭DCloud大量代码，<a href="https://www.zhihu.com/question/30994540?sort">参考</a></li>
 </ul>
 <h4 id="参考-4"><a href="#参考-4" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.apicloud.com/">APICloud</a></p>
-<h2 id="React-Native"><a href="#React-Native" class="headerlink" title="React Native"></a>React Native</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">能够在Javascript和React的基础上获得完全一致的开发体验，构建世界一流的原生APP。</span><br><span class="line">仅需学习一次，编写任何平台。(Learn once, write anywhere)。</span><br></pre></td></tr></table></figure>
+<h2 id="React-Native"><a href="#React-Native" class="headerlink" title="React Native"></a>React Native</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">能够在Javascript和React的基础上获得完全一致的开发体验，构建世界一流的原生APP。仅需学习一次，编写任何</span><br><span class="line">平台。(Learn once, write anywhere)。</span><br></pre></td></tr></table></figure>
 <h4 id="优点-5"><a href="#优点-5" class="headerlink" title="优点"></a>优点</h4><ul>
 <li>性能体验高于Hybrid,与原生体验差不多</li>
 <li>开发人员可以做到,一次学习,跨平台开发</li>
@@ -203,7 +221,7 @@
 <li>必须在不同平台下写两套代码，依赖暴露的接口</li>
 </ul>
 <h4 id="参考-5"><a href="#参考-5" class="headerlink" title="参考"></a>参考</h4><p><a href="https://reactnative.cn/">RN中文</a></p>
-<h3 id="Flutter"><a href="#Flutter" class="headerlink" title="Flutter"></a>Flutter</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Flutter是谷歌的移动UI框架，可以快速在iOS和Android上构建高质量的原生用户界面。 Flutter可以与现有的代码一起工作。在全世界，Flutter正在被越来越多的开发者和组织使用，并且Flutter是完全免费、开源的。</span><br></pre></td></tr></table></figure>
+<h3 id="Flutter"><a href="#Flutter" class="headerlink" title="Flutter"></a>Flutter</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Flutter是谷歌的移动UI框架，可以快速在iOS和Android上构建高质量的原生用户界面。 Flutter可以与现有的代码</span><br><span class="line">一起工作。在全世界，Flutter正在被越来越多的开发者和组织使用，并且Flutter是完全免费、开源的。</span><br></pre></td></tr></table></figure>
 <h4 id="优点-6"><a href="#优点-6" class="headerlink" title="优点"></a>优点</h4><ul>
 <li>性能与原生体验差不多</li>
 <li>热重载，丰富的控件以及开发工具</li>
