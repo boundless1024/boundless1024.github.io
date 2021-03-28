@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>android10创建文件失败</title>
+    <url>/2021/01/11/android10-create-file/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
+<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
+<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
+<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>adb命令相关记录</title>
     <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
@@ -51,7 +69,11 @@
 <h5 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screencap -p &#x2F;sdcard&#x2F;sc.png</span><br></pre></td></tr></table></figure>
 <h5 id="视频录制"><a href="#视频录制" class="headerlink" title="视频录制"></a>视频录制</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screenrecord &#x2F;sdcard&#x2F;filename.mp4</span><br></pre></td></tr></table></figure>
 <h5 id="获取手机中的apk"><a href="#获取手机中的apk" class="headerlink" title="获取手机中的apk"></a>获取手机中的apk</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity   --获取包名</span><br><span class="line">adb shell pm path com.aoyindsptv.phonelive --获取安装包地址</span><br><span class="line">adb pull 安装包地址  电脑地址</span><br></pre></td></tr></table></figure>
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity --查看包名和Activity</span><br><span class="line">adb shell dumpsys window | grep mCurrentFocus --同上</span><br></pre></td></tr></table></figure>
+
+
 <p><a href="https://www.jianshu.com/p/0693b841c83b">参考</a></p>
+<p><a href="https://weiwangqiang.github.io/2020/03/16/dumpsys-debug-detail/">参考2</a></p>
 <div class="gallery-group-main">
 
   <figure class="gallery-group">
@@ -92,47 +114,6 @@
       <tags>
         <tag>android</tag>
         <tag>adb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>android library上传</title>
-    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
-<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
-<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
-</li>
-<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
-</li>
-<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
-</li>
-<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
-</li>
-</ol>
-<p>参考</p>
-<ol>
-<li><p><a href="https://bintray.com/">参考1</a></p>
-</li>
-<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>library</tag>
       </tags>
   </entry>
   <entry>
@@ -328,21 +309,99 @@
       </tags>
   </entry>
   <entry>
-    <title>android10创建文件失败</title>
-    <url>/2021/01/11/android10-create-file/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
-<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
-<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
-<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
+    <title>android library上传</title>
+    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
+<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
+<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
+</li>
+<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
+</li>
+<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
+</li>
+<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
+</li>
+</ol>
+<p>参考</p>
+<ol>
+<li><p><a href="https://bintray.com/">参考1</a></p>
+</li>
+<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>android</category>
       </categories>
       <tags>
         <tag>android</tag>
+        <tag>library</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>github无法访问</title>
+    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
+<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
+<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
+<li>Linux 系统：<code>/etc/hosts</code></li>
+<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
+<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
+<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
+</ul>
+<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
+<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
+<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
+<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
+]]></content>
+      <categories>
+        <category>github</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -436,20 +495,42 @@
       </tags>
   </entry>
   <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
+    <title>okhttp请求记录</title>
+    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<ul>
+<li><p>OkHttp请求</p>
+<ol>
+<li><p>创建Request对象</p>
+<p><code>Request对象的创建通过Builder模式创建</code> </p>
+<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
+</li>
+<li><p>创建OkHttpClient对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>异步方式http请求</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>OkHttp 拦截器</p>
+<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>frida</category>
+        <category>android</category>
       </categories>
       <tags>
         <tag>android</tag>
-        <tag>frida</tag>
+        <tag>okhttp</tag>
       </tags>
   </entry>
   <entry>
@@ -571,58 +652,36 @@
       </tags>
   </entry>
   <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
 ]]></content>
       <categories>
         <category>frida</category>
       </categories>
       <tags>
+        <tag>android</tag>
         <tag>frida</tag>
       </tags>
   </entry>
   <entry>
-    <title>github无法访问</title>
-    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
-<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
-<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
-<li>Linux 系统：<code>/etc/hosts</code></li>
-<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
-<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
-<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
-</ul>
-<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
-<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
-<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
-<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
+    <title>通知栏使用备注</title>
+    <url>/2021/03/27/%E9%80%9A%E7%9F%A5%E6%A0%8F%E4%BD%BF%E7%94%A8%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h3 id="通知栏使用备注"><a href="#通知栏使用备注" class="headerlink" title="通知栏使用备注"></a>通知栏使用备注</h3><h4 id="RemoteViews"><a href="#RemoteViews" class="headerlink" title="RemoteViews"></a>RemoteViews</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一个能够被显示在其他进程中的View。该View的层次结构来自资源文件，并且此类提供了一下基础的操作来帮助修改View的内容。</span><br><span class="line">RemoteViews运行在另一个进程中， RemoteViews在开发中主要会作用于两个方面通知栏和桌面小部件。因为View是存在于另一个进程中的，</span><br><span class="line">所以我们不能够像直接操作View的那样来操作RemoteView，为了帮助我们操作RemoteView呢，Google为我们提供了 RemoteViews 类来帮助我们操作。提示，提供的资源文件中，只能包含部分ViewGroup和View,不支持扩展，不支持自定义View。支持的ViewGroup有：GridView</span><br><span class="line">AdapterViewFlipper、FrameLayout、GridLayout、LinearLayout、ListView、RelativeLayout、StackView、ViewFlipper。</span><br><span class="line">支持的View有：AnalogClock、Button、Chronometer、ImageButton、ImageView、ProgressBar、TextClock、TextView</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="PendingIntent"><a href="#PendingIntent" class="headerlink" title="PendingIntent"></a>PendingIntent</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PendingIntent 是一种特殊的 Intent， 作用和 Intent 一样是用于启动一个 Activity或者Service，或发送一条 Broadcast。</span><br><span class="line">通知响应用户动作便是用这个， 当对通知做出一个动作后，系统便会调用 PendingIntent，启动一个活动，服务或广播，这取决于你获取的是那种 PendingIntent。</span><br><span class="line"></span><br><span class="line">在 PendingIntent 中传入的 Context 销毁以后，PendingIntent 依旧有效，它一般使用在当 Context 销毁后需要执行 Intent的地方，一般不是用于立即执行的时候，比如在点击通知后唤醒一个 Activity。</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于启动 Activity </span><br><span class="line">PendingIntent.getActivity(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于发送 Broadcast</span><br><span class="line">PendingIntent.getBroadcast(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于启动服务</span><br><span class="line">PendingIntent.getService(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getActivities(Context context, int reqeustCode, Intent[] intents, int flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getForgroundService(Context, int reqeustCode, Intent intent, int flags)</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_CANCEL_CURRENT，如果当前已存在则取消当前的并返回一个新的 PendingIntent</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_UPDATE_CURRENT，如果已存在则更新之前的</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_NO_CREATE，如果已存在则返回当前存在的，否则返回 null</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_ONE_SHOT，表明这个 PendingIntent 只能用一次，触发一次后自动 cancel</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_IMMUTABLE，表明这个PendingIntent 不可变</span><br><span class="line"></span><br><span class="line">requestCode 和 flags 是相关联的，如果多次获取 PendingIntent 时 requestCode 相同，此时返回的结果就需要参考 flags 的值。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">- 创建Notification，配置参数</span><br><span class="line">- 获取NotificationManager，发送通知</span><br><span class="line">- Android <span class="number">8.0</span>之后，注意添加 NotificationChannel</span><br><span class="line">    <span class="comment">/***</span></span><br><span class="line"><span class="comment">     * 创建通知栏</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Notification <span class="title">createNotification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String channelId = CHANNEL_ID + <span class="string">&quot;&quot;</span>; <span class="comment">//channel id</span></span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123; <span class="comment">//8.0系统之后 增加 NotificationChannel</span></span><br><span class="line">            CharSequence channelName = getString(R.string.app_name);</span><br><span class="line">            <span class="keyword">int</span> importance = NotificationManager.IMPORTANCE_HIGH;</span><br><span class="line">            NotificationChannel mChannel = <span class="keyword">new</span> NotificationChannel(channelId, channelName, importance);</span><br><span class="line">            mNotificationManager.createNotificationChannel(mChannel);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == mRemoteViews) &#123; <span class="comment">//自定义通知栏view ,创建RemoteViews</span></span><br><span class="line">            mRemoteViews = <span class="keyword">new</span> RemoteViews(getPackageName(), R.layout.layout_notification_bar_tool);</span><br><span class="line">            initRemoteViews(mRemoteViews); <span class="comment">//初始化自定义view </span></span><br><span class="line">        &#125;</span><br><span class="line">        Notification notification = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>, channelId)</span><br><span class="line">                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)</span><br><span class="line"><span class="comment">//                .setOngoing(true) //前台显示</span></span><br><span class="line">                .setSmallIcon(R.drawable.ic_launcher)</span><br><span class="line">                .setContent(mRemoteViews)</span><br><span class="line">                .build();</span><br><span class="line">        </span><br><span class="line">        notification.when = System.currentTimeMillis();</span><br><span class="line">        IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter(ACTION_DK);</span><br><span class="line">        registerReceiver(mBroadcastReceiver, intentFilter);</span><br><span class="line">        <span class="keyword">return</span> notification;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/***</span></span><br><span class="line"><span class="comment">     * 发送通知栏</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">sendNotification</span><span class="params">()</span></span>&#123;</span><br><span class="line">        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</span><br><span class="line">        mNotification = createNotification(); <span class="comment">//上面方法，创建一个通知栏对象</span></span><br><span class="line">        mNotificationManager.notify(CHANNEL_ID ,mNotification);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Demo-实现类似360清理大师常驻通知栏"><a href="#Demo-实现类似360清理大师常驻通知栏" class="headerlink" title="Demo,实现类似360清理大师常驻通知栏"></a>Demo,实现类似360清理大师常驻通知栏</h4><p><img src="https://i.loli.net/2021/03/27/gmPSRtKFEifnzlL.png" alt="iShot2021-03-27上午10.25.23.png"></p>
 ]]></content>
       <categories>
-        <category>github</category>
+        <category>android</category>
       </categories>
       <tags>
-        <tag>github</tag>
+        <tag>android</tag>
+        <tag>adb</tag>
       </tags>
   </entry>
   <entry>
@@ -645,76 +704,6 @@
       </categories>
       <tags>
         <tag>other</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>xposed模块 hello world编写</title>
-    <url>/2021/03/18/xposed%E6%A8%A1%E5%9D%97%E5%85%A5%E9%97%A8%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">手机最好有root权限，确保上安装magsik和EdXposed等相关框架（测试设备是一加8 android 10系统），</span><br><span class="line">xposed框架在android 8.0之后就不再维护更新，都转战到magisk和EdXposed上了，具体的安装方式自行百度。</span><br></pre></td></tr></table></figure>
-<h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过Android Studio 新建一个Android Application项目，模板自行选择。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/BtnzoJ3waXuvMbC.png" alt="iShot2021-03-18下午04.23.04.png"></p>
-<h3 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修改新建的Android项目中AndroidManifest.xml文件，在application标签下增加下面三句话，以让xposed框架识别</span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedmodule&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;true&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposeddescription&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;Hello Xposed&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedminversion&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;53&quot;</span> /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/BOSXHbMqo1rvLZj.png" alt="iShot2021-03-18下午04.29.17.png"></p>
-<h3 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">在app项目中增加xposed相应的jar包支持</span><br><span class="line">  </span><br><span class="line"> compileOnly<span class="string">&#x27;de.robv.android.xposed:api:82&#x27;</span></span><br><span class="line"> compileOnly <span class="string">&#x27;de.robv.android.xposed:api:82:sources&#x27;</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/IYfhPDkeb73wNGW.png" alt="iShot2021-03-18下午04.35.12.png"></p>
-<h3 id="步骤4"><a href="#步骤4" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">编写xposed模块的入口，新建一个java类实现xposed框架中的接口 `IXposedHookLoadPackage` </span><br><span class="line">  中的`handleLoadPackage`,在`handleLoadPackage`处理相关的逻辑</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IXposedHookLoadPackage</span> <span class="keyword">extends</span> <span class="title">IXposedMod</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * This method is called when an app is loaded. It&#x27;s called very early, even before</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> Application#onCreate&#125; is called.</span></span><br><span class="line"><span class="comment">	 * Modules can set up their app-specific hooks here.</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> lpparam Information about the app.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Throwable Everything the callback throws is caught and logged.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">	<span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Wrapper</span> <span class="keyword">extends</span> <span class="title">XC_LoadPackage</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">final</span> IXposedHookLoadPackage instance;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Wrapper</span><span class="params">(IXposedHookLoadPackage instance)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.instance = instance;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">			instance.handleLoadPackage(lpparam);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/g4crnvSKlA3ZoMC.png" alt="iShot2021-03-18下午04.42.16.png"></p>
-<h3 id="步骤4-1"><a href="#步骤4-1" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">告诉xposed框架入口class,在android项目中的资产目录(asset)中新建一个文件 &#96;xposed_init&#96; 没有扩展名，</span><br><span class="line">在 &#96;xposed_init&#96; 中写入上面实现 &#96;IXposedHookLoadPackage&#96; 接口类的全路径(包名+类名)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/HLAa9k7qjh1RpWG.png" alt="iShot2021-03-18下午04.49.42.png"></p>
-<h3 id="步骤5"><a href="#步骤5" class="headerlink" title="步骤5"></a>步骤5</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">运行安装到手机上， 在EdXposed中找到刚才编写的模块，打开模块开关，必要时可以重启一下手机</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/P2Fy8CY5dsEnwZV.png" alt="iShot2021-03-18下午04.52.25.png"></p>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过xposed框架，只有你愿意并研究，可以写成很多实用的东西，比如禁用广告，绕过vip才能使用的功能……，例如下面</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/cVEwdeY9CshTlOP.png" alt="iShot2021-03-18下午05.03.59.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.xda-developers.com/how-to-install-magisk/">how-to-install-magisk</a></p>
-<p><a href="https://github.com/topjohnwu/Magisk">Magisk</a></p>
-<p><a href="https://github.com/ElderDrivers/EdXposed">EdXposed</a></p>
-<p><a href="https://repo.xposed.info/module-overview">xposed仓库</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>xposed</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>okhttp请求记录</title>
-    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<ul>
-<li><p>OkHttp请求</p>
-<ol>
-<li><p>创建Request对象</p>
-<p><code>Request对象的创建通过Builder模式创建</code> </p>
-<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
-</li>
-<li><p>创建OkHttpClient对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>异步方式http请求</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码</p>
-</li>
-</ol>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li><p>OkHttp 拦截器</p>
-<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>okhttp</tag>
       </tags>
   </entry>
   <entry>
@@ -897,6 +886,43 @@
       <tags>
         <tag>markdown</tag>
         <tag>md</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>xposed模块 hello world编写</title>
+    <url>/2021/03/18/xposed%E6%A8%A1%E5%9D%97%E5%85%A5%E9%97%A8%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>Xposed的执行原理，可以参考<a href="https://www.bilibili.com/read/cv884141?from=category_17">这篇文章</a>的介绍。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xposed劫持了Zygote进程。原本是zygote调用【app_process】来运行程序，现在有了xposed后，zygote调用</span><br><span class="line">【被xposed替换后的app_process】来运行程序，使得程序在开启时，额外加载一个jar包，从而改变APP的运行结果。</span><br><span class="line">我们通过xposed框架编写hook代码，这些hook代码实际上是运行在宿主app进程内的，所以如果想要调试hook代码，</span><br><span class="line">需要以debug模式运行宿主app。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">手机最好有root权限，确保上安装magsik和EdXposed等相关框架（测试设备是一加8 android 10系统），</span><br><span class="line">xposed框架在android 8.0之后就不再维护更新，都转战到magisk和EdXposed上了，具体的安装方式自行百度。</span><br></pre></td></tr></table></figure>
+<h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过Android Studio 新建一个Android Application项目，模板自行选择。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/BtnzoJ3waXuvMbC.png" alt="iShot2021-03-18下午04.23.04.png"></p>
+<h3 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修改新建的Android项目中AndroidManifest.xml文件，在application标签下增加下面三句话，以让xposed框架识别</span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedmodule&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;true&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposeddescription&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;Hello Xposed&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedminversion&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;53&quot;</span> /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/BOSXHbMqo1rvLZj.png" alt="iShot2021-03-18下午04.29.17.png"></p>
+<h3 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">在app项目中增加xposed相应的jar包支持</span><br><span class="line">  </span><br><span class="line"> compileOnly<span class="string">&#x27;de.robv.android.xposed:api:82&#x27;</span></span><br><span class="line"> compileOnly <span class="string">&#x27;de.robv.android.xposed:api:82:sources&#x27;</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/IYfhPDkeb73wNGW.png" alt="iShot2021-03-18下午04.35.12.png"></p>
+<h3 id="步骤4"><a href="#步骤4" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">编写xposed模块的入口，新建一个java类实现xposed框架中的接口 `IXposedHookLoadPackage` </span><br><span class="line">  中的`handleLoadPackage`,在`handleLoadPackage`处理相关的逻辑</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IXposedHookLoadPackage</span> <span class="keyword">extends</span> <span class="title">IXposedMod</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * This method is called when an app is loaded. It&#x27;s called very early, even before</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> Application#onCreate&#125; is called.</span></span><br><span class="line"><span class="comment">	 * Modules can set up their app-specific hooks here.</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> lpparam Information about the app.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Throwable Everything the callback throws is caught and logged.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">	<span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Wrapper</span> <span class="keyword">extends</span> <span class="title">XC_LoadPackage</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">final</span> IXposedHookLoadPackage instance;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Wrapper</span><span class="params">(IXposedHookLoadPackage instance)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.instance = instance;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">			instance.handleLoadPackage(lpparam);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/g4crnvSKlA3ZoMC.png" alt="iShot2021-03-18下午04.42.16.png"></p>
+<h3 id="步骤4-1"><a href="#步骤4-1" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">告诉xposed框架入口class,在android项目中的资产目录(asset)中新建一个文件 &#96;xposed_init&#96; 没有扩展名，</span><br><span class="line">在 &#96;xposed_init&#96; 中写入上面实现 &#96;IXposedHookLoadPackage&#96; 接口类的全路径(包名+类名)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/HLAa9k7qjh1RpWG.png" alt="iShot2021-03-18下午04.49.42.png"></p>
+<h3 id="步骤5"><a href="#步骤5" class="headerlink" title="步骤5"></a>步骤5</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">运行安装到手机上， 在EdXposed中找到刚才编写的模块，打开模块开关，必要时可以重启一下手机</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/P2Fy8CY5dsEnwZV.png" alt="iShot2021-03-18下午04.52.25.png"></p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过xposed框架，只有你愿意并研究，可以写成很多实用的东西，比如禁用广告，绕过vip才能使用的功能……，例如下面</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/cVEwdeY9CshTlOP.png" alt="iShot2021-03-18下午05.03.59.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.xda-developers.com/how-to-install-magisk/">how-to-install-magisk</a></p>
+<p><a href="https://github.com/topjohnwu/Magisk">Magisk</a></p>
+<p><a href="https://github.com/ElderDrivers/EdXposed">EdXposed</a></p>
+<p><a href="https://repo.xposed.info/module-overview">xposed仓库</a></p>
+<p><a href="http://blog.fuguicun.com/articles/2020/12/31/1609386370453.html">Xposed用于生产部署实践</a></p>
+<p><a href="https://github.com/NanoHttpd/nanohttpd">NanoHTTPD</a></p>
+<p><a href="http://91fans.com.cn/post/zysignfour/">参考</a></p>
+<p><a href="https://my.oschina.net/u/4579293/blog/4345442">参考2</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>xposed</tag>
       </tags>
   </entry>
 </search>
