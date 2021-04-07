@@ -1,15 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>android10创建文件失败</title>
-    <url>/2021/01/11/android10-create-file/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
-<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
-<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
-<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
+    <title>apk代码混淆备注</title>
+    <url>/2021/04/04/Apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h4 id="Apk代码混淆"><a href="#Apk代码混淆" class="headerlink" title="Apk代码混淆"></a>Apk代码混淆</h4><ul>
+<li><p>增加反编译后代码阅读成本</p>
+</li>
+<li><p>代码压缩</p>
+</li>
+<li><p>代码优化</p>
+<p><code>依赖 -&gt; main -&gt; 渠道 -&gt; 构建类型</code>  - 合并资源时顺序</p>
+</li>
+</ul>
+<h4 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在module项目中的build.gradle文件中配置minifyEnabled为true，混淆规则内容一般写在proguard-rules.pro</span><br><span class="line">一般proguard-rules.pro文件和build.gradle文件在同一目录</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/07/2Ulb7yq41I9NmE5.png" alt="iShot2021-04-07上午11.44.39.png"></p>
+<h4 id="混淆参数说明"><a href="#混淆参数说明" class="headerlink" title="混淆参数说明"></a>混淆参数说明</h4><table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-optimizationpasses</td>
+<td align="center">代码混淆的压缩比例</td>
+<td>值介于0-7</td>
+</tr>
+<tr>
+<td align="center">-dontusemixedcaseclassnames</td>
+<td align="center">混淆后类型都为小写</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-dontskipnonpubliclibraryclasses</td>
+<td align="center">不去忽略非公共的库类</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-dontoptimize</td>
+<td align="center">不优化输入的类文件</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-dontpreverify</td>
+<td align="center">不做预校验的操作</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-ignorewarnings</td>
+<td align="center">忽略警告</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-verbose</td>
+<td align="center">混淆时是否记录日志</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-keepattributes <em>Annotation</em></td>
+<td align="center">保护注解</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-printmapping proguardMapping.txt</td>
+<td align="center">生成原类名和混淆后的类名的映射文件</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-optimizations !code/simplification/cast,!field/,!class/merging/</td>
+<td align="center">指定混淆是采用的算法</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="keep说明"><a href="#keep说明" class="headerlink" title="keep说明"></a>keep说明</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-keep</td>
+<td>防止类和成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepnames</td>
+<td>防止类和成员被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclassmembers</td>
+<td>防止成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclassmembernames</td>
+<td>防止成员被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclasseswithmembers</td>
+<td>防止拥有该成员的类和成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclasseswithmembernames</td>
+<td>防止拥有该成员的类和成员被重命名</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keep 类修饰符 class 类名称 限定符 类&#123;&#125;</span><br><span class="line">-keep public class * extends androidx.**</span><br></pre></td></tr></table></figure>
+<ul>
+<li>类修饰符：<code>public</code>、<code>protected</code>、<code>private</code></li>
+<li><code>*</code> 匹配任意长度字符，但不含包名分隔符(.) </li>
+<li><code>**</code> 匹配任意长度字符，并且包含包名分隔符(.) </li>
+<li><code>extends</code> 可以指定类的基类 </li>
+<li><code>implement</code> 匹配实现了某接口的类 </li>
+<li><code>$</code> 内部类</li>
+</ul>
+<h4 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h4><p><code>-keep class com.xx.xx.**</code> 、<code>-keep class com.xx.xx.*</code></p>
+<ul>
+<li><code>**</code> 表示本包和所含子包下的类名都保持</li>
+<li><code>*</code> 表示只是保持该包下的类名</li>
+</ul>
+<p><code>-keep class com.example.bean.** &#123; *; &#125;</code></p>
+<ul>
+<li>表示本包和所含子包下的类名都保持，方法名和变量名也都保持</li>
+</ul>
+<p><code>-keep public class com.xx.Test &#123; *; &#125;</code> 不混淆com.xx.Test类<br><code>-keep class com.xx.** &#123;*;&#125;</code> 不混淆com.xx包下所有类<br><code>-keep public class * extends com.xx.Test &#123; *; &#125;</code>  不混淆某个类的子类<br><code>-keep public class **.*model*.** &#123; *; &#125; </code> 不混淆所有类名中包含了“model”的类及其成员</p>
+<p><code>-kepp class * implements com.xx.TestInterface &#123; *; &#125;</code> 不混淆TestInterface接口的实现</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">xx</span>.<span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> ();</span><br><span class="line">&#125;</span><br><span class="line">不混淆Test的构造方法</span><br></pre></td></tr></table></figure>
+<p><code>-keepclassmembers class com.xx.Test &#123; public void test( java.lang.String )&#125;</code> 不混淆Test的特定的test方法</p>
+<p><code>-keep class com.xx.Test$* &#123; *; &#125;</code> 不混淆Test类的内部类</p>
+<h4 id="资源保持规则"><a href="#资源保持规则" class="headerlink" title="资源保持规则"></a>资源保持规则</h4><p><code>shrinkResources true</code> 未被使用的资源默认被移除</p>
+<p>在 <code>res/raw/</code> 路径下创建一个 xml 文件，例如 <code>keep.xml</code></p>
+<ul>
+<li><code>tools:keep</code> 定义哪些资源需要被保留（资源之间用“,”隔开） </li>
+<li><code>tools:discard</code> 定义哪些资源需要被移除（资源之间用“,”隔开） </li>
+<li><code>tools:shrinkMode</code> 开启严格模式</li>
+</ul>
+<h4 id="模板代码"><a href="#模板代码" class="headerlink" title="模板代码"></a>模板代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#############################################</span><br><span class="line">#</span><br><span class="line"># 对于一些基本指令的添加</span><br><span class="line">#</span><br><span class="line">#############################################</span><br><span class="line"># 代码混淆压缩比，在0~7之间，默认为5，一般不做修改</span><br><span class="line">-optimizationpasses <span class="number">5</span></span><br><span class="line"></span><br><span class="line"># 混合时不使用大小写混合，混合后的类名为小写</span><br><span class="line">-dontusemixedcaseclassnames</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类</span><br><span class="line">-dontskipnonpubliclibraryclasses</span><br><span class="line"></span><br><span class="line"># 这句话能够使我们的项目混淆后产生映射文件</span><br><span class="line"># 包含有类名-&gt;混淆后类名的映射关系</span><br><span class="line">-verbose</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类成员</span><br><span class="line">-dontskipnonpubliclibraryclassmembers</span><br><span class="line"></span><br><span class="line"># 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。</span><br><span class="line">-dontpreverify</span><br><span class="line"></span><br><span class="line"># 保留Annotation不混淆</span><br><span class="line">-keepattributes *Annotation*,InnerClasses</span><br><span class="line"></span><br><span class="line"># 避免混淆泛型</span><br><span class="line">-keepattributes Signature</span><br><span class="line"></span><br><span class="line"># 抛出异常时保留代码行号</span><br><span class="line">-keepattributes SourceFile,LineNumberTable</span><br><span class="line"></span><br><span class="line"># 指定混淆是采用的算法，后面的参数是一个过滤器</span><br><span class="line"># 这个过滤器是谷歌推荐的算法，一般不做更改</span><br><span class="line">-optimizations !code/simplification/cast,!field<span class="comment">/*,!class/merging/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Android开发中一些需要保留的公共部分</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们使用的四大组件，自定义的Application等等这些类不被混淆</span></span><br><span class="line"><span class="comment"># 因为这些子类都有可能被外部调用</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Activity</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Appliction</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Service</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.BroadcastReceiver</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.ContentProvider</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.backup.BackupAgentHelper</span></span><br><span class="line"><span class="comment">-keep public class * extends android.preference.Preference</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View</span></span><br><span class="line"><span class="comment">-keep public class com.android.vending.licensing.ILicensingService</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留support下的所有类及其内部类</span></span><br><span class="line"><span class="comment">-keep class android.support.** &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留继承的</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v4.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v7.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.annotation.**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留R下面的资源</span></span><br><span class="line"><span class="comment">-keep class **.R$* &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留本地native方法不被混淆</span></span><br><span class="line"><span class="comment">-keepclasseswithmembernames class * &#123;</span></span><br><span class="line"><span class="comment">    native &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留在Activity中的方法参数是view的方法，</span></span><br><span class="line"><span class="comment"># 这样以来我们在layout中写的onClick就不会被影响</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.app.Activity&#123;</span></span><br><span class="line"><span class="comment">    public void *(android.view.View);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留枚举类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers enum * &#123;</span></span><br><span class="line"><span class="comment">    public static **[] values();</span></span><br><span class="line"><span class="comment">    public static ** valueOf(java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们自定义控件（继承自View）不被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View&#123;</span></span><br><span class="line"><span class="comment">    *** get*();</span></span><br><span class="line"><span class="comment">    void set*(***);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Parcelable序列化类不被混淆</span></span><br><span class="line"><span class="comment">-keep class * implements android.os.Parcelable &#123;</span></span><br><span class="line"><span class="comment">    public static final android.os.Parcelable$Creator *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Serializable序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * implements java.io.Serializable &#123;</span></span><br><span class="line"><span class="comment">    static final long serialVersionUID;</span></span><br><span class="line"><span class="comment">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span></span><br><span class="line"><span class="comment">    !static !transient &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">    private void writeObject(java.io.ObjectOutputStream);</span></span><br><span class="line"><span class="comment">    private void readObject(java.io.ObjectInputStream);</span></span><br><span class="line"><span class="comment">    java.lang.Object writeReplace();</span></span><br><span class="line"><span class="comment">    java.lang.Object readResolve();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于带有回调函数的onXXEvent、**On*Listener的，不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * &#123;</span></span><br><span class="line"><span class="comment">    void *(**On*Event);</span></span><br><span class="line"><span class="comment">    void *(**On*Listener);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># webView处理，项目中没有使用到webView忽略即可</span></span><br><span class="line"><span class="comment">-keepclassmembers class fqcn.of.javascript.interface.for.webview &#123;</span></span><br><span class="line"><span class="comment">    public *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);</span></span><br><span class="line"><span class="comment">    public boolean *(android.webkit.WebView, java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.webView, jav.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://www.huaweicloud.com/articles/ae151e2f60923097cefc473bd131addf.html">参考</a></p>
+<p><a href="https://www.guardsquare.com/en/products/proguard">proguard官网</a></p>
+<p><a href="https://blog.si-yee.com/2019/04/12/Android%E6%B7%B7%E6%B7%86-Proguard-%E8%AF%A6%E8%A7%A3/">参考2</a></p>
 ]]></content>
       <categories>
         <category>android</category>
@@ -114,6 +250,47 @@
       <tags>
         <tag>android</tag>
         <tag>adb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>android library上传</title>
+    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
+<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
+<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
+</li>
+<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
+</li>
+<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
+</li>
+<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
+</li>
+</ol>
+<p>参考</p>
+<ol>
+<li><p><a href="https://bintray.com/">参考1</a></p>
+</li>
+<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>library</tag>
       </tags>
   </entry>
   <entry>
@@ -309,99 +486,21 @@
       </tags>
   </entry>
   <entry>
-    <title>android library上传</title>
-    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
-<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
-<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
-</li>
-<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
-</li>
-<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
-</li>
-<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
-</li>
-</ol>
-<p>参考</p>
-<ol>
-<li><p><a href="https://bintray.com/">参考1</a></p>
-</li>
-<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
-</li>
-</ol>
+    <title>android10创建文件失败</title>
+    <url>/2021/01/11/android10-create-file/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
+<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
+<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
+<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
 ]]></content>
       <categories>
         <category>android</category>
       </categories>
       <tags>
         <tag>android</tag>
-        <tag>library</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>github无法访问</title>
-    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
-<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
-<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
-<li>Linux 系统：<code>/etc/hosts</code></li>
-<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
-<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
-<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
-</ul>
-<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
-<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
-<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
-<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
-]]></content>
-      <categories>
-        <category>github</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -495,42 +594,75 @@
       </tags>
   </entry>
   <entry>
-    <title>okhttp请求记录</title>
-    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<ul>
-<li><p>OkHttp请求</p>
-<ol>
-<li><p>创建Request对象</p>
-<p><code>Request对象的创建通过Builder模式创建</code> </p>
-<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
-</li>
-<li><p>创建OkHttpClient对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>异步方式http请求</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码</p>
-</li>
-</ol>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
 
 
-<ul>
-<li><p>OkHttp 拦截器</p>
-<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
-</li>
-</ul>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
 ]]></content>
       <categories>
-        <category>android</category>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
+]]></content>
+      <categories>
+        <category>frida</category>
       </categories>
       <tags>
         <tag>android</tag>
-        <tag>okhttp</tag>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>github无法访问</title>
+    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
+<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
+<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
+<li>Linux 系统：<code>/etc/hosts</code></li>
+<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
+<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
+<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
+</ul>
+<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
+<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
+<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
+<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
+]]></content>
+      <categories>
+        <category>github</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -652,39 +784,6 @@
       </tags>
   </entry>
   <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通知栏使用备注</title>
-    <url>/2021/03/27/%E9%80%9A%E7%9F%A5%E6%A0%8F%E4%BD%BF%E7%94%A8%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h3 id="通知栏使用备注"><a href="#通知栏使用备注" class="headerlink" title="通知栏使用备注"></a>通知栏使用备注</h3><h4 id="RemoteViews"><a href="#RemoteViews" class="headerlink" title="RemoteViews"></a>RemoteViews</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一个能够被显示在其他进程中的View。该View的层次结构来自资源文件，并且此类提供了一下基础的操作来帮助修改View的内容。</span><br><span class="line">RemoteViews运行在另一个进程中， RemoteViews在开发中主要会作用于两个方面通知栏和桌面小部件。因为View是存在于另一个进程中的，</span><br><span class="line">所以我们不能够像直接操作View的那样来操作RemoteView，为了帮助我们操作RemoteView呢，Google为我们提供了 RemoteViews 类来帮助我们操作。提示，提供的资源文件中，只能包含部分ViewGroup和View,不支持扩展，不支持自定义View。支持的ViewGroup有：GridView</span><br><span class="line">AdapterViewFlipper、FrameLayout、GridLayout、LinearLayout、ListView、RelativeLayout、StackView、ViewFlipper。</span><br><span class="line">支持的View有：AnalogClock、Button、Chronometer、ImageButton、ImageView、ProgressBar、TextClock、TextView</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="PendingIntent"><a href="#PendingIntent" class="headerlink" title="PendingIntent"></a>PendingIntent</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PendingIntent 是一种特殊的 Intent， 作用和 Intent 一样是用于启动一个 Activity或者Service，或发送一条 Broadcast。</span><br><span class="line">通知响应用户动作便是用这个， 当对通知做出一个动作后，系统便会调用 PendingIntent，启动一个活动，服务或广播，这取决于你获取的是那种 PendingIntent。</span><br><span class="line"></span><br><span class="line">在 PendingIntent 中传入的 Context 销毁以后，PendingIntent 依旧有效，它一般使用在当 Context 销毁后需要执行 Intent的地方，一般不是用于立即执行的时候，比如在点击通知后唤醒一个 Activity。</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于启动 Activity </span><br><span class="line">PendingIntent.getActivity(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于发送 Broadcast</span><br><span class="line">PendingIntent.getBroadcast(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于启动服务</span><br><span class="line">PendingIntent.getService(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getActivities(Context context, int reqeustCode, Intent[] intents, int flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getForgroundService(Context, int reqeustCode, Intent intent, int flags)</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_CANCEL_CURRENT，如果当前已存在则取消当前的并返回一个新的 PendingIntent</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_UPDATE_CURRENT，如果已存在则更新之前的</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_NO_CREATE，如果已存在则返回当前存在的，否则返回 null</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_ONE_SHOT，表明这个 PendingIntent 只能用一次，触发一次后自动 cancel</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_IMMUTABLE，表明这个PendingIntent 不可变</span><br><span class="line"></span><br><span class="line">requestCode 和 flags 是相关联的，如果多次获取 PendingIntent 时 requestCode 相同，此时返回的结果就需要参考 flags 的值。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">- 创建Notification，配置参数</span><br><span class="line">- 获取NotificationManager，发送通知</span><br><span class="line">- Android <span class="number">8.0</span>之后，注意添加 NotificationChannel</span><br><span class="line">    <span class="comment">/***</span></span><br><span class="line"><span class="comment">     * 创建通知栏</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Notification <span class="title">createNotification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String channelId = CHANNEL_ID + <span class="string">&quot;&quot;</span>; <span class="comment">//channel id</span></span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123; <span class="comment">//8.0系统之后 增加 NotificationChannel</span></span><br><span class="line">            CharSequence channelName = getString(R.string.app_name);</span><br><span class="line">            <span class="keyword">int</span> importance = NotificationManager.IMPORTANCE_HIGH;</span><br><span class="line">            NotificationChannel mChannel = <span class="keyword">new</span> NotificationChannel(channelId, channelName, importance);</span><br><span class="line">            mNotificationManager.createNotificationChannel(mChannel);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == mRemoteViews) &#123; <span class="comment">//自定义通知栏view ,创建RemoteViews</span></span><br><span class="line">            mRemoteViews = <span class="keyword">new</span> RemoteViews(getPackageName(), R.layout.layout_notification_bar_tool);</span><br><span class="line">            initRemoteViews(mRemoteViews); <span class="comment">//初始化自定义view </span></span><br><span class="line">        &#125;</span><br><span class="line">        Notification notification = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>, channelId)</span><br><span class="line">                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)</span><br><span class="line"><span class="comment">//                .setOngoing(true) //前台显示</span></span><br><span class="line">                .setSmallIcon(R.drawable.ic_launcher)</span><br><span class="line">                .setContent(mRemoteViews)</span><br><span class="line">                .build();</span><br><span class="line">        </span><br><span class="line">        notification.when = System.currentTimeMillis();</span><br><span class="line">        IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter(ACTION_DK);</span><br><span class="line">        registerReceiver(mBroadcastReceiver, intentFilter);</span><br><span class="line">        <span class="keyword">return</span> notification;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/***</span></span><br><span class="line"><span class="comment">     * 发送通知栏</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">sendNotification</span><span class="params">()</span></span>&#123;</span><br><span class="line">        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</span><br><span class="line">        mNotification = createNotification(); <span class="comment">//上面方法，创建一个通知栏对象</span></span><br><span class="line">        mNotificationManager.notify(CHANNEL_ID ,mNotification);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h4 id="Demo-实现类似360清理大师常驻通知栏"><a href="#Demo-实现类似360清理大师常驻通知栏" class="headerlink" title="Demo,实现类似360清理大师常驻通知栏"></a>Demo,实现类似360清理大师常驻通知栏</h4><p><img src="https://i.loli.net/2021/03/27/gmPSRtKFEifnzlL.png" alt="iShot2021-03-27上午10.25.23.png"></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>adb</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello Hexo</title>
     <url>/2020/12/12/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -777,7 +876,7 @@
 <h4 id="更多语法参考：流程图语法参考"><a href="#更多语法参考：流程图语法参考" class="headerlink" title="更多语法参考：流程图语法参考"></a>更多语法参考：<a href="http://adrai.github.io/flowchart.js/">流程图语法参考</a></h4><h3 id="8-序列图"><a href="#8-序列图" class="headerlink" title="8. 序列图"></a>8. 序列图</h3><h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1"></a>示例 1</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alice-&gt;Bob: Hello Bob, how are you?</span><br><span class="line">Note right of Bob: Bob thinks</span><br><span class="line">Bob--&gt;Alice: I am good thanks!</span><br></pre></td></tr></table></figure>
 <h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2"></a>示例 2</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Title: Here is a title</span><br><span class="line">A-&gt;B: Normal line</span><br><span class="line">B--&gt;C: Dashed line</span><br><span class="line">C-&gt;&gt;D: Open arrow</span><br><span class="line">D--&gt;&gt;A: Dashed open arrow</span><br></pre></td></tr></table></figure>
 <h4 id="更多语法参考：序列图语法参考"><a href="#更多语法参考：序列图语法参考" class="headerlink" title="更多语法参考：序列图语法参考"></a>更多语法参考：<a href="http://bramp.github.io/js-sequence-diagrams/">序列图语法参考</a></h4><h3 id="9-甘特图"><a href="#9-甘特图" class="headerlink" title="9. 甘特图"></a>9. 甘特图</h3><p>甘特图内在思想简单。基本是一条线条图，横轴表示时间，纵轴表示活动（项目），线条表示在整个期间上计划和实际的活动完成情况。它直观地表明任务计划在什么时候进行，及实际进展与计划要求的对比。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">title 项目开发流程</span><br><span class="line">section 项目确定</span><br><span class="line">    需求分析       :a1, 2016-06-22, 3d</span><br><span class="line">    可行性报告     :after a1, 5d</span><br><span class="line">    概念验证       : 5d</span><br><span class="line">section 项目实施</span><br><span class="line">    概要设计      :2016-07-05  , 5d</span><br><span class="line">    详细设计      :2016-07-08, 10d</span><br><span class="line">    编码          :2016-07-15, 10d</span><br><span class="line">    测试          :2016-07-22, 5d</span><br><span class="line">section 发布验收</span><br><span class="line">    发布: 2d</span><br><span class="line">    验收: 3d</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">%% 语法示例</span><br><span class="line">        gantt</span><br><span class="line">        dateFormat  YYYY-MM-DD</span><br><span class="line">        title 软件开发甘特图</span><br><span class="line">        section 设计</span><br><span class="line">        需求                      :done,    des1, 2014-01-06,2014-01-08</span><br><span class="line">        原型                      :active,  des2, 2014-01-09, 3d</span><br><span class="line">        UI设计                     :         des3, after des2, 5d</span><br><span class="line">    未来任务                     :         des4, after des3, 5d</span><br><span class="line">        section 开发</span><br><span class="line">        学习准备理解需求                      :crit, done, 2014-01-06,24h</span><br><span class="line">        设计框架                             :crit, done, after des2, 2d</span><br><span class="line">        开发                                 :crit, active, 3d</span><br><span class="line">        未来任务                              :crit, 5d</span><br><span class="line">        耍                                   :2d</span><br><span class="line">        section 测试</span><br><span class="line">        功能测试                              :active, a1, after des3, 3d</span><br><span class="line">        压力测试                               :after a1  , 20h</span><br><span class="line">        测试报告                               : 48h</span><br></pre></td></tr></table></figure>
 <h4 id="更多语法参考：甘特图语法参考"><a href="#更多语法参考：甘特图语法参考" class="headerlink" title="更多语法参考：甘特图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#gant-diagrams">甘特图语法参考</a></h4><h3 id="10-Mermaid-流程图"><a href="#10-Mermaid-流程图" class="headerlink" title="10. Mermaid 流程图"></a>10. Mermaid 流程图</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A[Hard edge] --&gt;|Link text| B(Round edge)</span><br><span class="line">B --&gt; C&#123;Decision&#125;</span><br><span class="line">C --&gt;|One| D[Result one]</span><br><span class="line">C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
 <h4 id="更多语法参考：Mermaid-流程图语法参考"><a href="#更多语法参考：Mermaid-流程图语法参考" class="headerlink" title="更多语法参考：Mermaid 流程图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#flowcharts-basic-syntax">Mermaid 流程图语法参考</a></h4><h3 id="11-Mermaid-序列图"><a href="#11-Mermaid-序列图" class="headerlink" title="11. Mermaid 序列图"></a>11. Mermaid 序列图</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alice-&gt;John: Hello John, how are you?</span><br><span class="line">loop every minute</span><br><span class="line">    John--&gt;Alice: Great!</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <h4 id="更多语法参考：Mermaid-序列图语法参考"><a href="#更多语法参考：Mermaid-序列图语法参考" class="headerlink" title="更多语法参考：Mermaid 序列图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#sequence-diagrams">Mermaid 序列图语法参考</a></h4><h3 id="12-表格支持"><a href="#12-表格支持" class="headerlink" title="12. 表格支持"></a>12. 表格支持</h3><table>
@@ -879,6 +978,7 @@
 </ul>
 <p>[^footnote]: 这是一个 <em>注脚</em> 的 <strong>文本</strong>。</p>
 <p>[^footnote2]: 这是另一个 <em>注脚</em> 的 <strong>文本</strong>。</p>
+<p><a href="https://www.runoob.com/markdown/md-advance.html">mermaid参考</a></p>
 ]]></content>
       <categories>
         <category>markdown</category>
@@ -886,6 +986,45 @@
       <tags>
         <tag>markdown</tag>
         <tag>md</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>okhttp请求记录</title>
+    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<ul>
+<li><p>OkHttp请求</p>
+<ol>
+<li><p>创建Request对象</p>
+<p><code>Request对象的创建通过Builder模式创建</code> </p>
+<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
+</li>
+<li><p>创建OkHttpClient对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>异步方式http请求</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>OkHttp 拦截器</p>
+<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>okhttp</tag>
       </tags>
   </entry>
   <entry>
@@ -923,6 +1062,22 @@
       <tags>
         <tag>android</tag>
         <tag>xposed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通知栏使用备注</title>
+    <url>/2021/03/27/%E9%80%9A%E7%9F%A5%E6%A0%8F%E4%BD%BF%E7%94%A8%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h3 id="通知栏使用备注"><a href="#通知栏使用备注" class="headerlink" title="通知栏使用备注"></a>通知栏使用备注</h3><h4 id="RemoteViews"><a href="#RemoteViews" class="headerlink" title="RemoteViews"></a>RemoteViews</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一个能够被显示在其他进程中的View。该View的层次结构来自资源文件，并且此类提供了一下基础的操作来帮助修改View的内容。</span><br><span class="line">RemoteViews运行在另一个进程中， RemoteViews在开发中主要会作用于两个方面通知栏和桌面小部件。因为View是存在于另一个进程中的，</span><br><span class="line">所以我们不能够像直接操作View的那样来操作RemoteView，为了帮助我们操作RemoteView呢，Google为我们提供了 RemoteViews 类来帮助我们操作。提示，提供的资源文件中，只能包含部分ViewGroup和View,不支持扩展，不支持自定义View。支持的ViewGroup有：GridView</span><br><span class="line">AdapterViewFlipper、FrameLayout、GridLayout、LinearLayout、ListView、RelativeLayout、StackView、ViewFlipper。</span><br><span class="line">支持的View有：AnalogClock、Button、Chronometer、ImageButton、ImageView、ProgressBar、TextClock、TextView</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="PendingIntent"><a href="#PendingIntent" class="headerlink" title="PendingIntent"></a>PendingIntent</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PendingIntent 是一种特殊的 Intent， 作用和 Intent 一样是用于启动一个 Activity或者Service，或发送一条 Broadcast。</span><br><span class="line">通知响应用户动作便是用这个， 当对通知做出一个动作后，系统便会调用 PendingIntent，启动一个活动，服务或广播，这取决于你获取的是那种 PendingIntent。</span><br><span class="line"></span><br><span class="line">在 PendingIntent 中传入的 Context 销毁以后，PendingIntent 依旧有效，它一般使用在当 Context 销毁后需要执行 Intent的地方，一般不是用于立即执行的时候，比如在点击通知后唤醒一个 Activity。</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于启动 Activity </span><br><span class="line">PendingIntent.getActivity(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于发送 Broadcast</span><br><span class="line">PendingIntent.getBroadcast(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取用于启动服务</span><br><span class="line">PendingIntent.getService(Context context, int requestCode, Intent intent, int flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getActivities(Context context, int reqeustCode, Intent[] intents, int flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getForgroundService(Context, int reqeustCode, Intent intent, int flags)</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_CANCEL_CURRENT，如果当前已存在则取消当前的并返回一个新的 PendingIntent</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_UPDATE_CURRENT，如果已存在则更新之前的</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_NO_CREATE，如果已存在则返回当前存在的，否则返回 null</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_ONE_SHOT，表明这个 PendingIntent 只能用一次，触发一次后自动 cancel</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_IMMUTABLE，表明这个PendingIntent 不可变</span><br><span class="line"></span><br><span class="line">requestCode 和 flags 是相关联的，如果多次获取 PendingIntent 时 requestCode 相同，此时返回的结果就需要参考 flags 的值。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">- 创建Notification，配置参数</span><br><span class="line">- 获取NotificationManager，发送通知</span><br><span class="line">- Android <span class="number">8.0</span>之后，注意添加 NotificationChannel</span><br><span class="line">    <span class="comment">/***</span></span><br><span class="line"><span class="comment">     * 创建通知栏</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Notification <span class="title">createNotification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String channelId = CHANNEL_ID + <span class="string">&quot;&quot;</span>; <span class="comment">//channel id</span></span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123; <span class="comment">//8.0系统之后 增加 NotificationChannel</span></span><br><span class="line">            CharSequence channelName = getString(R.string.app_name);</span><br><span class="line">            <span class="keyword">int</span> importance = NotificationManager.IMPORTANCE_HIGH;</span><br><span class="line">            NotificationChannel mChannel = <span class="keyword">new</span> NotificationChannel(channelId, channelName, importance);</span><br><span class="line">            mNotificationManager.createNotificationChannel(mChannel);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == mRemoteViews) &#123; <span class="comment">//自定义通知栏view ,创建RemoteViews</span></span><br><span class="line">            mRemoteViews = <span class="keyword">new</span> RemoteViews(getPackageName(), R.layout.layout_notification_bar_tool);</span><br><span class="line">            initRemoteViews(mRemoteViews); <span class="comment">//初始化自定义view </span></span><br><span class="line">        &#125;</span><br><span class="line">        Notification notification = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>, channelId)</span><br><span class="line">                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)</span><br><span class="line"><span class="comment">//                .setOngoing(true) //前台显示</span></span><br><span class="line">                .setSmallIcon(R.drawable.ic_launcher)</span><br><span class="line">                .setContent(mRemoteViews)</span><br><span class="line">                .build();</span><br><span class="line">        </span><br><span class="line">        notification.when = System.currentTimeMillis();</span><br><span class="line">        IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter(ACTION_DK);</span><br><span class="line">        registerReceiver(mBroadcastReceiver, intentFilter);</span><br><span class="line">        <span class="keyword">return</span> notification;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/***</span></span><br><span class="line"><span class="comment">     * 发送通知栏</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">sendNotification</span><span class="params">()</span></span>&#123;</span><br><span class="line">        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</span><br><span class="line">        mNotification = createNotification(); <span class="comment">//上面方法，创建一个通知栏对象</span></span><br><span class="line">        mNotificationManager.notify(CHANNEL_ID ,mNotification);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Demo-实现类似360清理大师常驻通知栏"><a href="#Demo-实现类似360清理大师常驻通知栏" class="headerlink" title="Demo,实现类似360清理大师常驻通知栏"></a>Demo,实现类似360清理大师常驻通知栏</h4><p><img src="https://i.loli.net/2021/03/27/gmPSRtKFEifnzlL.png" alt="iShot2021-03-27上午10.25.23.png"></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>adb</tag>
       </tags>
   </entry>
 </search>

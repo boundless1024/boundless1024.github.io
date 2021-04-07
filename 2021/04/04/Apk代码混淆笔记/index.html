@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>apk代码混淆备注 | Hello</title><meta name="keywords" content="android,混淆"><meta name="author" content="Leo"><meta name="copyright" content="Leo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1. 增加反编译后代码阅读成本 2. 代码压缩 3. 代码优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="apk代码混淆备注">
+<meta property="og:url" content="http://boundless1024.com/2021/04/04/Apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Hello">
+<meta property="og:description" content="1. 增加反编译后代码阅读成本 2. 代码压缩 3. 代码优化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/04/07/iHgyZQeXYkmULwC.jpg">
+<meta property="article:published_time" content="2021-04-04T02:23:43.000Z">
+<meta property="article:modified_time" content="2021-04-07T10:07:21.175Z">
+<meta property="article:author" content="Leo">
+<meta property="article:tag" content="android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/04/07/iHgyZQeXYkmULwC.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://boundless1024.com/2021/04/04/Apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%AC%94%E8%AE%B0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-center"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-04-07 18:07:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/22/JnUYy8q6ZvfTcVs.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/04/07/iHgyZQeXYkmULwC.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Hello</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">apk代码混淆备注</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-04T02:23:43.000Z" title="发表于 2021-04-04 10:23:43">2021-04-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-04-07T10:07:21.175Z" title="更新于 2021-04-07 18:07:21">2021-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/android/">android</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h4 id="Apk代码混淆"><a href="#Apk代码混淆" class="headerlink" title="Apk代码混淆"></a>Apk代码混淆</h4><ul>
+<li><p>增加反编译后代码阅读成本</p>
+</li>
+<li><p>代码压缩</p>
+</li>
+<li><p>代码优化</p>
+<p><code>依赖 -&gt; main -&gt; 渠道 -&gt; 构建类型</code>  - 合并资源时顺序</p>
+</li>
+</ul>
+<h4 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在module项目中的build.gradle文件中配置minifyEnabled为true，混淆规则内容一般写在proguard-rules.pro</span><br><span class="line">一般proguard-rules.pro文件和build.gradle文件在同一目录</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/07/2Ulb7yq41I9NmE5.png" alt="iShot2021-04-07上午11.44.39.png"></p>
+<h4 id="混淆参数说明"><a href="#混淆参数说明" class="headerlink" title="混淆参数说明"></a>混淆参数说明</h4><table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-optimizationpasses</td>
+<td align="center">代码混淆的压缩比例</td>
+<td>值介于0-7</td>
+</tr>
+<tr>
+<td align="center">-dontusemixedcaseclassnames</td>
+<td align="center">混淆后类型都为小写</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-dontskipnonpubliclibraryclasses</td>
+<td align="center">不去忽略非公共的库类</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-dontoptimize</td>
+<td align="center">不优化输入的类文件</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-dontpreverify</td>
+<td align="center">不做预校验的操作</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-ignorewarnings</td>
+<td align="center">忽略警告</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-verbose</td>
+<td align="center">混淆时是否记录日志</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-keepattributes <em>Annotation</em></td>
+<td align="center">保护注解</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-printmapping proguardMapping.txt</td>
+<td align="center">生成原类名和混淆后的类名的映射文件</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">-optimizations !code/simplification/cast,!field/,!class/merging/</td>
+<td align="center">指定混淆是采用的算法</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="keep说明"><a href="#keep说明" class="headerlink" title="keep说明"></a>keep说明</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-keep</td>
+<td>防止类和成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepnames</td>
+<td>防止类和成员被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclassmembers</td>
+<td>防止成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclassmembernames</td>
+<td>防止成员被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclasseswithmembers</td>
+<td>防止拥有该成员的类和成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclasseswithmembernames</td>
+<td>防止拥有该成员的类和成员被重命名</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">keep 类修饰符 class 类名称 限定符 类&#123;&#125;</span><br><span class="line">-keep public class * extends androidx.**</span><br></pre></td></tr></table></figure>
+<ul>
+<li>类修饰符：<code>public</code>、<code>protected</code>、<code>private</code></li>
+<li><code>*</code> 匹配任意长度字符，但不含包名分隔符(.) </li>
+<li><code>**</code> 匹配任意长度字符，并且包含包名分隔符(.) </li>
+<li><code>extends</code> 可以指定类的基类 </li>
+<li><code>implement</code> 匹配实现了某接口的类 </li>
+<li><code>$</code> 内部类</li>
+</ul>
+<h4 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h4><p><code>-keep class com.xx.xx.**</code> 、<code>-keep class com.xx.xx.*</code></p>
+<ul>
+<li><code>**</code> 表示本包和所含子包下的类名都保持</li>
+<li><code>*</code> 表示只是保持该包下的类名</li>
+</ul>
+<p><code>-keep class com.example.bean.** &#123; *; &#125;</code></p>
+<ul>
+<li>表示本包和所含子包下的类名都保持，方法名和变量名也都保持</li>
+</ul>
+<p><code>-keep public class com.xx.Test &#123; *; &#125;</code> 不混淆com.xx.Test类<br><code>-keep class com.xx.** &#123;*;&#125;</code> 不混淆com.xx包下所有类<br><code>-keep public class * extends com.xx.Test &#123; *; &#125;</code>  不混淆某个类的子类<br><code>-keep public class **.*model*.** &#123; *; &#125; </code> 不混淆所有类名中包含了“model”的类及其成员</p>
+<p><code>-kepp class * implements com.xx.TestInterface &#123; *; &#125;</code> 不混淆TestInterface接口的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">xx</span>.<span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> ();</span><br><span class="line">&#125;</span><br><span class="line">不混淆Test的构造方法</span><br></pre></td></tr></table></figure>
+<p><code>-keepclassmembers class com.xx.Test &#123; public void test( java.lang.String )&#125;</code> 不混淆Test的特定的test方法</p>
+<p><code>-keep class com.xx.Test$* &#123; *; &#125;</code> 不混淆Test类的内部类</p>
+<h4 id="资源保持规则"><a href="#资源保持规则" class="headerlink" title="资源保持规则"></a>资源保持规则</h4><p><code>shrinkResources true</code> 未被使用的资源默认被移除</p>
+<p>在 <code>res/raw/</code> 路径下创建一个 xml 文件，例如 <code>keep.xml</code></p>
+<ul>
+<li><code>tools:keep</code> 定义哪些资源需要被保留（资源之间用“,”隔开） </li>
+<li><code>tools:discard</code> 定义哪些资源需要被移除（资源之间用“,”隔开） </li>
+<li><code>tools:shrinkMode</code> 开启严格模式</li>
+</ul>
+<h4 id="模板代码"><a href="#模板代码" class="headerlink" title="模板代码"></a>模板代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line">#############################################</span><br><span class="line">#</span><br><span class="line"># 对于一些基本指令的添加</span><br><span class="line">#</span><br><span class="line">#############################################</span><br><span class="line"># 代码混淆压缩比，在0~7之间，默认为5，一般不做修改</span><br><span class="line">-optimizationpasses <span class="number">5</span></span><br><span class="line"></span><br><span class="line"># 混合时不使用大小写混合，混合后的类名为小写</span><br><span class="line">-dontusemixedcaseclassnames</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类</span><br><span class="line">-dontskipnonpubliclibraryclasses</span><br><span class="line"></span><br><span class="line"># 这句话能够使我们的项目混淆后产生映射文件</span><br><span class="line"># 包含有类名-&gt;混淆后类名的映射关系</span><br><span class="line">-verbose</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类成员</span><br><span class="line">-dontskipnonpubliclibraryclassmembers</span><br><span class="line"></span><br><span class="line"># 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。</span><br><span class="line">-dontpreverify</span><br><span class="line"></span><br><span class="line"># 保留Annotation不混淆</span><br><span class="line">-keepattributes *Annotation*,InnerClasses</span><br><span class="line"></span><br><span class="line"># 避免混淆泛型</span><br><span class="line">-keepattributes Signature</span><br><span class="line"></span><br><span class="line"># 抛出异常时保留代码行号</span><br><span class="line">-keepattributes SourceFile,LineNumberTable</span><br><span class="line"></span><br><span class="line"># 指定混淆是采用的算法，后面的参数是一个过滤器</span><br><span class="line"># 这个过滤器是谷歌推荐的算法，一般不做更改</span><br><span class="line">-optimizations !code/simplification/cast,!field<span class="comment">/*,!class/merging/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Android开发中一些需要保留的公共部分</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们使用的四大组件，自定义的Application等等这些类不被混淆</span></span><br><span class="line"><span class="comment"># 因为这些子类都有可能被外部调用</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Activity</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Appliction</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Service</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.BroadcastReceiver</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.ContentProvider</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.backup.BackupAgentHelper</span></span><br><span class="line"><span class="comment">-keep public class * extends android.preference.Preference</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View</span></span><br><span class="line"><span class="comment">-keep public class com.android.vending.licensing.ILicensingService</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留support下的所有类及其内部类</span></span><br><span class="line"><span class="comment">-keep class android.support.** &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留继承的</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v4.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v7.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.annotation.**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留R下面的资源</span></span><br><span class="line"><span class="comment">-keep class **.R$* &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留本地native方法不被混淆</span></span><br><span class="line"><span class="comment">-keepclasseswithmembernames class * &#123;</span></span><br><span class="line"><span class="comment">    native &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留在Activity中的方法参数是view的方法，</span></span><br><span class="line"><span class="comment"># 这样以来我们在layout中写的onClick就不会被影响</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.app.Activity&#123;</span></span><br><span class="line"><span class="comment">    public void *(android.view.View);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留枚举类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers enum * &#123;</span></span><br><span class="line"><span class="comment">    public static **[] values();</span></span><br><span class="line"><span class="comment">    public static ** valueOf(java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们自定义控件（继承自View）不被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View&#123;</span></span><br><span class="line"><span class="comment">    *** get*();</span></span><br><span class="line"><span class="comment">    void set*(***);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Parcelable序列化类不被混淆</span></span><br><span class="line"><span class="comment">-keep class * implements android.os.Parcelable &#123;</span></span><br><span class="line"><span class="comment">    public static final android.os.Parcelable$Creator *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Serializable序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * implements java.io.Serializable &#123;</span></span><br><span class="line"><span class="comment">    static final long serialVersionUID;</span></span><br><span class="line"><span class="comment">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span></span><br><span class="line"><span class="comment">    !static !transient &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">    private void writeObject(java.io.ObjectOutputStream);</span></span><br><span class="line"><span class="comment">    private void readObject(java.io.ObjectInputStream);</span></span><br><span class="line"><span class="comment">    java.lang.Object writeReplace();</span></span><br><span class="line"><span class="comment">    java.lang.Object readResolve();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于带有回调函数的onXXEvent、**On*Listener的，不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * &#123;</span></span><br><span class="line"><span class="comment">    void *(**On*Event);</span></span><br><span class="line"><span class="comment">    void *(**On*Listener);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># webView处理，项目中没有使用到webView忽略即可</span></span><br><span class="line"><span class="comment">-keepclassmembers class fqcn.of.javascript.interface.for.webview &#123;</span></span><br><span class="line"><span class="comment">    public *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);</span></span><br><span class="line"><span class="comment">    public boolean *(android.webkit.WebView, java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.webView, jav.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://www.huaweicloud.com/articles/ae151e2f60923097cefc473bd131addf.html">参考</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.guardsquare.com/en/products/proguard">proguard官网</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.si-yee.com/2019/04/12/Android%E6%B7%B7%E6%B7%86-Proguard-%E8%AF%A6%E8%A7%A3/">参考2</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Leo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://boundless1024.com/2021/04/04/Apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%AC%94%E8%AE%B0/">http://boundless1024.com/2021/04/04/Apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://boundless1024.com" target="_blank">Hello</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/android/">android</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/04/07/iHgyZQeXYkmULwC.jpg" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/27/%E9%80%9A%E7%9F%A5%E6%A0%8F%E4%BD%BF%E7%94%A8%E5%A4%87%E6%B3%A8/"><img class="next-cover" src="https://i.loli.net/2021/03/26/hG43A8aP6JE7ent.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">通知栏使用备注</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/01/01/adb命令相关记录/" title="adb命令相关记录"><img class="cover" src="https://i.loli.net/2021/02/22/NV2rbpv1nsxIRHG.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-01</div><div class="title">adb命令相关记录</div></div></a></div><div><a href="/2021/01/01/android-library上传相关记录/" title="android library上传"><img class="cover" src="https://i.loli.net/2021/02/22/la3hQYKkoXdrRic.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-01</div><div class="title">android library上传</div></div></a></div><div><a href="/2021/03/14/android-跳转-settings界面-intent/" title="Android跳转到Setting界面Action"><img class="cover" src="https://i.loli.net/2021/03/18/UVQLXmFahgZ5sWY.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-14</div><div class="title">Android跳转到Setting界面Action</div></div></a></div><div><a href="/2021/01/11/android10-create-file/" title="android10创建文件失败"><img class="cover" src="https://i.loli.net/2021/02/27/621MqpdtYBTgEZQ.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-11</div><div class="title">android10创建文件失败</div></div></a></div><div><a href="/2021/01/02/cross-platform/" title="cross platform 个人认知"><img class="cover" src="https://i.loli.net/2021/02/25/OgMPRhAswIkWqUf.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-02</div><div class="title">cross platform 个人认知</div></div></a></div><div><a href="/2021/02/23/frida_test/" title="frida测试-修改vip"><img class="cover" src="https://i.loli.net/2021/02/24/F4NRyT35qfb7vHc.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-23</div><div class="title">frida测试-修改vip</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86"><span class="toc-number">1.</span> <span class="toc-text">Apk代码混淆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E5%90%AF%E6%B7%B7%E6%B7%86"><span class="toc-number">2.</span> <span class="toc-text">开启混淆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B7%E6%B7%86%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">混淆参数说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#keep%E8%AF%B4%E6%98%8E"><span class="toc-number">4.</span> <span class="toc-text">keep说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E8%A7%84%E5%88%99"><span class="toc-number">5.</span> <span class="toc-text">基本规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E4%BF%9D%E6%8C%81%E8%A7%84%E5%88%99"><span class="toc-number">6.</span> <span class="toc-text">资源保持规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81"><span class="toc-number">7.</span> <span class="toc-text">模板代码</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Leo</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="http://boundless1024.com">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', '', 'katex-wrap')
+  })
+})()</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script></div></body></html>
