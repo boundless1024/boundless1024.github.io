@@ -1,160 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>apk代码混淆备注</title>
-    <url>/2021/04/04/Apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h4 id="Apk代码混淆"><a href="#Apk代码混淆" class="headerlink" title="Apk代码混淆"></a>Apk代码混淆</h4><ul>
-<li><p>增加反编译后代码阅读成本</p>
-</li>
-<li><p>代码压缩</p>
-</li>
-<li><p>代码优化</p>
-<p><code>依赖 -&gt; main -&gt; 渠道 -&gt; 构建类型</code>  - 合并资源时顺序</p>
-</li>
-</ul>
-<h4 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在module项目中的build.gradle文件中配置minifyEnabled为true，混淆规则内容一般写在proguard-rules.pro</span><br><span class="line">一般proguard-rules.pro文件和build.gradle文件在同一目录</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/07/2Ulb7yq41I9NmE5.png" alt="iShot2021-04-07上午11.44.39.png"></p>
-<h4 id="混淆参数说明"><a href="#混淆参数说明" class="headerlink" title="混淆参数说明"></a>混淆参数说明</h4><table>
-<thead>
-<tr>
-<th align="center">参数</th>
-<th align="center">说明</th>
-<th>备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">-optimizationpasses</td>
-<td align="center">代码混淆的压缩比例</td>
-<td>值介于0-7</td>
-</tr>
-<tr>
-<td align="center">-dontusemixedcaseclassnames</td>
-<td align="center">混淆后类型都为小写</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">-dontskipnonpubliclibraryclasses</td>
-<td align="center">不去忽略非公共的库类</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">-dontoptimize</td>
-<td align="center">不优化输入的类文件</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">-dontpreverify</td>
-<td align="center">不做预校验的操作</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">-ignorewarnings</td>
-<td align="center">忽略警告</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">-verbose</td>
-<td align="center">混淆时是否记录日志</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">-keepattributes <em>Annotation</em></td>
-<td align="center">保护注解</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">-printmapping proguardMapping.txt</td>
-<td align="center">生成原类名和混淆后的类名的映射文件</td>
-<td></td>
-</tr>
-<tr>
-<td align="center">-optimizations !code/simplification/cast,!field/,!class/merging/</td>
-<td align="center">指定混淆是采用的算法</td>
-<td></td>
-</tr>
-</tbody></table>
-<h4 id="keep说明"><a href="#keep说明" class="headerlink" title="keep说明"></a>keep说明</h4><table>
-<thead>
-<tr>
-<th>参数</th>
-<th>说明</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>-keep</td>
-<td>防止类和成员被移除或者被重命名</td>
-<td></td>
-</tr>
-<tr>
-<td>-keepnames</td>
-<td>防止类和成员被重命名</td>
-<td></td>
-</tr>
-<tr>
-<td>-keepclassmembers</td>
-<td>防止成员被移除或者被重命名</td>
-<td></td>
-</tr>
-<tr>
-<td>-keepclassmembernames</td>
-<td>防止成员被重命名</td>
-<td></td>
-</tr>
-<tr>
-<td>-keepclasseswithmembers</td>
-<td>防止拥有该成员的类和成员被移除或者被重命名</td>
-<td></td>
-</tr>
-<tr>
-<td>-keepclasseswithmembernames</td>
-<td>防止拥有该成员的类和成员被重命名</td>
-<td></td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keep 类修饰符 class 类名称 限定符 类&#123;&#125;</span><br><span class="line">-keep public class * extends androidx.**</span><br></pre></td></tr></table></figure>
-<ul>
-<li>类修饰符：<code>public</code>、<code>protected</code>、<code>private</code></li>
-<li><code>*</code> 匹配任意长度字符，但不含包名分隔符(.) </li>
-<li><code>**</code> 匹配任意长度字符，并且包含包名分隔符(.) </li>
-<li><code>extends</code> 可以指定类的基类 </li>
-<li><code>implement</code> 匹配实现了某接口的类 </li>
-<li><code>$</code> 内部类</li>
-</ul>
-<h4 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h4><p><code>-keep class com.xx.xx.**</code> 、<code>-keep class com.xx.xx.*</code></p>
-<ul>
-<li><code>**</code> 表示本包和所含子包下的类名都保持</li>
-<li><code>*</code> 表示只是保持该包下的类名</li>
-</ul>
-<p><code>-keep class com.example.bean.** &#123; *; &#125;</code></p>
-<ul>
-<li>表示本包和所含子包下的类名都保持，方法名和变量名也都保持</li>
-</ul>
-<p><code>-keep public class com.xx.Test &#123; *; &#125;</code> 不混淆com.xx.Test类<br><code>-keep class com.xx.** &#123;*;&#125;</code> 不混淆com.xx包下所有类<br><code>-keep public class * extends com.xx.Test &#123; *; &#125;</code>  不混淆某个类的子类<br><code>-keep public class **.*model*.** &#123; *; &#125; </code> 不混淆所有类名中包含了“model”的类及其成员</p>
-<p><code>-kepp class * implements com.xx.TestInterface &#123; *; &#125;</code> 不混淆TestInterface接口的实现</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">xx</span>.<span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> ();</span><br><span class="line">&#125;</span><br><span class="line">不混淆Test的构造方法</span><br></pre></td></tr></table></figure>
-<p><code>-keepclassmembers class com.xx.Test &#123; public void test( java.lang.String )&#125;</code> 不混淆Test的特定的test方法</p>
-<p><code>-keep class com.xx.Test$* &#123; *; &#125;</code> 不混淆Test类的内部类</p>
-<h4 id="资源保持规则"><a href="#资源保持规则" class="headerlink" title="资源保持规则"></a>资源保持规则</h4><p><code>shrinkResources true</code> 未被使用的资源默认被移除</p>
-<p>在 <code>res/raw/</code> 路径下创建一个 xml 文件，例如 <code>keep.xml</code></p>
-<ul>
-<li><code>tools:keep</code> 定义哪些资源需要被保留（资源之间用“,”隔开） </li>
-<li><code>tools:discard</code> 定义哪些资源需要被移除（资源之间用“,”隔开） </li>
-<li><code>tools:shrinkMode</code> 开启严格模式</li>
-</ul>
-<h4 id="模板代码"><a href="#模板代码" class="headerlink" title="模板代码"></a>模板代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#############################################</span><br><span class="line">#</span><br><span class="line"># 对于一些基本指令的添加</span><br><span class="line">#</span><br><span class="line">#############################################</span><br><span class="line"># 代码混淆压缩比，在0~7之间，默认为5，一般不做修改</span><br><span class="line">-optimizationpasses <span class="number">5</span></span><br><span class="line"></span><br><span class="line"># 混合时不使用大小写混合，混合后的类名为小写</span><br><span class="line">-dontusemixedcaseclassnames</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类</span><br><span class="line">-dontskipnonpubliclibraryclasses</span><br><span class="line"></span><br><span class="line"># 这句话能够使我们的项目混淆后产生映射文件</span><br><span class="line"># 包含有类名-&gt;混淆后类名的映射关系</span><br><span class="line">-verbose</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类成员</span><br><span class="line">-dontskipnonpubliclibraryclassmembers</span><br><span class="line"></span><br><span class="line"># 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。</span><br><span class="line">-dontpreverify</span><br><span class="line"></span><br><span class="line"># 保留Annotation不混淆</span><br><span class="line">-keepattributes *Annotation*,InnerClasses</span><br><span class="line"></span><br><span class="line"># 避免混淆泛型</span><br><span class="line">-keepattributes Signature</span><br><span class="line"></span><br><span class="line"># 抛出异常时保留代码行号</span><br><span class="line">-keepattributes SourceFile,LineNumberTable</span><br><span class="line"></span><br><span class="line"># 指定混淆是采用的算法，后面的参数是一个过滤器</span><br><span class="line"># 这个过滤器是谷歌推荐的算法，一般不做更改</span><br><span class="line">-optimizations !code/simplification/cast,!field<span class="comment">/*,!class/merging/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Android开发中一些需要保留的公共部分</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们使用的四大组件，自定义的Application等等这些类不被混淆</span></span><br><span class="line"><span class="comment"># 因为这些子类都有可能被外部调用</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Activity</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Appliction</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Service</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.BroadcastReceiver</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.ContentProvider</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.backup.BackupAgentHelper</span></span><br><span class="line"><span class="comment">-keep public class * extends android.preference.Preference</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View</span></span><br><span class="line"><span class="comment">-keep public class com.android.vending.licensing.ILicensingService</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留support下的所有类及其内部类</span></span><br><span class="line"><span class="comment">-keep class android.support.** &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留继承的</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v4.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v7.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.annotation.**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留R下面的资源</span></span><br><span class="line"><span class="comment">-keep class **.R$* &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留本地native方法不被混淆</span></span><br><span class="line"><span class="comment">-keepclasseswithmembernames class * &#123;</span></span><br><span class="line"><span class="comment">    native &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留在Activity中的方法参数是view的方法，</span></span><br><span class="line"><span class="comment"># 这样以来我们在layout中写的onClick就不会被影响</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.app.Activity&#123;</span></span><br><span class="line"><span class="comment">    public void *(android.view.View);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留枚举类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers enum * &#123;</span></span><br><span class="line"><span class="comment">    public static **[] values();</span></span><br><span class="line"><span class="comment">    public static ** valueOf(java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们自定义控件（继承自View）不被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View&#123;</span></span><br><span class="line"><span class="comment">    *** get*();</span></span><br><span class="line"><span class="comment">    void set*(***);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Parcelable序列化类不被混淆</span></span><br><span class="line"><span class="comment">-keep class * implements android.os.Parcelable &#123;</span></span><br><span class="line"><span class="comment">    public static final android.os.Parcelable$Creator *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Serializable序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * implements java.io.Serializable &#123;</span></span><br><span class="line"><span class="comment">    static final long serialVersionUID;</span></span><br><span class="line"><span class="comment">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span></span><br><span class="line"><span class="comment">    !static !transient &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">    private void writeObject(java.io.ObjectOutputStream);</span></span><br><span class="line"><span class="comment">    private void readObject(java.io.ObjectInputStream);</span></span><br><span class="line"><span class="comment">    java.lang.Object writeReplace();</span></span><br><span class="line"><span class="comment">    java.lang.Object readResolve();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于带有回调函数的onXXEvent、**On*Listener的，不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * &#123;</span></span><br><span class="line"><span class="comment">    void *(**On*Event);</span></span><br><span class="line"><span class="comment">    void *(**On*Listener);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># webView处理，项目中没有使用到webView忽略即可</span></span><br><span class="line"><span class="comment">-keepclassmembers class fqcn.of.javascript.interface.for.webview &#123;</span></span><br><span class="line"><span class="comment">    public *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);</span></span><br><span class="line"><span class="comment">    public boolean *(android.webkit.WebView, java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.webView, jav.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://www.huaweicloud.com/articles/ae151e2f60923097cefc473bd131addf.html">参考</a></p>
-<p><a href="https://www.guardsquare.com/en/products/proguard">proguard官网</a></p>
-<p><a href="https://blog.si-yee.com/2019/04/12/Android%E6%B7%B7%E6%B7%86-Proguard-%E8%AF%A6%E8%A7%A3/">参考2</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>adb命令相关记录</title>
     <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
@@ -504,32 +350,173 @@
       </tags>
   </entry>
   <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+    <title>apk代码混淆备注</title>
+    <url>/2021/04/04/apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h4 id="Apk代码混淆"><a href="#Apk代码混淆" class="headerlink" title="Apk代码混淆"></a>Apk代码混淆</h4><ul>
+<li><p>增加反编译后代码阅读成本</p>
+</li>
+<li><p>代码压缩</p>
+</li>
+<li><p>代码优化</p>
+<p><code>依赖 -&gt; main -&gt; 渠道 -&gt; 构建类型</code>  - 合并资源时顺序</p>
+</li>
+</ul>
+<h4 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在module项目中的build.gradle文件中配置minifyEnabled为true，混淆规则内容一般写在proguard-rules.pro</span><br><span class="line">一般proguard-rules.pro文件和build.gradle文件在同一目录</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/07/2Ulb7yq41I9NmE5.png" alt="iShot2021-04-07上午11.44.39.png"></p>
+<h4 id="混淆参数说明"><a href="#混淆参数说明" class="headerlink" title="混淆参数说明"></a>混淆参数说明</h4><table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">说明</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-optimizationpasses</td>
+<td align="left">代码混淆的压缩比例</td>
+<td>值介于0-7</td>
+</tr>
+<tr>
+<td align="left">-dontusemixedcaseclassnames</td>
+<td align="left">混淆后类型都为小写</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-dontskipnonpubliclibraryclasses</td>
+<td align="left">不去忽略非公共的库类</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-dontoptimize</td>
+<td align="left">不优化输入的类文件</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-dontpreverify</td>
+<td align="left">不做预校验的操作</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-ignorewarnings</td>
+<td align="left">忽略警告</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-verbose</td>
+<td align="left">混淆时是否记录日志</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-keepattributes <em>Annotation</em></td>
+<td align="left">保护注解</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-printmapping proguardMapping.txt</td>
+<td align="left">生成原类名和混淆后的类名的映射文件</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-optimizations !code/simplification/cast,!field/,!class/merging/</td>
+<td align="left">指定混淆是采用的算法</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-obfuscationdictionary</td>
+<td align="left">指定外部模糊字典</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-classobfuscationdictionary</td>
+<td align="left">指定class模糊字典</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">-packageobfuscationdictionary</td>
+<td align="left">指定package模糊字典</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="keep说明"><a href="#keep说明" class="headerlink" title="keep说明"></a>keep说明</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th align="left">说明</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-keep</td>
+<td align="left">防止类和成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepnames</td>
+<td align="left">防止类和成员被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclassmembers</td>
+<td align="left">防止成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclassmembernames</td>
+<td align="left">防止成员被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclasseswithmembers</td>
+<td align="left">防止拥有该成员的类和成员被移除或者被重命名</td>
+<td></td>
+</tr>
+<tr>
+<td>-keepclasseswithmembernames</td>
+<td align="left">防止拥有该成员的类和成员被重命名</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keep 类修饰符 class 类名称 限定符 类&#123;&#125;</span><br><span class="line">-keep public class * extends androidx.**</span><br></pre></td></tr></table></figure>
+<ul>
+<li>类修饰符：<code>public</code>、<code>protected</code>、<code>private</code></li>
+<li><code>*</code> 匹配任意长度字符，但不含包名分隔符(.) </li>
+<li><code>**</code> 匹配任意长度字符，并且包含包名分隔符(.) </li>
+<li><code>extends</code> 可以指定类的基类 </li>
+<li><code>implement</code> 匹配实现了某接口的类 </li>
+<li><code>$</code> 内部类</li>
+</ul>
+<h4 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h4><p><code>-keep class com.xx.xx.**</code> 、<code>-keep class com.xx.xx.*</code></p>
+<ul>
+<li><code>**</code> 表示本包和所含子包下的类名都保持</li>
+<li><code>*</code> 表示只是保持该包下的类名</li>
+</ul>
+<p><code>-keep class com.example.bean.** &#123; *; &#125;</code></p>
+<ul>
+<li>表示本包和所含子包下的类名都保持，方法名和变量名也都保持</li>
+</ul>
+<p><code>-keep public class com.xx.Test &#123; *; &#125;</code> 不混淆com.xx.Test类<br><code>-keep class com.xx.** &#123;*;&#125;</code> 不混淆com.xx包下所有类<br><code>-keep public class * extends com.xx.Test &#123; *; &#125;</code>  不混淆某个类的子类<br><code>-keep public class **.*model*.** &#123; *; &#125; </code> 不混淆所有类名中包含了“model”的类及其成员</p>
+<p><code>-kepp class * implements com.xx.TestInterface &#123; *; &#125;</code> 不混淆TestInterface接口的实现</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">xx</span>.<span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> ();</span><br><span class="line">&#125;</span><br><span class="line">不混淆Test的构造方法</span><br></pre></td></tr></table></figure>
+<p><code>-keepclassmembers class com.xx.Test &#123; public void test( java.lang.String )&#125;</code> 不混淆Test的特定的test方法</p>
+<p><code>-keep class com.xx.Test$* &#123; *; &#125;</code> 不混淆Test类的内部类</p>
+<h4 id="资源保持规则"><a href="#资源保持规则" class="headerlink" title="资源保持规则"></a>资源保持规则</h4><p><code>shrinkResources true</code> 未被使用的资源默认被移除</p>
+<p>在 <code>res/raw/</code> 路径下创建一个 xml 文件，例如 <code>keep.xml</code></p>
+<ul>
+<li><code>tools:keep</code> 定义哪些资源需要被保留（资源之间用“,”隔开） </li>
+<li><code>tools:discard</code> 定义哪些资源需要被移除（资源之间用“,”隔开） </li>
+<li><code>tools:shrinkMode</code> 开启严格模式</li>
+</ul>
+<h4 id="模板代码"><a href="#模板代码" class="headerlink" title="模板代码"></a>模板代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#############################################</span><br><span class="line">#</span><br><span class="line"># 对于一些基本指令的添加</span><br><span class="line">#</span><br><span class="line">#############################################</span><br><span class="line"># 代码混淆压缩比，在0~7之间，默认为5，一般不做修改</span><br><span class="line">-optimizationpasses <span class="number">5</span></span><br><span class="line"></span><br><span class="line"># 混合时不使用大小写混合，混合后的类名为小写</span><br><span class="line">-dontusemixedcaseclassnames</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类</span><br><span class="line">-dontskipnonpubliclibraryclasses</span><br><span class="line"></span><br><span class="line"># 这句话能够使我们的项目混淆后产生映射文件</span><br><span class="line"># 包含有类名-&gt;混淆后类名的映射关系</span><br><span class="line">-verbose</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类成员</span><br><span class="line">-dontskipnonpubliclibraryclassmembers</span><br><span class="line"></span><br><span class="line"># 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。</span><br><span class="line">-dontpreverify</span><br><span class="line"></span><br><span class="line"># 保留Annotation不混淆</span><br><span class="line">-keepattributes *Annotation*,InnerClasses</span><br><span class="line"></span><br><span class="line"># 避免混淆泛型</span><br><span class="line">-keepattributes Signature</span><br><span class="line"></span><br><span class="line"># 抛出异常时保留代码行号</span><br><span class="line">-keepattributes SourceFile,LineNumberTable</span><br><span class="line"></span><br><span class="line"># 指定混淆是采用的算法，后面的参数是一个过滤器</span><br><span class="line"># 这个过滤器是谷歌推荐的算法，一般不做更改</span><br><span class="line">-optimizations !code/simplification/cast,!field<span class="comment">/*,!class/merging/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Android开发中一些需要保留的公共部分</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们使用的四大组件，自定义的Application等等这些类不被混淆</span></span><br><span class="line"><span class="comment"># 因为这些子类都有可能被外部调用</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Activity</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Appliction</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Service</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.BroadcastReceiver</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.ContentProvider</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.backup.BackupAgentHelper</span></span><br><span class="line"><span class="comment">-keep public class * extends android.preference.Preference</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View</span></span><br><span class="line"><span class="comment">-keep public class com.android.vending.licensing.ILicensingService</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留support下的所有类及其内部类</span></span><br><span class="line"><span class="comment">-keep class android.support.** &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留继承的</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v4.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v7.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.annotation.**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留R下面的资源</span></span><br><span class="line"><span class="comment">-keep class **.R$* &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留本地native方法不被混淆</span></span><br><span class="line"><span class="comment">-keepclasseswithmembernames class * &#123;</span></span><br><span class="line"><span class="comment">    native &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留在Activity中的方法参数是view的方法，</span></span><br><span class="line"><span class="comment"># 这样以来我们在layout中写的onClick就不会被影响</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.app.Activity&#123;</span></span><br><span class="line"><span class="comment">    public void *(android.view.View);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留枚举类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers enum * &#123;</span></span><br><span class="line"><span class="comment">    public static **[] values();</span></span><br><span class="line"><span class="comment">    public static ** valueOf(java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们自定义控件（继承自View）不被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View&#123;</span></span><br><span class="line"><span class="comment">    *** get*();</span></span><br><span class="line"><span class="comment">    void set*(***);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Parcelable序列化类不被混淆</span></span><br><span class="line"><span class="comment">-keep class * implements android.os.Parcelable &#123;</span></span><br><span class="line"><span class="comment">    public static final android.os.Parcelable$Creator *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Serializable序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * implements java.io.Serializable &#123;</span></span><br><span class="line"><span class="comment">    static final long serialVersionUID;</span></span><br><span class="line"><span class="comment">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span></span><br><span class="line"><span class="comment">    !static !transient &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">    private void writeObject(java.io.ObjectOutputStream);</span></span><br><span class="line"><span class="comment">    private void readObject(java.io.ObjectInputStream);</span></span><br><span class="line"><span class="comment">    java.lang.Object writeReplace();</span></span><br><span class="line"><span class="comment">    java.lang.Object readResolve();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于带有回调函数的onXXEvent、**On*Listener的，不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * &#123;</span></span><br><span class="line"><span class="comment">    void *(**On*Event);</span></span><br><span class="line"><span class="comment">    void *(**On*Listener);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># webView处理，项目中没有使用到webView忽略即可</span></span><br><span class="line"><span class="comment">-keepclassmembers class fqcn.of.javascript.interface.for.webview &#123;</span></span><br><span class="line"><span class="comment">    public *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);</span></span><br><span class="line"><span class="comment">    public boolean *(android.webkit.WebView, java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.webView, jav.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://www.huaweicloud.com/articles/ae151e2f60923097cefc473bd131addf.html">参考1</a></p>
+<p><a href="https://www.guardsquare.com/en/products/proguard">proguard官网</a></p>
+<p><a href="https://blog.si-yee.com/2019/04/12/Android%E6%B7%B7%E6%B7%86-Proguard-%E8%AF%A6%E8%A7%A3/">参考2</a></p>
+<p><a href="https://github.com/WrBug/FrenziedProguard">参考3</a></p>
 ]]></content>
       <categories>
-        <category>frida</category>
+        <category>android</category>
       </categories>
       <tags>
-        <tag>frida</tag>
+        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -620,6 +607,35 @@
         <tag>android</tag>
         <tag>flutter</tag>
         <tag>dcloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>frida</tag>
       </tags>
   </entry>
   <entry>
