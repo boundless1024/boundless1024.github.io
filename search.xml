@@ -351,7 +351,7 @@
   </entry>
   <entry>
     <title>apk代码混淆备注学习</title>
-    <url>/2021/04/04/apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E7%AC%94%E8%AE%B0/</url>
+    <url>/2021/04/04/apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h4 id="Apk代码混淆"><a href="#Apk代码混淆" class="headerlink" title="Apk代码混淆"></a>Apk代码混淆</h4><ul>
 <li><p>增加反编译后代码阅读成本</p>
 </li>
@@ -361,122 +361,151 @@
 <p><code>依赖 -&gt; main -&gt; 渠道 -&gt; 构建类型</code>  - 合并资源时顺序</p>
 </li>
 </ul>
-<h4 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">在module项目中的build.gradle文件中配置minifyEnabled为true，混淆规则内容一般写在proguard-rules.pro</span><br><span class="line">一般proguard-rules.pro文件和build.gradle文件在同一目录</span><br></pre></td></tr></table></figure>
+<h4 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h4><p>在module项目中的<code>build.gradle</code>文件中配置<code>minifyEnabled</code>为<code>true</code>，<br>混淆规则内容一般写在<code>proguard-rules.pro</code><br>一般<code>proguard-rules.pro</code>文件和<code>build.gradle</code>文件在同一目录</p>
 <p><img src="https://i.loli.net/2021/04/07/2Ulb7yq41I9NmE5.png" alt="iShot2021-04-07上午11.44.39.png"></p>
-<h4 id="混淆参数说明"><a href="#混淆参数说明" class="headerlink" title="混淆参数说明"></a>混淆参数说明</h4><table>
+<h4 id="开启混淆生成文件"><a href="#开启混淆生成文件" class="headerlink" title="开启混淆生成文件"></a>开启混淆生成文件</h4><p>生成的混淆文件信息  <code>app\build\outputs\mapping</code>  目录下,根据 <code>usage.txt</code> 文件查看是否有被误移除的代码。</p>
+<p><img src="https://i.loli.net/2021/04/09/5Zbel2OpHLhERGS.png" alt="iShot2021-04-09上午10.22.24.png"></p>
+<table>
 <thead>
 <tr>
-<th align="left">参数</th>
-<th align="left">说明</th>
-<th>备注</th>
+<th>文件</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">-optimizationpasses</td>
-<td align="left">代码混淆的压缩比例</td>
-<td>值介于0-7</td>
+<td>configuration.txt</td>
+<td>混淆信息</td>
 </tr>
 <tr>
-<td align="left">-dontusemixedcaseclassnames</td>
-<td align="left">混淆后类型都为小写</td>
-<td></td>
+<td>mapping.txt</td>
+<td>混淆前后类、方法、类成员等的对照表</td>
 </tr>
 <tr>
-<td align="left">-dontskipnonpubliclibraryclasses</td>
-<td align="left">不去忽略非公共的库类</td>
-<td></td>
+<td>seeds.txt</td>
+<td>没有被混淆的类和成员</td>
 </tr>
 <tr>
-<td align="left">-dontoptimize</td>
-<td align="left">不优化输入的类文件</td>
-<td></td>
+<td>usage.txt</td>
+<td>被移除的代码</td>
+</tr>
+</tbody></table>
+<h4 id="混淆参数说明"><a href="#混淆参数说明" class="headerlink" title="混淆参数说明"></a>混淆参数说明</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-optimizationpasses</td>
+<td>代码混淆的压缩比例</td>
 </tr>
 <tr>
-<td align="left">-dontpreverify</td>
-<td align="left">不做预校验的操作</td>
-<td></td>
+<td>-dontusemixedcaseclassnames</td>
+<td>混淆后类型都为小写</td>
 </tr>
 <tr>
-<td align="left">-ignorewarnings</td>
-<td align="left">忽略警告</td>
-<td></td>
+<td>-dontskipnonpubliclibraryclasses</td>
+<td>不去忽略非公共的库类</td>
 </tr>
 <tr>
-<td align="left">-verbose</td>
-<td align="left">混淆时是否记录日志</td>
-<td></td>
+<td>-dontoptimize</td>
+<td>不优化输入的类文件</td>
 </tr>
 <tr>
-<td align="left">-keepattributes <em>Annotation</em></td>
-<td align="left">保护注解</td>
-<td></td>
+<td>-dontpreverify</td>
+<td>不做预校验的操作</td>
 </tr>
 <tr>
-<td align="left">-printmapping proguardMapping.txt</td>
-<td align="left">生成原类名和混淆后的类名的映射文件</td>
-<td></td>
+<td>-ignorewarnings</td>
+<td>忽略警告</td>
 </tr>
 <tr>
-<td align="left">-optimizations !code/simplification/cast,!field/,!class/merging/</td>
-<td align="left">指定混淆是采用的算法</td>
-<td></td>
+<td>-verbose</td>
+<td>混淆时是否记录日志</td>
 </tr>
 <tr>
-<td align="left">-obfuscationdictionary</td>
-<td align="left">指定外部模糊字典</td>
-<td></td>
+<td>-dontnote</td>
+<td>指定不打印有关配置中可能的错误或遗漏的注释</td>
 </tr>
 <tr>
-<td align="left">-classobfuscationdictionary</td>
-<td align="left">指定class模糊字典</td>
-<td></td>
+<td>-dontwarn</td>
+<td>指定不警告有关未解决的引用和其他重要问题</td>
 </tr>
 <tr>
-<td align="left">-packageobfuscationdictionary</td>
-<td align="left">指定package模糊字典</td>
-<td></td>
+<td>-keepattributes <em>Annotation</em></td>
+<td>保护注解</td>
+</tr>
+<tr>
+<td>-printmapping proguardMapping.txt</td>
+<td>生成原类名和混淆后的类名的映射文件</td>
+</tr>
+<tr>
+<td>-optimizations !code/simplification/cast,!field/,!class/merging/</td>
+<td>指定混淆是采用的算法</td>
+</tr>
+<tr>
+<td>-keepparameternames</td>
+<td>指定保留所保存方法的参数名称和类型</td>
+</tr>
+<tr>
+<td>-keeppackagenames</td>
+<td>指定不混淆给定的软件包名称</td>
+</tr>
+<tr>
+<td>-flattenpackagehierarchy</td>
+<td>将所有重命名的软件包重新打包</td>
+</tr>
+<tr>
+<td>-repackageclasses</td>
+<td>将所有重命名的类文件重新打包</td>
+</tr>
+<tr>
+<td>-obfuscationdictionary</td>
+<td>指定外部模糊字典</td>
+</tr>
+<tr>
+<td>-classobfuscationdictionary</td>
+<td>指定class模糊字典</td>
+</tr>
+<tr>
+<td>-packageobfuscationdictionary</td>
+<td>指定package模糊字典</td>
 </tr>
 </tbody></table>
 <h4 id="keep说明"><a href="#keep说明" class="headerlink" title="keep说明"></a>keep说明</h4><table>
 <thead>
 <tr>
 <th>参数</th>
-<th align="left">说明</th>
-<th></th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>-keep</td>
-<td align="left">防止类和成员被移除或者被重命名</td>
-<td></td>
+<td>防止类和成员被移除或者被重命名</td>
 </tr>
 <tr>
 <td>-keepnames</td>
-<td align="left">防止类和成员被重命名</td>
-<td></td>
+<td>防止类和成员被重命名</td>
 </tr>
 <tr>
 <td>-keepclassmembers</td>
-<td align="left">防止成员被移除或者被重命名</td>
-<td></td>
+<td>防止成员被移除或者被重命名</td>
 </tr>
 <tr>
 <td>-keepclassmembernames</td>
-<td align="left">防止成员被重命名</td>
-<td></td>
+<td>防止成员被重命名</td>
 </tr>
 <tr>
 <td>-keepclasseswithmembers</td>
-<td align="left">防止拥有该成员的类和成员被移除或者被重命名</td>
-<td></td>
+<td>防止拥有该成员的类和成员被移除或者被重命名</td>
 </tr>
 <tr>
 <td>-keepclasseswithmembernames</td>
-<td align="left">防止拥有该成员的类和成员被重命名</td>
-<td></td>
+<td>防止拥有该成员的类和成员被重命名</td>
 </tr>
 </tbody></table>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">keep 类修饰符 class 类名称 限定符 类&#123;&#125;</span><br><span class="line">-keep public class * extends androidx.**</span><br></pre></td></tr></table></figure>
+<p>keep 类修饰符 class 类名称 限定符 类{ }   例如  <code>-keep public class * extends   androidx.**</code> </p>
 <ul>
 <li>类修饰符：<code>public</code>、<code>protected</code>、<code>private</code></li>
 <li><code>*</code> 匹配任意长度字符，但不含包名分隔符(.) </li>
@@ -496,8 +525,7 @@
 </ul>
 <p><code>-keep public class com.xx.Test &#123; *; &#125;</code> 不混淆com.xx.Test类<br><code>-keep class com.xx.** &#123;*;&#125;</code> 不混淆com.xx包下所有类<br><code>-keep public class * extends com.xx.Test &#123; *; &#125;</code>  不混淆某个类的子类<br><code>-keep public class **.*model*.** &#123; *; &#125; </code> 不混淆所有类名中包含了“model”的类及其成员</p>
 <p><code>-kepp class * implements com.xx.TestInterface &#123; *; &#125;</code> 不混淆TestInterface接口的实现</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-keepclassmembers <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">xx</span>.<span class="title">Test</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> ();</span><br><span class="line">&#125;</span><br><span class="line">不混淆Test的构造方法</span><br></pre></td></tr></table></figure>
-<p><code>-keepclassmembers class com.xx.Test &#123; public void test( java.lang.String )&#125;</code> 不混淆Test的特定的test方法</p>
+<p><code>-keepclassmembers class com.xx.Test &#123; public (); &#125;</code>  不混淆Test的构造方法<br><code>-keepclassmembers class com.xx.Test &#123; public void test( java.lang.String )&#125;</code>  不混淆Test的特定的test方法</p>
 <p><code>-keep class com.xx.Test$* &#123; *; &#125;</code> 不混淆Test类的内部类</p>
 <h4 id="资源保持规则"><a href="#资源保持规则" class="headerlink" title="资源保持规则"></a>资源保持规则</h4><p><code>shrinkResources true</code> 未被使用的资源默认被移除</p>
 <p>在 <code>res/raw/</code> 路径下创建一个 xml 文件，例如 <code>keep.xml</code></p>
@@ -507,10 +535,11 @@
 <li><code>tools:shrinkMode</code> 开启严格模式</li>
 </ul>
 <h4 id="模板代码"><a href="#模板代码" class="headerlink" title="模板代码"></a>模板代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#############################################</span><br><span class="line">#</span><br><span class="line"># 对于一些基本指令的添加</span><br><span class="line">#</span><br><span class="line">#############################################</span><br><span class="line"># 代码混淆压缩比，在0~7之间，默认为5，一般不做修改</span><br><span class="line">-optimizationpasses <span class="number">5</span></span><br><span class="line"></span><br><span class="line"># 混合时不使用大小写混合，混合后的类名为小写</span><br><span class="line">-dontusemixedcaseclassnames</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类</span><br><span class="line">-dontskipnonpubliclibraryclasses</span><br><span class="line"></span><br><span class="line"># 这句话能够使我们的项目混淆后产生映射文件</span><br><span class="line"># 包含有类名-&gt;混淆后类名的映射关系</span><br><span class="line">-verbose</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类成员</span><br><span class="line">-dontskipnonpubliclibraryclassmembers</span><br><span class="line"></span><br><span class="line"># 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。</span><br><span class="line">-dontpreverify</span><br><span class="line"></span><br><span class="line"># 保留Annotation不混淆</span><br><span class="line">-keepattributes *Annotation*,InnerClasses</span><br><span class="line"></span><br><span class="line"># 避免混淆泛型</span><br><span class="line">-keepattributes Signature</span><br><span class="line"></span><br><span class="line"># 抛出异常时保留代码行号</span><br><span class="line">-keepattributes SourceFile,LineNumberTable</span><br><span class="line"></span><br><span class="line"># 指定混淆是采用的算法，后面的参数是一个过滤器</span><br><span class="line"># 这个过滤器是谷歌推荐的算法，一般不做更改</span><br><span class="line">-optimizations !code/simplification/cast,!field<span class="comment">/*,!class/merging/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Android开发中一些需要保留的公共部分</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们使用的四大组件，自定义的Application等等这些类不被混淆</span></span><br><span class="line"><span class="comment"># 因为这些子类都有可能被外部调用</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Activity</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Appliction</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Service</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.BroadcastReceiver</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.ContentProvider</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.backup.BackupAgentHelper</span></span><br><span class="line"><span class="comment">-keep public class * extends android.preference.Preference</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View</span></span><br><span class="line"><span class="comment">-keep public class com.android.vending.licensing.ILicensingService</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留support下的所有类及其内部类</span></span><br><span class="line"><span class="comment">-keep class android.support.** &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留继承的</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v4.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v7.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.annotation.**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留R下面的资源</span></span><br><span class="line"><span class="comment">-keep class **.R$* &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留本地native方法不被混淆</span></span><br><span class="line"><span class="comment">-keepclasseswithmembernames class * &#123;</span></span><br><span class="line"><span class="comment">    native &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留在Activity中的方法参数是view的方法，</span></span><br><span class="line"><span class="comment"># 这样以来我们在layout中写的onClick就不会被影响</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.app.Activity&#123;</span></span><br><span class="line"><span class="comment">    public void *(android.view.View);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留枚举类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers enum * &#123;</span></span><br><span class="line"><span class="comment">    public static **[] values();</span></span><br><span class="line"><span class="comment">    public static ** valueOf(java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们自定义控件（继承自View）不被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View&#123;</span></span><br><span class="line"><span class="comment">    *** get*();</span></span><br><span class="line"><span class="comment">    void set*(***);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Parcelable序列化类不被混淆</span></span><br><span class="line"><span class="comment">-keep class * implements android.os.Parcelable &#123;</span></span><br><span class="line"><span class="comment">    public static final android.os.Parcelable$Creator *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Serializable序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * implements java.io.Serializable &#123;</span></span><br><span class="line"><span class="comment">    static final long serialVersionUID;</span></span><br><span class="line"><span class="comment">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span></span><br><span class="line"><span class="comment">    !static !transient &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">    private void writeObject(java.io.ObjectOutputStream);</span></span><br><span class="line"><span class="comment">    private void readObject(java.io.ObjectInputStream);</span></span><br><span class="line"><span class="comment">    java.lang.Object writeReplace();</span></span><br><span class="line"><span class="comment">    java.lang.Object readResolve();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于带有回调函数的onXXEvent、**On*Listener的，不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * &#123;</span></span><br><span class="line"><span class="comment">    void *(**On*Event);</span></span><br><span class="line"><span class="comment">    void *(**On*Listener);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># webView处理，项目中没有使用到webView忽略即可</span></span><br><span class="line"><span class="comment">-keepclassmembers class fqcn.of.javascript.interface.for.webview &#123;</span></span><br><span class="line"><span class="comment">    public *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);</span></span><br><span class="line"><span class="comment">    public boolean *(android.webkit.WebView, java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.webView, jav.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://www.huaweicloud.com/articles/ae151e2f60923097cefc473bd131addf.html">参考1</a></p>
 <p><a href="https://www.guardsquare.com/en/products/proguard">proguard官网</a></p>
+<p><a href="https://www.huaweicloud.com/articles/ae151e2f60923097cefc473bd131addf.html">参考1</a></p>
 <p><a href="https://blog.si-yee.com/2019/04/12/Android%E6%B7%B7%E6%B7%86-Proguard-%E8%AF%A6%E8%A7%A3/">参考2</a></p>
 <p><a href="https://github.com/WrBug/FrenziedProguard">参考3</a></p>
+<p><a href="http://blog.skymxc.com/2018/06/03/Proguard/">参考4</a></p>
 ]]></content>
       <categories>
         <category>android</category>
@@ -819,6 +848,389 @@
       </categories>
       <tags>
         <tag>other</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java 23中设计模式</title>
+    <url>/2018/08/27/java-design-pattern-mark/</url>
+    <content><![CDATA[<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><ul>
+<li><h5 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a><a href="#1">面向对象</a></h5><ol>
+<li><a href="#1.1">OO特征</a></li>
+<li><a href="#1.2">OO原则</a></li>
+<li><a href="#1.3">设计模式一览</a></li>
+</ol>
+</li>
+<li><h5 id="单例模式-Singleton"><a href="#单例模式-Singleton" class="headerlink" title="单例模式(Singleton)"></a><a href="#2">单例模式(Singleton)</a></h5><ol>
+<li><a href="#2.1">意图</a></li>
+<li><a href="#2.2">类图</a></li>
+<li><a href="#2.3">单例模式VS静态变量</a></li>
+</ol>
+</li>
+<li><h5 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a><a href="#3">策略模式</a></h5><ol>
+<li><a href="#3.1">定义</a></li>
+<li><a href="#3.2">类图</a></li>
+<li><a href="#3.3">应用：TimeInterpolator</a></li>
+</ol>
+</li>
+<li><h5 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a><a href="#4">观察者模式</a></h5><ol>
+<li><a href="#4.1">定义</a></li>
+<li><a href="#4.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="装饰者模式-Decorator"><a href="#装饰者模式-Decorator" class="headerlink" title="装饰者模式(Decorator)"></a><a href="#5">装饰者模式(Decorator)</a></h5><ol>
+<li><a href="#5.1">意图</a></li>
+<li><a href="#5.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="工厂方法模式-Factory-Method"><a href="#工厂方法模式-Factory-Method" class="headerlink" title="工厂方法模式(Factory Method)"></a><a href="#6">工厂方法模式(Factory Method)</a></h5><ol>
+<li><a href="#6.1">意图</a></li>
+<li><a href="#6.2">类图</a></li>
+<li><a href="#6.3">应用:ThreadFactory</a></li>
+</ol>
+</li>
+<li><h5 id="抽象工厂模式-Abstract-Factory"><a href="#抽象工厂模式-Abstract-Factory" class="headerlink" title="抽象工厂模式(Abstract Factory)"></a><a href="#7">抽象工厂模式(Abstract Factory)</a></h5><ol>
+<li><a href="#7.1">意图</a></li>
+<li><a href="#7.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a><a href="#8">命令模式</a></h5><ol>
+<li><a href="#8.1">定义</a></li>
+<li><a href="#8.2">类图</a></li>
+<li><a href="#8.3">应用:ThreadPoolExecutor</a></li>
+</ol>
+</li>
+<li><h5 id="适配器模式-Adapter"><a href="#适配器模式-Adapter" class="headerlink" title="适配器模式(Adapter)"></a><a href="#9">适配器模式(Adapter)</a></h5><ol>
+<li><a href="#9.1">意图</a></li>
+<li><a href="#9.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="外观模式-Facade"><a href="#外观模式-Facade" class="headerlink" title="外观模式(Facade)"></a><a href="#10">外观模式(Facade)</a></h5><ol>
+<li><a href="#10.1">意图</a></li>
+<li><a href="#10.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a><a href="#11">模板方法模式</a></h5><ol>
+<li><a href="#11.1">定义</a></li>
+<li><a href="#11.2">类图</a></li>
+<li><a href="#11.3">应用:View.draw</a></li>
+</ol>
+</li>
+<li><h5 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a><a href="#12">迭代器模式</a></h5><ol>
+<li><a href="#12.1">定义</a></li>
+<li><a href="#12.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="组合模式-Composite"><a href="#组合模式-Composite" class="headerlink" title="组合模式(Composite)"></a><a href="#13">组合模式(Composite)</a></h5><ol>
+<li><a href="#13.1">意图</a></li>
+<li><a href="#13.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a><a href="#14">状态模式</a></h5><ol>
+<li><a href="#14.1">定义</a></li>
+<li><a href="#14.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a><a href="#15">代理模式</a></h5><ol>
+<li><a href="#15.1">定义</a></li>
+<li><a href="#15.2">远程代理</a></li>
+<li><a href="#15.3">保护代理</a></li>
+<li><a href="#15.4">同步代理</a></li>
+</ol>
+</li>
+<li><h5 id="建造者模式-Builder"><a href="#建造者模式-Builder" class="headerlink" title="建造者模式(Builder)"></a><a href="#16">建造者模式(Builder)</a></h5><ol>
+<li><a href="#16.1">意图</a></li>
+<li><a href="#16.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="桥接模式-Bridge"><a href="#桥接模式-Bridge" class="headerlink" title="桥接模式(Bridge)"></a><a href="#17">桥接模式(Bridge)</a></h5><ol>
+<li><a href="#17.1">意图</a></li>
+<li><a href="#17.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="原型模式-Prototype"><a href="#原型模式-Prototype" class="headerlink" title="原型模式(Prototype)"></a><a href="#18">原型模式(Prototype)</a></h5><ol>
+<li><a href="#18.1">意图</a></li>
+<li><a href="#18.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="享元模式-Flyweight"><a href="#享元模式-Flyweight" class="headerlink" title="享元模式(Flyweight)"></a><a href="#19">享元模式(Flyweight)</a></h5><ol>
+<li><a href="#19.1">意图</a></li>
+<li><a href="#19.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="责任链模式-Chain-Of-Responsibility"><a href="#责任链模式-Chain-Of-Responsibility" class="headerlink" title="责任链模式(Chain Of Responsibility)"></a><a href="#20">责任链模式(Chain Of Responsibility)</a></h5><ol>
+<li><a href="#20.1">意图</a></li>
+<li><a href="#20.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="解释器模式-Interpreter"><a href="#解释器模式-Interpreter" class="headerlink" title="解释器模式(Interpreter)"></a><a href="#21">解释器模式(Interpreter)</a></h5><ol>
+<li><a href="#21.1">意图</a></li>
+<li><a href="#21.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="中介者模式-Mediator"><a href="#中介者模式-Mediator" class="headerlink" title="中介者模式(Mediator)"></a><a href="#22">中介者模式(Mediator)</a></h5><ol>
+<li><a href="#22.1">意图</a></li>
+<li><a href="#22.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="备忘录模式-Memento"><a href="#备忘录模式-Memento" class="headerlink" title="备忘录模式(Memento)"></a><a href="#23">备忘录模式(Memento)</a></h5><ol>
+<li><a href="#23.1">意图</a></li>
+<li><a href="#23.2">类图</a></li>
+</ol>
+</li>
+<li><h5 id="访问者模式-Visitor"><a href="#访问者模式-Visitor" class="headerlink" title="访问者模式(Visitor)"></a><a href="#24">访问者模式(Visitor)</a></h5><ol>
+<li><a href="#24.1">意图</a></li>
+<li><a href="#24.2">类图</a></li>
+</ol>
+</li>
+</ul>
+<h3 id="1">面向对象</h3>
+
+<h4 id="1.1">OO特征</h4>
+
+<img src="https://i.loli.net/2021/04/09/qU9fmkowN2du3Br.png" alt="image.png" style="zoom:67%;" />
+
+<h4 id="1.2">OO原则</h4>
+
+<img src="https://i.loli.net/2021/04/09/2MTKZonjUvzXSRi.png" alt="image.png" style="zoom:67%;" />
+
+<h4 id="1.3">设计模式一览</h4>
+
+<img src="https://i.loli.net/2021/04/09/GNTYxEz1SktXDO5.png" alt="image.png" style="zoom:67%;" />
+
+<h3 id="2">单例模式(Singleton)</h3>
+
+<h4 id="2.1">意图</h4> 
+
+<p>确保一个类只有一个实例，并提供一个全局访问点。</p>
+<h4 id="2.2">类图</h4> 
+
+<img src="https://i.loli.net/2021/04/09/DAtpxa1KSgUf3ZP.png" alt="image.png" style="zoom:67%;" />
+
+<h4 id="2.3">单例模式VS静态变量</h4>
+
+<img src="https://i.loli.net/2021/04/09/F4zimr9Hwl5IQxT.png" alt="image.png" style="zoom:67%;" />
+
+<h3 id="3">策略模式</h3>
+
+<h4 id="3.1">定义</h4> 
+
+<p>定义算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户。</p>
+<h4 id="3.2">类图</h4> 
+
+<p>以动画时间插值器为例：</p>
+<img src="https://i.loli.net/2021/04/09/mDSV4qJxNEt6ulj.png" alt="image.png" style="zoom:67%;" />
+
+<h4 id="3.3">应用:TimeInterpolator</h4>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValueAnimator</span> <span class="keyword">extends</span> <span class="title">Animator</span> <span class="keyword">implements</span> <span class="title">AnimationHandler</span>.<span class="title">AnimationFrameCallback</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The time interpolator to be used if none is set on the animation</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> TimeInterpolator sDefaultInterpolator =</span><br><span class="line">            <span class="keyword">new</span> AccelerateDecelerateInterpolator();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TimeInterpolator mInterpolator = sDefaultInterpolator;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setInterpolator</span><span class="params">(TimeInterpolator value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mInterpolator = value;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mInterpolator = <span class="keyword">new</span> LinearInterpolator();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">animateValue</span><span class="params">(<span class="keyword">float</span> fraction)</span> </span>&#123;</span><br><span class="line">        fraction = mInterpolator.getInterpolation(fraction);</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4">观察者模式</h3>
+
+<h4 id="4.1">定义</h4> 
+
+<p>定义对象间一对多的依赖，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。</p>
+<h4 id="4.2">类图</h4> 
+
+<p>以ListView用到的观察者模式为例：</p>
+<p><img src="https://i.loli.net/2021/04/09/PV5K8RoZQ3z4nWH.png" alt="image.png"></p>
+<h3 id="5">装饰者模式(Decorator)</h3>
+
+<h4 id="5.1">意图</h4> 
+
+<p>动态地将责任附加到对象上。想要扩展功能，装饰者提供有别于继承的另一种选择。</p>
+<h4 id="5.2">类图</h4> 
+
+<p>以InputStream为例：</p>
+<img src="../assets/images/edraw/uml_decorator.png?v=1" width="470">
+
+<h3 id="6">工厂方法模式(Factory Method)</h3>
+
+<h4 id="6.1">意图</h4> 
+
+<p>定义一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化延迟到子类。</p>
+<h4 id="6.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_factoryMethod.png?v=1" width="600">
+
+<h4 id="6.3">应用:ThreadFactory</h4> 
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ThreadFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">Thread <span class="title">newThread</span><span class="params">(Runnable r)</span></span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ThreadPoolExecutor</span><span class="params">(<span class="keyword">int</span> corePoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">int</span> maximumPoolSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                          <span class="keyword">long</span> keepAliveTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                          TimeUnit unit,</span></span></span><br><span class="line"><span class="function"><span class="params">                          BlockingQueue&lt;Runnable&gt; workQueue,</span></span></span><br><span class="line"><span class="function"><span class="params">                          ThreadFactory threadFactory,</span></span></span><br><span class="line"><span class="function"><span class="params">                          RejectedExecutionHandler handler)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">this</span>.threadFactory = threadFactory;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="7">抽象工厂模式(Abstract Factory)</h3>
+
+<h4 id="7.1">意图</h4> 
+
+<p>提供一个创建一系列相关或相互依赖的对象的接口，而无需指定它们具体的类。</p>
+<h4 id="7.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_abstractFactory.png?v=1" width="900">
+
+<h3 id="8">命令模式</h3>
+
+<h4 id="8.1">定义</h4> 
+
+<p>将请求封装成对象。</p>
+<h4 id="8.2">类图</h4> 
+
+<p>以线程池为例：</p>
+<img src="../assets/images/edraw/uml_command.png" width="770">
+
+<h4 id="8.3">应用:ThreadPoolExecutor</h4>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolExecutor</span> <span class="keyword">extends</span> <span class="title">AbstractExecutorService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="9">适配器模式(Adapter)</h3>
+
+<h4 id="9.1">意图</h4> 
+
+<p>将一个类的接口，转换成客户期望的另一个接口。适配器让原本不兼容的类可以合作无间。</p>
+<h4 id="9.2">类图</h4> 
+
+<p>以ListView为例：</p>
+<img src="../assets/images/edraw/uml_adapter.png?v=1" width="600">
+
+<h3 id="10">外观模式(Facade)</h3>
+
+<h4 id="10.1">意图</h4> 
+
+<p>为子系统提供一个接口，便于它的使用。</p>
+<h4 id="10.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_facade.png?v=1" width="660">
+
+<h3 id="11">模板方法模式</h3>
+
+<h4 id="11.1">定义</h4> 
+
+<p>在一个方法中定义一个算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以在不改变算法结构的情况下，重新定义算法中的某些步骤。</p>
+<h4 id="11.2">类图</h4> 
+
+<p>以View的绘制流程为例：</p>
+<img src="../assets/images/edraw/uml_templateMethod.png" width="680">
+
+<h4 id="11.3">应用:View.draw</h4>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// draw the background, if needed</span></span><br><span class="line">    drawBackground(canvas);</span><br><span class="line">    <span class="comment">// draw the content</span></span><br><span class="line">    <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</span><br><span class="line">    <span class="comment">// draw the children</span></span><br><span class="line">    dispatchDraw(canvas);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="12">迭代器模式</h3>
+
+<h4 id="12.1">定义</h4> 
+
+<p>封装遍历，提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露其内部的表示。</p>
+<h4 id="12.2">类图</h4> 
+
+<p>以List为例：</p>
+<img src="../assets/images/edraw/uml_iterator.png" width="630">
+
+<h3 id="13">组合模式(Composite)</h3>
+
+<h4 id="13.1">意图</h4> 
+
+<p>让客户以一致的方式处理个别对象以及对象组合。</p>
+<h4 id="13.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_composite.png?v=1" width="550">
+
+<h3 id="14">状态模式</h3>
+
+<h4 id="14.1">定义</h4> 
+
+<p>运行对象在内部状态改变时改变它的行为，对象看起来好像修改了它的类。</p>
+<h4 id="14.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_state.png?v=1" width="500">
+
+<h3 id="15">代理模式</h3>
+
+<h4 id="15.1">定义</h4>
+
+<p>为另一个对象提供一个替身或者占位符以控制对这个对象的访问。</p>
+<h4 id="15.2">远程代理</h4>
+
+<img src="../assets/images/edraw/uml_aidl.png?v=1" width="850">
+
+<h4 id="15.3">保护代理</h4>
+
+<img src="../assets/images/edraw/uml_protect_proxy.png" width="590">
+
+<h4 id="15.4">同步代理</h4>
+
+<img src="../assets/images/edraw/uml_sync_proxy.png" width="600">
+
+<h3 id="16">建造者模式(Builder)</h3>
+
+<h4 id="16.1">意图</h4> 
+
+<p>将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+<h4 id="16.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_builder.png" width="750">
+
+<h3 id="17">桥接模式(Bridge)</h3>
+
+<h4 id="17.1">意图</h4> 
+
+<p>将抽象部分与它的实现部分分离，使它们都可以独立地变化。</p>
+<h4 id="17.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_bridge.png" width="880">
+
+<h3 id="18">原型模式(Prototype)</h3>
+
+<h4 id="18.1">意图</h4> 
+
+<p>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
+<h4 id="18.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_prototype.png" width="600">
+
+<h3 id="19">享元模式(Flyweight)</h3>
+
+<h4 id="19.1">意图</h4> 
+
+<p>利用共享技术有效地支持大量细粒度对象。</p>
+<h4 id="19.2">类图</h4> 
+
+<h3 id="20">责任链模式(Chain Of Responsibility)</h3>
+
+<h4 id="20.1">意图</h4> 
+
+<p>使多个对象都有机会处理请求，从而避免请求的发送者和接收者直接的耦合关系。</p>
+<h4 id="20.2">类图</h4> 
+
+<img src="../assets/images/edraw/uml_responsibility.png" width="500">
+
+<h3 id="21">解释器模式(Interpreter)</h3>
+
+<h4 id="21.1">意图</h4> 
+
+<p>给定一个语言，定义它的文法的一种表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子。</p>
+<h4 id="21.2">类图</h4> 
+
+<h3 id="22">中介者模式(Mediator)</h3>
+
+<h4 id="22.1">意图</h4> 
+
+<p>用一个中介来封装一系列的对象交互。中介者使各个对象不需要显示地相互引用，从而使其耦合松散，而且可以独立地改变他们之间的交互。</p>
+<h4 id="22.2">类图</h4> 
+
+<h3 id="23">备忘录模式(Memento)</h3>
+
+<h4 id="23.1">意图</h4> 
+
+<p>在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样以后就可以将该对象恢复到原先保存的状态。</p>
+<h4 id="23.2">类图</h4> 
+
+<h3 id="24">访问者模式(Visitor)</h3>
+
+<h4 id="24.1">意图</h4> 
+
+<p>表示一个作用于某对象结构中的各元素的操作。它使你可以在不改变各元素的类的前提下定义作用于这些元素的新操作。</p>
+<h4 id="24.2">类图</h4> ]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
