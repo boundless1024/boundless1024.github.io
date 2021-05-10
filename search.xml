@@ -846,23 +846,6 @@
       </tags>
   </entry>
   <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>frida安装</title>
     <url>/2021/01/02/frida-install/</url>
     <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
@@ -1014,6 +997,45 @@
       </categories>
       <tags>
         <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello Hexo</title>
+    <url>/2020/12/12/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<div class="justified-gallery"><p><img src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg"><br><img src="https://i.loli.net/2019/12/25/ryLVePaqkYm4TEK.jpg"><br><img src="https://i.loli.net/2019/12/25/gEy5Zc1Ai6VuO4N.jpg"><br><img src="https://i.loli.net/2019/12/25/d6QHbytlSYO4FBG.jpg"><br><img src="https://i.loli.net/2019/12/25/6nepIJ1xTgufatZ.jpg"><br><img src="https://i.loli.net/2019/12/25/E7Jvr4eIPwUNmzq.jpg"><br><img src="https://i.loli.net/2019/12/25/mh19anwBSWIkGlH.jpg"><br><img src="https://i.loli.net/2019/12/25/2tu9JC8ewpBFagv.jpg"></p>
+          </div>
+]]></content>
+      <categories>
+        <category>other</category>
+      </categories>
+      <tags>
+        <tag>other</tag>
       </tags>
   </entry>
   <entry>
@@ -1518,25 +1540,101 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello Hexo</title>
-    <url>/2020/12/12/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<div class="justified-gallery"><p><img src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg"><br><img src="https://i.loli.net/2019/12/25/ryLVePaqkYm4TEK.jpg"><br><img src="https://i.loli.net/2019/12/25/gEy5Zc1Ai6VuO4N.jpg"><br><img src="https://i.loli.net/2019/12/25/d6QHbytlSYO4FBG.jpg"><br><img src="https://i.loli.net/2019/12/25/6nepIJ1xTgufatZ.jpg"><br><img src="https://i.loli.net/2019/12/25/E7Jvr4eIPwUNmzq.jpg"><br><img src="https://i.loli.net/2019/12/25/mh19anwBSWIkGlH.jpg"><br><img src="https://i.loli.net/2019/12/25/2tu9JC8ewpBFagv.jpg"></p>
-          </div>
+    <title>okhttp请求记录</title>
+    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<ul>
+<li><p>OkHttp请求</p>
+<ol>
+<li><p>创建Request对象</p>
+<p><code>Request对象的创建通过Builder模式创建</code> </p>
+<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
+</li>
+<li><p>创建OkHttpClient对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>异步方式http请求</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>OkHttp 拦截器</p>
+<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>other</category>
+        <category>android</category>
       </categories>
       <tags>
-        <tag>other</tag>
+        <tag>android</tag>
+        <tag>okhttp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>maven-gradle插件备注记录</title>
+    <url>/2021/04/21/maven-gradle%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<h5 id="电脑安装maven"><a href="#电脑安装maven" class="headerlink" title="电脑安装maven"></a>电脑安装maven</h5><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">从 Maven 官方地址：http://maven.apache.org/download.cgi 下载最新版的zip包，解压缩后配置环境变量</span><br></pre></td></tr></table></figure>
+<h5 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile <span class="comment">#编辑.bash_profile文件添加配置</span></span><br><span class="line"><span class="built_in">export</span> M2_HOME=/Users/xxx/soft/apache-maven-3.6.3  <span class="comment">#本机maven地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$M2_HOME</span>/bin</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile  <span class="comment">#同步.bash_profile文件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="验证配置"><a href="#验证配置" class="headerlink" title="验证配置"></a>验证配置</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">mvn -version </span><br><span class="line">Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f) <span class="comment">#表示生效</span></span><br><span class="line">Maven home: /Users/xxx/soft/apache-maven-3.6.3  <span class="comment">#maven目录</span></span><br><span class="line">Java version: 1.8.0_251, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">&quot;mac os x&quot;</span>, version: <span class="string">&quot;10.15.7&quot;</span>, arch: <span class="string">&quot;x86_64&quot;</span>, family: <span class="string">&quot;mac&quot;</span></span><br></pre></td></tr></table></figure>
+<h5 id="maven仓库"><a href="#maven仓库" class="headerlink" title="maven仓库"></a>maven仓库</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">1. 本地仓库 <span class="comment"># 默认在用户的目录下.m2/repository/的仓库目录。</span></span><br><span class="line">2. 远程仓库 <span class="comment"># mavenCentral 和 jcenter 或者 内网服务器的私有仓库</span></span><br></pre></td></tr></table></figure>
+<h5 id="物料存储路径对应"><a href="#物料存储路径对应" class="headerlink" title="物料存储路径对应"></a>物料存储路径对应</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">groupId # 唯一标识符 例如 com.xxx.helper</span><br><span class="line">artifactId # 项目名称  log</span><br><span class="line">version # 版本 1.1.1</span><br><span class="line">implementation &#x27;com.xxx.helper:log:1.1.1&#x27; # 引入时对应</span><br></pre></td></tr></table></figure>
+<h5 id="发布本地库流程"><a href="#发布本地库流程" class="headerlink" title="发布本地库流程"></a>发布本地库流程</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">创建一个Android 库项目 或者 创建一个gradle插件<span class="keyword">module</span>，在build.gradle文件中配置maven信息</span><br><span class="line">apply plugin: <span class="string">&#x27;maven&#x27;</span> <span class="comment">//引入maven 插件</span></span><br><span class="line">ext &#123;</span><br><span class="line">    PUBLISH_VERSION =<span class="string">&quot;1.1.1-beta&quot;</span> <span class="comment">//定义版本信息</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// maven配置</span></span><br><span class="line">uploadArchives &#123;</span><br><span class="line">    repositories.mavenDeployer &#123;</span><br><span class="line">        repository(url: uri(<span class="string">&#x27;../repos&#x27;</span>)) <span class="comment">//自定义本地maven仓库地址</span></span><br><span class="line">        pom.project &#123;</span><br><span class="line">            groupId <span class="string">&#x27;com.xxx.helper&#x27;</span> <span class="comment">//唯一标识</span></span><br><span class="line">            artifactId <span class="string">&#x27;log&#x27;</span> <span class="comment">//名称</span></span><br><span class="line">            version project.PUBLISH_VERSION <span class="comment">//版本</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="发布到本地仓库命令"><a href="#发布到本地仓库命令" class="headerlink" title="发布到本地仓库命令"></a>发布到本地仓库命令</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew uploadArchives</span><br></pre></td></tr></table></figure>
+<h5 id="发布远程仓库流程"><a href="#发布远程仓库流程" class="headerlink" title="发布远程仓库流程"></a>发布远程仓库流程</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">创建一个Android 库项目 或者 创建一个gradle插件<span class="keyword">module</span>，在build.gradle文件中配置maven信息</span><br><span class="line">  </span><br><span class="line"><span class="comment">//https://github.com/novoda/bintray-release</span></span><br><span class="line"><span class="comment">//apply plugin: &#x27;com.novoda.bintray-release&#x27;  //gradle版本限制，6.+版本不支持</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">//https://github.com/panpf/bintray-publish</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.github.panpf.bintray-publish&#x27;</span> <span class="comment">//6.+以上版本使用 </span></span><br><span class="line"></span><br><span class="line">ext &#123;</span><br><span class="line">    PUBLISH_VERSION = <span class="string">&quot;1.1.1&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">&#x27;xxx&#x27;</span>             <span class="comment">// Binary用户名</span></span><br><span class="line">    repoName = <span class="string">&#x27;xxx&#x27;</span>          <span class="comment">// Binary上的刚才新建的仓库名（Repository）</span></span><br><span class="line">    groupId = <span class="string">&#x27;com.xxx.helper&#x27;</span>        <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的包名a</span></span><br><span class="line">    artifactId = <span class="string">&#x27;log&#x27;</span>        <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的项目名b</span></span><br><span class="line">    publishVersion = project.PUBLISH_VERSION          <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的版本号c</span></span><br><span class="line">    desc = <span class="string">&#x27;xxx插件&#x27;</span>            <span class="comment">// 对该开源组件的说明</span></span><br><span class="line">    website = <span class="string">&#x27;https://github.com/xxx/log&#x27;</span>  <span class="comment">// VCS地址，即填写项目上传的Github地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="发布到远程仓库命令"><a href="#发布到远程仓库命令" class="headerlink" title="发布到远程仓库命令"></a>发布到远程仓库命令</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">./gradlew clean build bintrayUpload -PbintrayUser=xxx -PbintrayKey=xxxx -PdryRun=<span class="keyword">false</span> </span><br><span class="line"> -x javadocRelease <span class="comment">// -x 跳过命令</span></span><br></pre></td></tr></table></figure>
+<h5 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在子项目下的build.gradle文件中配置编译脚本信息，也可以在根目录下的build.gradle文件配置</span></span><br><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenLocal()</span><br><span class="line">        google()</span><br><span class="line">        mavenCentral()</span><br><span class="line">        jcenter()</span><br><span class="line"><span class="comment">//        maven &#123;</span></span><br><span class="line"><span class="comment">//            url uri(&#x27;../repos&#x27;) //本地Maven仓库地址</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">         classpath <span class="string">&#x27;com.xxx.helper:log:1.1.1&#x27;</span> <span class="comment">//插件依赖</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="引入插件信息"><a href="#引入插件信息" class="headerlink" title="引入插件信息"></a>引入插件信息</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.application&#x27;</span> <span class="comment">//android项目</span></span><br><span class="line">apply plugin: <span class="string">&#x27;kotlin-android&#x27;</span> <span class="comment">//kotlin</span></span><br><span class="line">apply plugin: <span class="string">&#x27;plugin.log&#x27;</span> <span class="comment">//引入自定义插件</span></span><br></pre></td></tr></table></figure>
+<h5 id="插件调试"><a href="#插件调试" class="headerlink" title="插件调试"></a>插件调试</h5><ol>
+<li><p>创建远程调试配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Android Studio -&gt; Run -&gt; Edit Configurations -&gt; 如下图</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/22/m1E9aWPAplJMoOC.png" alt="iShot2021-04-22上午11.45.31.png"></p>
+</li>
+<li><p>复制命令行参数信息</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=<span class="number">5006</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在引入插件的项目中创建一个Run Configurations ，配置信息如下</p>
+<p><img src="https://i.loli.net/2021/04/22/fLEpqT7vXRo6KC5.png" alt="iShot2021-04-22上午11.51.01.png"><br><img src="https://i.loli.net/2021/04/22/JIQvn8LUCWatlPH.png" alt="iShot2021-04-22上午11.52.59.png"></p>
+</li>
+<li><p>以debug的形式运行Remote配置，然后再运行【:app:build】,如果没有问题的话就可以调试</p>
+<p><img src="https://i.loli.net/2021/04/22/UjoRI6sbyW5r1AJ.png" alt="iShot2021-04-22上午11.57.43.png"></p>
+</li>
+</ol>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.jianshu.com/p/cff4684803f3">参考1</a></p>
+<p><a href="https://juejin.cn/post/6948626628637360135">参考2</a></p>
+<p><a href="https://mwping.github.io/android/gradle-plugin.html">参考3</a></p>
+<p><a href="https://www.milovetingting.cn/2020/02/25/Android/%E5%9C%A8Android%20Studio%E4%B8%AD%E8%B0%83%E8%AF%95Gradle%E6%8F%92%E4%BB%B6/#%E8%B0%83%E8%AF%95">gradle插件调试参考</a></p>
+<p><a href="https://blog.csdn.net/dbs1215/article/details/108569013?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242">gradle插件调试2参考</a> </p>
+<p><a href="https://doc.yonyoucloud.com/doc/wiki/project/GradleUserGuide-Wiki/dependency_management_basics/publishing_artifacts.html">gradle-指南</a></p>
+]]></content>
+      <categories>
+        <category>gradle</category>
+      </categories>
+      <tags>
+        <tag>gradle</tag>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RecyclerView嵌套滑动</title>
+    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
+<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
+<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>recyclerview</tag>
       </tags>
   </entry>
   <entry>
@@ -1720,104 +1818,6 @@
       <tags>
         <tag>markdown</tag>
         <tag>md</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>maven-gradle插件备注记录</title>
-    <url>/2021/04/21/maven-gradle%E6%8F%92%E4%BB%B6/</url>
-    <content><![CDATA[<h5 id="电脑安装maven"><a href="#电脑安装maven" class="headerlink" title="电脑安装maven"></a>电脑安装maven</h5><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">从 Maven 官方地址：http://maven.apache.org/download.cgi 下载最新版的zip包，解压缩后配置环境变量</span><br></pre></td></tr></table></figure>
-<h5 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile <span class="comment">#编辑.bash_profile文件添加配置</span></span><br><span class="line"><span class="built_in">export</span> M2_HOME=/Users/xxx/soft/apache-maven-3.6.3  <span class="comment">#本机maven地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$M2_HOME</span>/bin</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile  <span class="comment">#同步.bash_profile文件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="验证配置"><a href="#验证配置" class="headerlink" title="验证配置"></a>验证配置</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">mvn -version </span><br><span class="line">Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f) <span class="comment">#表示生效</span></span><br><span class="line">Maven home: /Users/xxx/soft/apache-maven-3.6.3  <span class="comment">#maven目录</span></span><br><span class="line">Java version: 1.8.0_251, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">&quot;mac os x&quot;</span>, version: <span class="string">&quot;10.15.7&quot;</span>, arch: <span class="string">&quot;x86_64&quot;</span>, family: <span class="string">&quot;mac&quot;</span></span><br></pre></td></tr></table></figure>
-<h5 id="maven仓库"><a href="#maven仓库" class="headerlink" title="maven仓库"></a>maven仓库</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">1. 本地仓库 <span class="comment"># 默认在用户的目录下.m2/repository/的仓库目录。</span></span><br><span class="line">2. 远程仓库 <span class="comment"># mavenCentral 和 jcenter 或者 内网服务器的私有仓库</span></span><br></pre></td></tr></table></figure>
-<h5 id="物料存储路径对应"><a href="#物料存储路径对应" class="headerlink" title="物料存储路径对应"></a>物料存储路径对应</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">groupId # 唯一标识符 例如 com.xxx.helper</span><br><span class="line">artifactId # 项目名称  log</span><br><span class="line">version # 版本 1.1.1</span><br><span class="line">implementation &#x27;com.xxx.helper:log:1.1.1&#x27; # 引入时对应</span><br></pre></td></tr></table></figure>
-<h5 id="发布本地库流程"><a href="#发布本地库流程" class="headerlink" title="发布本地库流程"></a>发布本地库流程</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">创建一个Android 库项目 或者 创建一个gradle插件<span class="keyword">module</span>，在build.gradle文件中配置maven信息</span><br><span class="line">apply plugin: <span class="string">&#x27;maven&#x27;</span> <span class="comment">//引入maven 插件</span></span><br><span class="line">ext &#123;</span><br><span class="line">    PUBLISH_VERSION =<span class="string">&quot;1.1.1-beta&quot;</span> <span class="comment">//定义版本信息</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// maven配置</span></span><br><span class="line">uploadArchives &#123;</span><br><span class="line">    repositories.mavenDeployer &#123;</span><br><span class="line">        repository(url: uri(<span class="string">&#x27;../repos&#x27;</span>)) <span class="comment">//自定义本地maven仓库地址</span></span><br><span class="line">        pom.project &#123;</span><br><span class="line">            groupId <span class="string">&#x27;com.xxx.helper&#x27;</span> <span class="comment">//唯一标识</span></span><br><span class="line">            artifactId <span class="string">&#x27;log&#x27;</span> <span class="comment">//名称</span></span><br><span class="line">            version project.PUBLISH_VERSION <span class="comment">//版本</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="发布到本地仓库命令"><a href="#发布到本地仓库命令" class="headerlink" title="发布到本地仓库命令"></a>发布到本地仓库命令</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew uploadArchives</span><br></pre></td></tr></table></figure>
-<h5 id="发布远程仓库流程"><a href="#发布远程仓库流程" class="headerlink" title="发布远程仓库流程"></a>发布远程仓库流程</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">创建一个Android 库项目 或者 创建一个gradle插件<span class="keyword">module</span>，在build.gradle文件中配置maven信息</span><br><span class="line">  </span><br><span class="line"><span class="comment">//https://github.com/novoda/bintray-release</span></span><br><span class="line"><span class="comment">//apply plugin: &#x27;com.novoda.bintray-release&#x27;  //gradle版本限制，6.+版本不支持</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">//https://github.com/panpf/bintray-publish</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.github.panpf.bintray-publish&#x27;</span> <span class="comment">//6.+以上版本使用 </span></span><br><span class="line"></span><br><span class="line">ext &#123;</span><br><span class="line">    PUBLISH_VERSION = <span class="string">&quot;1.1.1&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">&#x27;xxx&#x27;</span>             <span class="comment">// Binary用户名</span></span><br><span class="line">    repoName = <span class="string">&#x27;xxx&#x27;</span>          <span class="comment">// Binary上的刚才新建的仓库名（Repository）</span></span><br><span class="line">    groupId = <span class="string">&#x27;com.xxx.helper&#x27;</span>        <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的包名a</span></span><br><span class="line">    artifactId = <span class="string">&#x27;log&#x27;</span>        <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的项目名b</span></span><br><span class="line">    publishVersion = project.PUBLISH_VERSION          <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的版本号c</span></span><br><span class="line">    desc = <span class="string">&#x27;xxx插件&#x27;</span>            <span class="comment">// 对该开源组件的说明</span></span><br><span class="line">    website = <span class="string">&#x27;https://github.com/xxx/log&#x27;</span>  <span class="comment">// VCS地址，即填写项目上传的Github地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="发布到远程仓库命令"><a href="#发布到远程仓库命令" class="headerlink" title="发布到远程仓库命令"></a>发布到远程仓库命令</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">./gradlew clean build bintrayUpload -PbintrayUser=xxx -PbintrayKey=xxxx -PdryRun=<span class="keyword">false</span> </span><br><span class="line"> -x javadocRelease <span class="comment">// -x 跳过命令</span></span><br></pre></td></tr></table></figure>
-<h5 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在子项目下的build.gradle文件中配置编译脚本信息，也可以在根目录下的build.gradle文件配置</span></span><br><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenLocal()</span><br><span class="line">        google()</span><br><span class="line">        mavenCentral()</span><br><span class="line">        jcenter()</span><br><span class="line"><span class="comment">//        maven &#123;</span></span><br><span class="line"><span class="comment">//            url uri(&#x27;../repos&#x27;) //本地Maven仓库地址</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">         classpath <span class="string">&#x27;com.xxx.helper:log:1.1.1&#x27;</span> <span class="comment">//插件依赖</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="引入插件信息"><a href="#引入插件信息" class="headerlink" title="引入插件信息"></a>引入插件信息</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.application&#x27;</span> <span class="comment">//android项目</span></span><br><span class="line">apply plugin: <span class="string">&#x27;kotlin-android&#x27;</span> <span class="comment">//kotlin</span></span><br><span class="line">apply plugin: <span class="string">&#x27;plugin.log&#x27;</span> <span class="comment">//引入自定义插件</span></span><br></pre></td></tr></table></figure>
-<h5 id="插件调试"><a href="#插件调试" class="headerlink" title="插件调试"></a>插件调试</h5><ol>
-<li><p>创建远程调试配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Android Studio -&gt; Run -&gt; Edit Configurations -&gt; 如下图</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/22/m1E9aWPAplJMoOC.png" alt="iShot2021-04-22上午11.45.31.png"></p>
-</li>
-<li><p>复制命令行参数信息</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=<span class="number">5006</span></span><br></pre></td></tr></table></figure></li>
-<li><p>在引入插件的项目中创建一个Run Configurations ，配置信息如下</p>
-<p><img src="https://i.loli.net/2021/04/22/fLEpqT7vXRo6KC5.png" alt="iShot2021-04-22上午11.51.01.png"><br><img src="https://i.loli.net/2021/04/22/JIQvn8LUCWatlPH.png" alt="iShot2021-04-22上午11.52.59.png"></p>
-</li>
-<li><p>以debug的形式运行Remote配置，然后再运行【:app:build】,如果没有问题的话就可以调试</p>
-<p><img src="https://i.loli.net/2021/04/22/UjoRI6sbyW5r1AJ.png" alt="iShot2021-04-22上午11.57.43.png"></p>
-</li>
-</ol>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.jianshu.com/p/cff4684803f3">参考1</a></p>
-<p><a href="https://juejin.cn/post/6948626628637360135">参考2</a></p>
-<p><a href="https://mwping.github.io/android/gradle-plugin.html">参考3</a></p>
-<p><a href="https://www.milovetingting.cn/2020/02/25/Android/%E5%9C%A8Android%20Studio%E4%B8%AD%E8%B0%83%E8%AF%95Gradle%E6%8F%92%E4%BB%B6/#%E8%B0%83%E8%AF%95">gradle插件调试参考</a></p>
-<p><a href="https://blog.csdn.net/dbs1215/article/details/108569013?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242">gradle插件调试2参考</a> </p>
-<p><a href="https://doc.yonyoucloud.com/doc/wiki/project/GradleUserGuide-Wiki/dependency_management_basics/publishing_artifacts.html">gradle-指南</a></p>
-]]></content>
-      <categories>
-        <category>gradle</category>
-      </categories>
-      <tags>
-        <tag>gradle</tag>
-        <tag>maven</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>okhttp请求记录</title>
-    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<ul>
-<li><p>OkHttp请求</p>
-<ol>
-<li><p>创建Request对象</p>
-<p><code>Request对象的创建通过Builder模式创建</code> </p>
-<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
-</li>
-<li><p>创建OkHttpClient对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>异步方式http请求</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码</p>
-</li>
-</ol>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li><p>OkHttp 拦截器</p>
-<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>okhttp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RecyclerView嵌套滑动</title>
-    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
-<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
-<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>recyclerview</tag>
       </tags>
   </entry>
   <entry>
