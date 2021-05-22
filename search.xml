@@ -1,44 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>android library上传</title>
-    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
-<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
-<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
+    <title>adb命令相关记录</title>
+    <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
+<li>adb devices          <code>显示连接到计算机的设备</code></li>
+<li>adb  [-s] shell        <code>进入设备的shell界面</code></li>
+<li>adb kill-server       <code>终止adb服务进程</code></li>
+<li>adb start-server     <code>重启adb服务进程</code></li>
+<li>adb connect ip       <code>连接到指定的ip,配合无线调试</code></li>
+</ul>
+<h5 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h5><ul>
+<li>adb  shell pm    <code>和包相关的操作</code></li>
+<li>adb shell pm path 包名         <code>打印出给定包名对应应用的apk路径</code><pre><code>- adb shell pm list packages    ```列出包相关的信息，参考[-f] [-d] [-e] [-s] [-3] [-i] [-l] [-u] [-U]……```
+- adb shell pm list permissions     ```列出权限相关的```
+- adb install apk文件       ```安装apk```
+- adb uninstall 包名        ```卸载apk```
+- adb shell pm start 包名/启动activity       ```启动apk```
+- adb shell pm clear 包名      ```清除apk数据```
+</code></pre>
 </li>
-<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
-</li>
-<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
-<ol start="6">
-<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
-</li>
-<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
-</li>
-</ol>
-<p>参考</p>
-<ol>
-<li><p><a href="https://bintray.com/">参考1</a></p>
-</li>
-<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
-</li>
-</ol>
+</ul>
+<h5 id="内存、进程相关"><a href="#内存、进程相关" class="headerlink" title="内存、进程相关"></a>内存、进程相关</h5><ul>
+<li>adb  shell dumpsys cupinfo     <code>查看CPU信息</code></li>
+<li>adb shell dumpsys meminfo  [包名]   <code>查看应用的内存信息</code></li>
+<li>adb shell top          <code>查看设备cpu和内存占用情况</code></li>
+<li>adb shell top -m 2       <code>查看占用内存前2的app</code></li>
+<li>adb shell ps | grep[findStr] 关键字         <code>查看某一程序进程</code></li>
+<li>adb shell ps -x [PID]        <code>查看指定进程状态</code></li>
+<li>adb shell kill [PID]        <code>杀死进程</code></li>
+<li>adb shell top -n 1       <code>刷新一次内存信息，然后返回</code></li>
+<li>adb shell cat /proc/meminfo     <code>查看当前内存占用</code></li>
+</ul>
+<h5 id="Android四大组件"><a href="#Android四大组件" class="headerlink" title="Android四大组件"></a>Android四大组件</h5><p>![image-20201022173705225](/Users/libo/Library/Application Support/typora-user-images/image-20201022173705225.png)</p>
+<ul>
+<li>adb shell dumpsys activity top      <code>查看栈顶Activity</code></li>
+<li>adb shell dumpsys activity activities | grep mResumedActivity   <code>查看当前正在显示的activity</code></li>
+<li>adb shell am      <code>和activity相关 start、force-stop 包名、kill-all、kill 包名</code></li>
+<li>adb shell service list     <code>查看后台services信息</code></li>
+<li>adb shell dumpsys notification      <code>获取通知信息</code></li>
+</ul>
+<h5 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h5><ul>
+<li>adb shell cd  <code>进入某个目录</code></li>
+<li>adb shell ls -a   <code>查看这个目录下的文件</code></li>
+<li>adb pull 远程路径(手机) 本地路径(电脑) <code>手机复制文件出来</code></li>
+<li>adb push 本地路径(电脑)  远程路径(手机)  <code>向手机发送文件</code></li>
+<li>adb shell makedir   <code>创建一个文件夹</code></li>
+<li>adb shell cat      ````查看文件内容```</li>
+</ul>
+<h5 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screencap -p &#x2F;sdcard&#x2F;sc.png</span><br></pre></td></tr></table></figure>
+<h5 id="视频录制"><a href="#视频录制" class="headerlink" title="视频录制"></a>视频录制</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screenrecord &#x2F;sdcard&#x2F;filename.mp4</span><br></pre></td></tr></table></figure>
+<h5 id="获取手机中的apk"><a href="#获取手机中的apk" class="headerlink" title="获取手机中的apk"></a>获取手机中的apk</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity   --获取包名</span><br><span class="line">adb shell pm path com.aoyindsptv.phonelive --获取安装包地址</span><br><span class="line">adb pull 安装包地址  电脑地址</span><br></pre></td></tr></table></figure>
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity --查看包名和Activity</span><br><span class="line">adb shell dumpsys window | grep mCurrentFocus --同上</span><br></pre></td></tr></table></figure>
+
+
+<p><a href="https://www.jianshu.com/p/0693b841c83b">参考</a></p>
+<p><a href="https://weiwangqiang.github.io/2020/03/16/dumpsys-debug-detail/">参考2</a></p>
+<div class="gallery-group-main">
+
+  <figure class="gallery-group">
+  <img class="gallery-group-img" src='https://i.loli.net/2019/11/10/T7Mu8Aod3egmC4Q.png' alt="Group Image Gallery">
+  <figcaption>
+  <div class="gallery-group-name">壁紙</div>
+  <p>收藏的一些壁紙</p>
+  <a href='/Gallery/wallpaper'></a>
+  </figcaption>
+  </figure>
+  
+
+  <figure class="gallery-group">
+  <img class="gallery-group-img" src='https://i.loli.net/2019/12/25/8t97aVlp4hgyBGu.jpg' alt="Group Image Gallery">
+  <figcaption>
+  <div class="gallery-group-name">漫威</div>
+  <p>關於漫威的圖片</p>
+  <a href='/Gallery/marvel'></a>
+  </figcaption>
+  </figure>
+  
+
+  <figure class="gallery-group">
+  <img class="gallery-group-img" src='https://i.loli.net/2019/12/25/hOqbQ3BIwa6KWpo.jpg' alt="Group Image Gallery">
+  <figcaption>
+  <div class="gallery-group-name">OH MY GIRL</div>
+  <p>關於OH MY GIRL的圖片</p>
+  <a href='/Gallery/ohmygirl'></a>
+  </figcaption>
+  </figure>
+  
+</div>
+
 ]]></content>
       <categories>
         <category>android</category>
       </categories>
       <tags>
         <tag>android</tag>
-        <tag>library</tag>
+        <tag>adb</tag>
       </tags>
   </entry>
   <entry>
@@ -189,21 +246,44 @@
       </tags>
   </entry>
   <entry>
-    <title>android10创建文件失败</title>
-    <url>/2021/01/11/android10-create-file/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
-<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
-<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
-<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
+    <title>android library上传</title>
+    <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
+<li>登录注册账号  <a href="https://bintray.com/login?forwardedFrom=/">地址</a><img src="https://i.loli.net/2021/02/22/GDEqge4TCznH3Rb.png" alt="image-20201027185936082.png"></li>
+<li>创建仓库  <img src="https://i.loli.net/2021/02/22/ig6aCvcEZ8M73WN.png" alt="image-20201027190240356.png"></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">说明：这里也可以不创建maven仓库， 那么在后续的库上传时需要指定仓库，repoName</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>创建自己的library库<img src="https://i.loli.net/2021/02/22/SVP1HCnsie5tE4w.png" alt="image-20201027190709179.png"><img src="https://i.loli.net/2021/02/22/j5LkmT4nKeCNytu.png" alt="image-20201027190546331.png"></p>
+</li>
+<li><p>获取上传时用到的apikey<img src="https://i.loli.net/2021/02/22/IbhcKMPYVkTeyol.png" alt="image-20201027190851669.png"></p>
+</li>
+<li><p>上传代码到library<img src="https://i.loli.net/2021/02/22/pTzOrf7xc31hGDZ.png" alt="image-20201027191204862.png"></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew clean build bintrayUpload -PbintrayUser&#x3D;boundless1024 -PbintrayKey&#x3D;d59a0923f6a03320d40be3b8e36e407ec1fc7b4d -PdryRun&#x3D;false</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p> 使用library<img src="https://i.loli.net/2021/02/22/YLCpOvhSxca9flX.png" alt="image-20201027191733290.png"><img src="https://i.loli.net/2021/02/22/VsMvBKOopSZRx7q.png" alt="image-20201027191815006.png"></p>
+</li>
+<li><p>同步到jcenter<img src="https://i.loli.net/2021/02/22/KveaF5bEgAqfhTn.png" alt="image-20201027192049858.png"></p>
+</li>
+</ol>
+<p>参考</p>
+<ol>
+<li><p><a href="https://bintray.com/">参考1</a></p>
+</li>
+<li><p><a href="https://github.com/ddnosh/ARabbit/blob/master/sdk/build.gradle">参考2</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/677601f192e5">参考3</a></p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>android</category>
       </categories>
       <tags>
         <tag>android</tag>
+        <tag>library</tag>
       </tags>
   </entry>
   <entry>
@@ -399,130 +479,21 @@
       </tags>
   </entry>
   <entry>
-    <title>adb命令相关记录</title>
-    <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
-<li>adb devices          <code>显示连接到计算机的设备</code></li>
-<li>adb  [-s] shell        <code>进入设备的shell界面</code></li>
-<li>adb kill-server       <code>终止adb服务进程</code></li>
-<li>adb start-server     <code>重启adb服务进程</code></li>
-<li>adb connect ip       <code>连接到指定的ip,配合无线调试</code></li>
-</ul>
-<h5 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h5><ul>
-<li>adb  shell pm    <code>和包相关的操作</code></li>
-<li>adb shell pm path 包名         <code>打印出给定包名对应应用的apk路径</code><pre><code>- adb shell pm list packages    ```列出包相关的信息，参考[-f] [-d] [-e] [-s] [-3] [-i] [-l] [-u] [-U]……```
-- adb shell pm list permissions     ```列出权限相关的```
-- adb install apk文件       ```安装apk```
-- adb uninstall 包名        ```卸载apk```
-- adb shell pm start 包名/启动activity       ```启动apk```
-- adb shell pm clear 包名      ```清除apk数据```
-</code></pre>
-</li>
-</ul>
-<h5 id="内存、进程相关"><a href="#内存、进程相关" class="headerlink" title="内存、进程相关"></a>内存、进程相关</h5><ul>
-<li>adb  shell dumpsys cupinfo     <code>查看CPU信息</code></li>
-<li>adb shell dumpsys meminfo  [包名]   <code>查看应用的内存信息</code></li>
-<li>adb shell top          <code>查看设备cpu和内存占用情况</code></li>
-<li>adb shell top -m 2       <code>查看占用内存前2的app</code></li>
-<li>adb shell ps | grep[findStr] 关键字         <code>查看某一程序进程</code></li>
-<li>adb shell ps -x [PID]        <code>查看指定进程状态</code></li>
-<li>adb shell kill [PID]        <code>杀死进程</code></li>
-<li>adb shell top -n 1       <code>刷新一次内存信息，然后返回</code></li>
-<li>adb shell cat /proc/meminfo     <code>查看当前内存占用</code></li>
-</ul>
-<h5 id="Android四大组件"><a href="#Android四大组件" class="headerlink" title="Android四大组件"></a>Android四大组件</h5><p>![image-20201022173705225](/Users/libo/Library/Application Support/typora-user-images/image-20201022173705225.png)</p>
-<ul>
-<li>adb shell dumpsys activity top      <code>查看栈顶Activity</code></li>
-<li>adb shell dumpsys activity activities | grep mResumedActivity   <code>查看当前正在显示的activity</code></li>
-<li>adb shell am      <code>和activity相关 start、force-stop 包名、kill-all、kill 包名</code></li>
-<li>adb shell service list     <code>查看后台services信息</code></li>
-<li>adb shell dumpsys notification      <code>获取通知信息</code></li>
-</ul>
-<h5 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h5><ul>
-<li>adb shell cd  <code>进入某个目录</code></li>
-<li>adb shell ls -a   <code>查看这个目录下的文件</code></li>
-<li>adb pull 远程路径(手机) 本地路径(电脑) <code>手机复制文件出来</code></li>
-<li>adb push 本地路径(电脑)  远程路径(手机)  <code>向手机发送文件</code></li>
-<li>adb shell makedir   <code>创建一个文件夹</code></li>
-<li>adb shell cat      ````查看文件内容```</li>
-</ul>
-<h5 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screencap -p &#x2F;sdcard&#x2F;sc.png</span><br></pre></td></tr></table></figure>
-<h5 id="视频录制"><a href="#视频录制" class="headerlink" title="视频录制"></a>视频录制</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screenrecord &#x2F;sdcard&#x2F;filename.mp4</span><br></pre></td></tr></table></figure>
-<h5 id="获取手机中的apk"><a href="#获取手机中的apk" class="headerlink" title="获取手机中的apk"></a>获取手机中的apk</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity   --获取包名</span><br><span class="line">adb shell pm path com.aoyindsptv.phonelive --获取安装包地址</span><br><span class="line">adb pull 安装包地址  电脑地址</span><br></pre></td></tr></table></figure>
-<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity --查看包名和Activity</span><br><span class="line">adb shell dumpsys window | grep mCurrentFocus --同上</span><br></pre></td></tr></table></figure>
-
-
-<p><a href="https://www.jianshu.com/p/0693b841c83b">参考</a></p>
-<p><a href="https://weiwangqiang.github.io/2020/03/16/dumpsys-debug-detail/">参考2</a></p>
-<div class="gallery-group-main">
-
-  <figure class="gallery-group">
-  <img class="gallery-group-img" src='https://i.loli.net/2019/11/10/T7Mu8Aod3egmC4Q.png' alt="Group Image Gallery">
-  <figcaption>
-  <div class="gallery-group-name">壁紙</div>
-  <p>收藏的一些壁紙</p>
-  <a href='/Gallery/wallpaper'></a>
-  </figcaption>
-  </figure>
-  
-
-  <figure class="gallery-group">
-  <img class="gallery-group-img" src='https://i.loli.net/2019/12/25/8t97aVlp4hgyBGu.jpg' alt="Group Image Gallery">
-  <figcaption>
-  <div class="gallery-group-name">漫威</div>
-  <p>關於漫威的圖片</p>
-  <a href='/Gallery/marvel'></a>
-  </figcaption>
-  </figure>
-  
-
-  <figure class="gallery-group">
-  <img class="gallery-group-img" src='https://i.loli.net/2019/12/25/hOqbQ3BIwa6KWpo.jpg' alt="Group Image Gallery">
-  <figcaption>
-  <div class="gallery-group-name">OH MY GIRL</div>
-  <p>關於OH MY GIRL的圖片</p>
-  <a href='/Gallery/ohmygirl'></a>
-  </figcaption>
-  </figure>
-  
-</div>
-
+    <title>android10创建文件失败</title>
+    <url>/2021/01/11/android10-create-file/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
+<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
+<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
+<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
 ]]></content>
       <categories>
         <category>android</category>
       </categories>
       <tags>
         <tag>android</tag>
-        <tag>adb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>frida</tag>
       </tags>
   </entry>
   <entry>
@@ -725,101 +696,62 @@
       </tags>
   </entry>
   <entry>
-    <title>git-log备注</title>
-    <url>/2021/04/27/git-log%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h5 id="git-log-备注"><a href="#git-log-备注" class="headerlink" title="git log 备注"></a>git log 备注</h5><table>
-<thead>
-<tr>
-<th>选项</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>%H</td>
-<td>提交的完整哈希值</td>
-</tr>
-<tr>
-<td>%h</td>
-<td>提交的简写哈希值</td>
-</tr>
-<tr>
-<td>%T</td>
-<td>树的完整哈希值</td>
-</tr>
-<tr>
-<td>%t</td>
-<td>树的简写哈希值</td>
-</tr>
-<tr>
-<td>%P</td>
-<td>父提交的完整哈希值</td>
-</tr>
-<tr>
-<td>%p</td>
-<td>父提交的简写哈希值</td>
-</tr>
-<tr>
-<td>%an</td>
-<td>作者名字</td>
-</tr>
-<tr>
-<td>%ae</td>
-<td>作者的电子邮件地址</td>
-</tr>
-<tr>
-<td>%ad</td>
-<td>作者修订日期(可以用 –date=选项 来定制格式)</td>
-</tr>
-<tr>
-<td>%ar</td>
-<td>作者修订日期，按多久以前的方式显示</td>
-</tr>
-<tr>
-<td>%cn</td>
-<td>提交者的名字</td>
-</tr>
-<tr>
-<td>%ce</td>
-<td>提交者的电子邮件地址</td>
-</tr>
-<tr>
-<td>%cd</td>
-<td>提交日期</td>
-</tr>
-<tr>
-<td>%cr</td>
-<td>提交日期(距今多长时间)</td>
-</tr>
-<tr>
-<td>%s</td>
-<td>提交说明</td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log    </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/30/Csgyt2ej8ScYDdo.png" alt="iShot2021-04-30下午05.45.46.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log --oneline</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/30/M6O4d1XrGuHgcwL.png" alt="iShot2021-04-30下午04.00.11.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git shortlog  </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/30/dLzT7g4ODRbXFW8.png" alt="iShot2021-04-30下午04.07.27.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git lg </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/30/YfJw4PqBZ5ozOAa.png" alt="iShot2021-04-30下午04.08.49.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git lg --pretty&#x3D;format:%cr-%s --after&#x3D;&quot;yesterday&quot; --before&#x3D;&quot;2021-04-30&quot; </span><br></pre></td></tr></table></figure>
-<p><code>after</code> 的参数可以很丰富 例如 <code>3.weeks.ago</code>、<code>2021-04-20</code>、<code>yesterday</code> ……</p>
-<h5 id="例如"><a href="#例如" class="headerlink" title="例如"></a>例如</h5><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取昨天到今天的Git日志信息</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">def</span> getGitLog() &#123;</span><br><span class="line">    <span class="keyword">def</span> todayYmd = <span class="keyword">new</span> Date().format(<span class="string">&quot;yyyy-MM-dd&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> beginYmd =<span class="string">&quot;yesterday&quot;</span></span><br><span class="line"></span><br><span class="line">    println(<span class="string">&quot;currentTime = &quot;</span> +System.currentTimeMillis())</span><br><span class="line">    StringBuffer stringBuffer = <span class="keyword">new</span> StringBuffer()</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; git log&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --pretty=format:%cr-%s&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --after=\&quot;$&#123;beginYmd&#125;\&quot;&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --before=\&quot;$&#123;todayYmd&#125;\&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> cmd = stringBuffer.toString()</span><br><span class="line">    println(<span class="string">&quot;cmd =$cmd&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span>  cmd.execute().text.trim()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取编译当前安装包的时间</span></span><br><span class="line"><span class="keyword">def</span> buildAppTime() &#123;</span><br><span class="line">    <span class="keyword">def</span> buildTime = <span class="keyword">new</span> Date().format(<span class="string">&quot;MM_dd_HH_mm&quot;</span>)</span><br><span class="line"><span class="comment">//    def buildTime = new Date().format(&quot;yyyy_MM_dd_HH_mm&quot;)</span></span><br><span class="line">    <span class="keyword">return</span> buildTime</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出git日志信息到文件中</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">def</span> buildLog() &#123;</span><br><span class="line">    FileWriter fw = <span class="keyword">new</span> FileWriter(project.rootDir.absolutePath + File.separator + <span class="string">&quot;log.txt&quot;</span>)</span><br><span class="line">    StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    builder.append(<span class="string">&quot;[构建时间]=&quot;</span> + buildAppTime())</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[版本编号]=&quot;</span> + project.android.defaultConfig.versionCode)</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[版本名称]=&quot;</span> + project.android.defaultConfig.versionName)</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[提交记录]=\r\n&quot;</span> + getGitLog())</span><br><span class="line">    println(<span class="string">&quot;kkkkk = $&#123;builder.toString()&#125;&quot;</span>)</span><br><span class="line">    fw.write(builder.toString())</span><br><span class="line">    fw.flush()</span><br><span class="line">    fw.close()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="重命名打包信息"><a href="#重命名打包信息" class="headerlink" title="重命名打包信息"></a>重命名打包信息</h5><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="comment">//备注 gradle插件版本  classpath &#x27;com.android.tools.build:gradle:3.2.0&#x27; </span></span><br><span class="line"><span class="comment">//应用名称缩写</span></span><br><span class="line"><span class="keyword">def</span> APP_NAME_ABBREVIATION = <span class="string">&quot;SXTTPJC&quot;</span></span><br><span class="line"><span class="keyword">def</span> DEFAULT_CHANNEL = <span class="string">&quot;official&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//修改打包后apk的名称</span></span><br><span class="line">    <span class="comment">//给打包出来的Apk修改一下名字</span></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line"><span class="comment">//            println(&quot;variant = &quot; + variant)</span></span><br><span class="line">            <span class="keyword">def</span> outputDir = variant.getPackageApplication().outputDirectory.getParentFile().getAbsoluteFile()</span><br><span class="line"><span class="comment">//            println(&quot;outputDir = $&#123;outputDir&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line">            <span class="keyword">def</span> newOutputDir = <span class="keyword">new</span> File(outputDir, <span class="string">&quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;</span>)</span><br><span class="line">            println(<span class="string">&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;</span>)</span><br><span class="line">            variant.getPackageApplication().outputDirectory = newOutputDir</span><br><span class="line"></span><br><span class="line">            <span class="keyword">def</span> versionName = project.android.defaultConfig.versionName</span><br><span class="line">            <span class="keyword">def</span> versionCode = project.android.defaultConfig.versionCode</span><br><span class="line"><span class="comment">//            versionName = versionName.replaceAll(&quot;\\.&quot;, &quot;_&quot;)</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;app-$&#123;variant.buildType.name&#125;_$&#123;APP_NAME&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;versionCode&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">            <span class="comment">//新的apk名称</span></span><br><span class="line">            <span class="keyword">def</span> newApkName = <span class="string">&quot;$&#123;APP_NAME_ABBREVIATION&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;variant.buildType.name&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">            println(<span class="string">&quot;newApkName = &quot;</span> + newApkName)</span><br><span class="line">            outputFileName = newApkName</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line"><span class="comment">//2 </span></span><br><span class="line">   android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//            def outputDir = variant.getPackageApplication().getOutputDirectory().host</span></span><br><span class="line"><span class="comment">//            println(&quot;outputDir = $&#123;outputDir&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line"><span class="comment">//            def newOutputDir = new File(outputDir, &quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            println(&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            variant.getPackageApplication().outputDirectory = newOutputDir</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line"><span class="comment">//            def newOutputDir = new File(outputDir, &quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            println(&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            variant.getPackageApplication().outputDirectory = newOutputDir</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//            def versionName = project.android.defaultConfig.versionName</span></span><br><span class="line"><span class="comment">//            def versionCode = project.android.defaultConfig.versionCode</span></span><br><span class="line"><span class="comment">//            versionName = versionName.replaceAll(&quot;\\.&quot;, &quot;_&quot;)</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;app-$&#123;variant.buildType.name&#125;_$&#123;APP_NAME&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;versionCode&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">                <span class="comment">//新的apk名称</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;$&#123;APP_NAME_ABBREVIATION&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;variant.buildType.name&#125;&#125;.apk&quot;</span></span><br><span class="line"><span class="comment">//            println(&quot;newApkName = &quot; + newApkName)</span></span><br><span class="line"><span class="comment">//            outputFileName = newApkName</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            output -&gt;</span><br><span class="line">                println(<span class="string">&quot;\nbuildDir = $&#123;buildDir&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\nandroid = $&#123;android.buildOutputs&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\nvariant = $&#123;variant.getPackageApplicationProvider()&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\noutput = $output&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\noutputFileName = $output.outputFileName&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        variant.getAssembleProvider().get().doLast&#123;</span><br><span class="line">            println(<span class="string">&quot;..........copy file begin.........&quot;</span>)</span><br><span class="line">            variant.outputs.forEach&#123;</span><br><span class="line">                file -&gt;</span><br><span class="line">                    println(<span class="string">&quot;\nfile = $&#123;file.outputFile&#125;&quot;</span>)</span><br><span class="line">                    copy&#123;</span><br><span class="line">                        from file.outputFile</span><br><span class="line">                        into <span class="keyword">new</span> File(<span class="string">&quot;/Users/xxx/apk&quot;</span>)</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            println(<span class="string">&quot;..........copy file end.........&quot;</span>)</span><br><span class="line"></span><br><span class="line">            println(<span class="string">&quot;..........ok.........&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+    <title>asm-gradle备注</title>
+    <url>/2021/04/23/asm-%E5%AD%97%E8%8A%82%E7%A0%81/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ASM是一个通用的Java字节码操作和分析框架。 它可以直接以二进制形式用于修改现有类或动态生成类。 </span><br><span class="line">ASM提供了一些常见的字节码转换和分析算法，可以从中构建定制的复杂转换和代码分析工具。 </span><br><span class="line">ASM提供了与其他Java字节码框架类似的功能，但是侧重于性能。 因为它的设计和实现是尽可能的小和尽可能快，</span><br><span class="line">所以它非常适合在动态系统中使用（但当然也可以以静态方式使用，例如在编译器中使用）。</span><br></pre></td></tr></table></figure>
+<p><code>AOP</code> 是一种<strong>面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术</strong>。和面向对象编程 的 <code>OOP</code> 相同。</p>
+<h5 id="gradle插件开发"><a href="#gradle插件开发" class="headerlink" title="gradle插件开发"></a>gradle插件开发</h5><ol>
+<li><p>单独创建一个.gradle文件</p>
+</li>
+<li><p>通过<code>buildSrc</code>目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Gradle会默认在配置初始化前，编译buildSrc这个项目，可以是java、groovy、kotlin项目，并把项目配置到classpath下。所以如果Module 命名为 buildSrc 那么不需要在 Project 级别的 build.gradle 文件中使用 classpath 引入，也不需要在 app 级别的 build.gradle 文件中使用 apply plugin: 进行应用。</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>创建一个moudle项目 改造</p>
+</li>
+</ol>
+<p>插件的开发自行实践</p>
+<h5 id="插桩"><a href="#插桩" class="headerlink" title="插桩"></a>插桩</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">目标程序代码中某些位置插入或修改成一些代码，从而在目标程序运行过程中获取某些程序状态并加以分析。</span><br><span class="line">简单来说就是在代码中插入代码。那么函数插桩，便是在函数中插入或修改代码。字节码插桩可以实现</span><br><span class="line">&#96;无埋点统计上报&#96;、&#96;轻量级AOP&#96; 、&#96;行为统计&#96;、&#96;方法耗时统计&#96;……</span><br></pre></td></tr></table></figure>
+<h5 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Android打包过程中java -&gt; java class-&gt; dx命令 -&gt; dex文件，通过自定义gradle插件的方式可以介入到生成dex</span><br><span class="line">文件之前的流程中，原理通过gradle插件提供的api类工具Transform</span><br></pre></td></tr></table></figure>
+<h5 id="部分代码"><a href="#部分代码" class="headerlink" title="部分代码"></a>部分代码</h5><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloTransform</span> : <span class="type">Transform</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getName</span><span class="params">()</span></span>: String = <span class="string">&quot;HelloTransform&quot;</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getInputTypes</span><span class="params">()</span></span>: MutableSet&lt;QualifiedContent.ContentType&gt; =</span><br><span class="line">        TransformManager.CONTENT_CLASS <span class="comment">//类型，android这边默认有两中类型：class 、资源</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getScopes</span><span class="params">()</span></span>: MutableSet&lt;<span class="keyword">in</span> QualifiedContent.Scope&gt; =</span><br><span class="line">        TransformManager.SCOPE_FULL_PROJECT  <span class="comment">//范围</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">isIncremental</span><span class="params">()</span></span>: <span class="built_in">Boolean</span> = <span class="literal">false</span> <span class="comment">//是否是增量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">transform</span><span class="params">(transformInvocation: <span class="type">TransformInvocation</span>?)</span></span> &#123; <span class="comment">//这里面可以操作字节码</span></span><br><span class="line">        transformInvocation?.let &#123;</span><br><span class="line">            println(<span class="string">&quot;--------------- HelloTransform transform start --------------- &quot;</span>)</span><br><span class="line">            <span class="keyword">val</span> startTime = System.currentTimeMillis()</span><br><span class="line">            <span class="keyword">val</span> inputs = transformInvocation.inputs</span><br><span class="line">            <span class="keyword">val</span> outputProvider = transformInvocation.outputProvider</span><br><span class="line"></span><br><span class="line">            <span class="comment">//删除之前的输出</span></span><br><span class="line">            outputProvider?.deleteAll()</span><br><span class="line"></span><br><span class="line">            <span class="comment">//遍历inputs</span></span><br><span class="line">            inputs.forEach &#123; tt -&gt;</span><br><span class="line">                tt.directoryInputs.forEach &#123; dirInput -&gt;</span><br><span class="line">                    printDirInput(dirInput)</span><br><span class="line">                &#125;</span><br><span class="line">                tt.jarInputs.forEach &#123; jarInput -&gt;</span><br><span class="line">                    printJarInput(jarInput)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">val</span> cost = (System.currentTimeMillis() - startTime) / <span class="number">1000</span></span><br><span class="line">            println(<span class="string">&quot;--------------- HelloTransform transform end --------------- &quot;</span>)</span><br><span class="line">            println(<span class="string">&quot;--------------- HelloTransform 耗时 = <span class="variable">$cost</span>  --------------- &quot;</span>)</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">printJarInput</span><span class="params">(jarInput: <span class="type">JarInput</span>?)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">        jarInput?.let &#123;</span><br><span class="line">            println(<span class="string">&quot;jar <span class="subst">$&#123;it.name&#125;</span>\n <span class="subst">$&#123;it.file.path&#125;</span> \n\n&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">printDirInput</span><span class="params">(dirInput: <span class="type">DirectoryInput</span>?)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">        dirInput?.let &#123;</span><br><span class="line">            println(<span class="string">&quot;dir <span class="subst">$&#123;it.name&#125;</span> <span class="subst">$&#123;it.file.path&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="出错"><a href="#出错" class="headerlink" title="出错"></a>出错</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">上面的代码如果在moudle中引入，会导致无法安装apk,出现` INSTALL_FAILED_INVALID_APK` `code is missing`</span><br><span class="line">这是因为在`transform`方法中，无论你是否会对字节码or其他信息做处理，都需要将之前的输入作为输出传递下去</span><br></pre></td></tr></table></figure>
+<h5 id="更正"><a href="#更正" class="headerlink" title="更正"></a>更正</h5><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">transform</span><span class="params">(transformInvocation: <span class="type">TransformInvocation</span>?)</span></span> &#123; <span class="comment">//这里面可以操作字节码</span></span><br><span class="line">  transformInvocation?.let &#123;</span><br><span class="line">    println(<span class="string">&quot;--------------- HelloTransform transform start --------------- &quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> startTime = System.currentTimeMillis()</span><br><span class="line">    <span class="keyword">val</span> inputs = transformInvocation.inputs</span><br><span class="line">    <span class="keyword">val</span> outputProvider = transformInvocation.outputProvider</span><br><span class="line"></span><br><span class="line">    <span class="comment">//删除之前的输出,注意一般需要根据是否是增量，不是增量就全部删除</span></span><br><span class="line">    outputProvider?.deleteAll()</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历inputs</span></span><br><span class="line">    inputs.forEach &#123; tt -&gt;</span><br><span class="line">                    tt.directoryInputs.forEach &#123; dirInput -&gt;</span><br><span class="line">                                                printDirInput(dirInput)</span><br><span class="line">                                                <span class="comment">//处理完输入文件之后，要把输出给下一个任务</span></span><br><span class="line">                                                <span class="keyword">val</span> dest = outputProvider.getContentLocation(</span><br><span class="line">                                                  dirInput.name,</span><br><span class="line">                                                  dirInput.contentTypes, dirInput.scopes,</span><br><span class="line">                                                  Format.DIRECTORY</span><br><span class="line">                                                )</span><br><span class="line">                                                FileUtils.copyDirectory(dirInput.file, dest)</span><br><span class="line">                                               &#125;</span><br><span class="line">                    tt.jarInputs.forEach &#123; jarInput -&gt;</span><br><span class="line">                                          printJarInput(jarInput)</span><br><span class="line">                                          <span class="comment">//处理完输入文件之后，要把输出给下一个任务</span></span><br><span class="line">                                          <span class="keyword">val</span> dest: File = outputProvider.getContentLocation(</span><br><span class="line">                                            jarInput.name,</span><br><span class="line">                                            jarInput.contentTypes, jarInput.scopes, Format.JAR</span><br><span class="line">                                          )</span><br><span class="line">                                          FileUtils.copyFile(jarInput.file, dest)</span><br><span class="line">                                         &#125;</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> cost = (System.currentTimeMillis() - startTime) / <span class="number">1000</span></span><br><span class="line">    println(<span class="string">&quot;--------------- HelloTransform transform end --------------- &quot;</span>)</span><br><span class="line">    println(<span class="string">&quot;--------------- HelloTransform 耗时 = <span class="variable">$cost</span>  --------------- &quot;</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.cnblogs.com/EnSnail/p/6772454.html">参考1</a></p>
-<p><a href="https://www.runoob.com/git/git-commit-history.html">参考2</a></p>
-<p><a href="https://blog.csdn.net/byhook/article/details/51746825">参考3</a></p>
-<p><a href="https://git-scm.com/docs/git-log">官网</a></p>
-<p><a href="https://blog.csdn.net/smallbabylong/article/details/111276762">apk打包命名</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://asm.ow2.io/">ASM官网</a></p>
+<p><a href="https://jueee.github.io/2020/08/2020-08-27-Java%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E7%BA%B5%E6%A1%86%E6%9E%B6ASM/">参考1</a></p>
+<p><a href="https://blog.csdn.net/CrazyMo_/article/details/102601483">参考2</a></p>
+<p><a href="https://blog.jiahuan.me/2019/01/11/Android%E7%BC%96%E8%AF%91%E6%9C%9F%E4%BF%AE%E6%94%B9Class%E5%AD%97%E8%8A%82%E7%A0%81/">参考3</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1634989">参考4</a></p>
+<p><a href="https://www.jianshu.com/p/16ed4d233fd1">参考5</a></p>
+<p><a href="https://stackoom.com/question/3fEwG/build-gradle%E4%B8%AD%E7%9A%84registerTransform%E4%B9%8B%E5%90%8E%E7%BC%BA%E5%B0%91base-apk%E4%BB%A3%E7%A0%81">出错-参考</a></p>
+<p><a href="https://blog.yorek.xyz/android/paid/master/bytecode/">参考6-重点</a></p>
+<p><a href="https://www.thedroidsonroids.com/blog/how-to-generate-java-sources-using-buildsrc-gradle-project">参考7-code gen</a></p>
+<p><a href="https://jishuin.proginn.com/p/763bfbd36680">参考8</a></p>
 ]]></content>
       <categories>
-        <category>git</category>
+        <category>gradle</category>
       </categories>
       <tags>
-        <tag>git</tag>
+        <tag>asm</tag>
         <tag>gradle</tag>
       </tags>
   </entry>
@@ -914,85 +846,148 @@
       </tags>
   </entry>
   <entry>
-    <title>asm-gradle备注</title>
-    <url>/2021/04/23/asm-%E5%AD%97%E8%8A%82%E7%A0%81/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ASM是一个通用的Java字节码操作和分析框架。 它可以直接以二进制形式用于修改现有类或动态生成类。 </span><br><span class="line">ASM提供了一些常见的字节码转换和分析算法，可以从中构建定制的复杂转换和代码分析工具。 </span><br><span class="line">ASM提供了与其他Java字节码框架类似的功能，但是侧重于性能。 因为它的设计和实现是尽可能的小和尽可能快，</span><br><span class="line">所以它非常适合在动态系统中使用（但当然也可以以静态方式使用，例如在编译器中使用）。</span><br></pre></td></tr></table></figure>
-<p><code>AOP</code> 是一种<strong>面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术</strong>。和面向对象编程 的 <code>OOP</code> 相同。</p>
-<h5 id="gradle插件开发"><a href="#gradle插件开发" class="headerlink" title="gradle插件开发"></a>gradle插件开发</h5><ol>
-<li><p>单独创建一个.gradle文件</p>
-</li>
-<li><p>通过<code>buildSrc</code>目录</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Gradle会默认在配置初始化前，编译buildSrc这个项目，可以是java、groovy、kotlin项目，并把项目配置到classpath下。所以如果Module 命名为 buildSrc 那么不需要在 Project 级别的 build.gradle 文件中使用 classpath 引入，也不需要在 app 级别的 build.gradle 文件中使用 apply plugin: 进行应用。</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>创建一个moudle项目 改造</p>
-</li>
-</ol>
-<p>插件的开发自行实践</p>
-<h5 id="插桩"><a href="#插桩" class="headerlink" title="插桩"></a>插桩</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">目标程序代码中某些位置插入或修改成一些代码，从而在目标程序运行过程中获取某些程序状态并加以分析。</span><br><span class="line">简单来说就是在代码中插入代码。那么函数插桩，便是在函数中插入或修改代码。字节码插桩可以实现</span><br><span class="line">&#96;无埋点统计上报&#96;、&#96;轻量级AOP&#96; 、&#96;行为统计&#96;、&#96;方法耗时统计&#96;……</span><br></pre></td></tr></table></figure>
-<h5 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Android打包过程中java -&gt; java class-&gt; dx命令 -&gt; dex文件，通过自定义gradle插件的方式可以介入到生成dex</span><br><span class="line">文件之前的流程中，原理通过gradle插件提供的api类工具Transform</span><br></pre></td></tr></table></figure>
-<h5 id="部分代码"><a href="#部分代码" class="headerlink" title="部分代码"></a>部分代码</h5><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloTransform</span> : <span class="type">Transform</span></span>() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getName</span><span class="params">()</span></span>: String = <span class="string">&quot;HelloTransform&quot;</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getInputTypes</span><span class="params">()</span></span>: MutableSet&lt;QualifiedContent.ContentType&gt; =</span><br><span class="line">        TransformManager.CONTENT_CLASS <span class="comment">//类型，android这边默认有两中类型：class 、资源</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getScopes</span><span class="params">()</span></span>: MutableSet&lt;<span class="keyword">in</span> QualifiedContent.Scope&gt; =</span><br><span class="line">        TransformManager.SCOPE_FULL_PROJECT  <span class="comment">//范围</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">isIncremental</span><span class="params">()</span></span>: <span class="built_in">Boolean</span> = <span class="literal">false</span> <span class="comment">//是否是增量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">transform</span><span class="params">(transformInvocation: <span class="type">TransformInvocation</span>?)</span></span> &#123; <span class="comment">//这里面可以操作字节码</span></span><br><span class="line">        transformInvocation?.let &#123;</span><br><span class="line">            println(<span class="string">&quot;--------------- HelloTransform transform start --------------- &quot;</span>)</span><br><span class="line">            <span class="keyword">val</span> startTime = System.currentTimeMillis()</span><br><span class="line">            <span class="keyword">val</span> inputs = transformInvocation.inputs</span><br><span class="line">            <span class="keyword">val</span> outputProvider = transformInvocation.outputProvider</span><br><span class="line"></span><br><span class="line">            <span class="comment">//删除之前的输出</span></span><br><span class="line">            outputProvider?.deleteAll()</span><br><span class="line"></span><br><span class="line">            <span class="comment">//遍历inputs</span></span><br><span class="line">            inputs.forEach &#123; tt -&gt;</span><br><span class="line">                tt.directoryInputs.forEach &#123; dirInput -&gt;</span><br><span class="line">                    printDirInput(dirInput)</span><br><span class="line">                &#125;</span><br><span class="line">                tt.jarInputs.forEach &#123; jarInput -&gt;</span><br><span class="line">                    printJarInput(jarInput)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">val</span> cost = (System.currentTimeMillis() - startTime) / <span class="number">1000</span></span><br><span class="line">            println(<span class="string">&quot;--------------- HelloTransform transform end --------------- &quot;</span>)</span><br><span class="line">            println(<span class="string">&quot;--------------- HelloTransform 耗时 = <span class="variable">$cost</span>  --------------- &quot;</span>)</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">printJarInput</span><span class="params">(jarInput: <span class="type">JarInput</span>?)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">        jarInput?.let &#123;</span><br><span class="line">            println(<span class="string">&quot;jar <span class="subst">$&#123;it.name&#125;</span>\n <span class="subst">$&#123;it.file.path&#125;</span> \n\n&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">printDirInput</span><span class="params">(dirInput: <span class="type">DirectoryInput</span>?)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">        dirInput?.let &#123;</span><br><span class="line">            println(<span class="string">&quot;dir <span class="subst">$&#123;it.name&#125;</span> <span class="subst">$&#123;it.file.path&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="出错"><a href="#出错" class="headerlink" title="出错"></a>出错</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">上面的代码如果在moudle中引入，会导致无法安装apk,出现` INSTALL_FAILED_INVALID_APK` `code is missing`</span><br><span class="line">这是因为在`transform`方法中，无论你是否会对字节码or其他信息做处理，都需要将之前的输入作为输出传递下去</span><br></pre></td></tr></table></figure>
-<h5 id="更正"><a href="#更正" class="headerlink" title="更正"></a>更正</h5><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">transform</span><span class="params">(transformInvocation: <span class="type">TransformInvocation</span>?)</span></span> &#123; <span class="comment">//这里面可以操作字节码</span></span><br><span class="line">  transformInvocation?.let &#123;</span><br><span class="line">    println(<span class="string">&quot;--------------- HelloTransform transform start --------------- &quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> startTime = System.currentTimeMillis()</span><br><span class="line">    <span class="keyword">val</span> inputs = transformInvocation.inputs</span><br><span class="line">    <span class="keyword">val</span> outputProvider = transformInvocation.outputProvider</span><br><span class="line"></span><br><span class="line">    <span class="comment">//删除之前的输出,注意一般需要根据是否是增量，不是增量就全部删除</span></span><br><span class="line">    outputProvider?.deleteAll()</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历inputs</span></span><br><span class="line">    inputs.forEach &#123; tt -&gt;</span><br><span class="line">                    tt.directoryInputs.forEach &#123; dirInput -&gt;</span><br><span class="line">                                                printDirInput(dirInput)</span><br><span class="line">                                                <span class="comment">//处理完输入文件之后，要把输出给下一个任务</span></span><br><span class="line">                                                <span class="keyword">val</span> dest = outputProvider.getContentLocation(</span><br><span class="line">                                                  dirInput.name,</span><br><span class="line">                                                  dirInput.contentTypes, dirInput.scopes,</span><br><span class="line">                                                  Format.DIRECTORY</span><br><span class="line">                                                )</span><br><span class="line">                                                FileUtils.copyDirectory(dirInput.file, dest)</span><br><span class="line">                                               &#125;</span><br><span class="line">                    tt.jarInputs.forEach &#123; jarInput -&gt;</span><br><span class="line">                                          printJarInput(jarInput)</span><br><span class="line">                                          <span class="comment">//处理完输入文件之后，要把输出给下一个任务</span></span><br><span class="line">                                          <span class="keyword">val</span> dest: File = outputProvider.getContentLocation(</span><br><span class="line">                                            jarInput.name,</span><br><span class="line">                                            jarInput.contentTypes, jarInput.scopes, Format.JAR</span><br><span class="line">                                          )</span><br><span class="line">                                          FileUtils.copyFile(jarInput.file, dest)</span><br><span class="line">                                         &#125;</span><br><span class="line">                   &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> cost = (System.currentTimeMillis() - startTime) / <span class="number">1000</span></span><br><span class="line">    println(<span class="string">&quot;--------------- HelloTransform transform end --------------- &quot;</span>)</span><br><span class="line">    println(<span class="string">&quot;--------------- HelloTransform 耗时 = <span class="variable">$cost</span>  --------------- &quot;</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://asm.ow2.io/">ASM官网</a></p>
-<p><a href="https://jueee.github.io/2020/08/2020-08-27-Java%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E7%BA%B5%E6%A1%86%E6%9E%B6ASM/">参考1</a></p>
-<p><a href="https://blog.csdn.net/CrazyMo_/article/details/102601483">参考2</a></p>
-<p><a href="https://blog.jiahuan.me/2019/01/11/Android%E7%BC%96%E8%AF%91%E6%9C%9F%E4%BF%AE%E6%94%B9Class%E5%AD%97%E8%8A%82%E7%A0%81/">参考3</a></p>
-<p><a href="https://cloud.tencent.com/developer/article/1634989">参考4</a></p>
-<p><a href="https://www.jianshu.com/p/16ed4d233fd1">参考5</a></p>
-<p><a href="https://stackoom.com/question/3fEwG/build-gradle%E4%B8%AD%E7%9A%84registerTransform%E4%B9%8B%E5%90%8E%E7%BC%BA%E5%B0%91base-apk%E4%BB%A3%E7%A0%81">出错-参考</a></p>
-<p><a href="https://blog.yorek.xyz/android/paid/master/bytecode/">参考6-重点</a></p>
-<p><a href="https://www.thedroidsonroids.com/blog/how-to-generate-java-sources-using-buildsrc-gradle-project">参考7-code gen</a></p>
-<p><a href="https://jishuin.proginn.com/p/763bfbd36680">参考8</a></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
 ]]></content>
       <categories>
-        <category>gradle</category>
+        <category>frida</category>
       </categories>
       <tags>
-        <tag>gradle</tag>
-        <tag>asm</tag>
+        <tag>frida</tag>
       </tags>
   </entry>
   <entry>
-    <title>Hello Hexo</title>
-    <url>/2020/12/12/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<div class="justified-gallery"><p><img src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg"><br><img src="https://i.loli.net/2019/12/25/ryLVePaqkYm4TEK.jpg"><br><img src="https://i.loli.net/2019/12/25/gEy5Zc1Ai6VuO4N.jpg"><br><img src="https://i.loli.net/2019/12/25/d6QHbytlSYO4FBG.jpg"><br><img src="https://i.loli.net/2019/12/25/6nepIJ1xTgufatZ.jpg"><br><img src="https://i.loli.net/2019/12/25/E7Jvr4eIPwUNmzq.jpg"><br><img src="https://i.loli.net/2019/12/25/mh19anwBSWIkGlH.jpg"><br><img src="https://i.loli.net/2019/12/25/2tu9JC8ewpBFagv.jpg"></p>
-          </div>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
 ]]></content>
       <categories>
-        <category>other</category>
+        <category>frida</category>
       </categories>
       <tags>
-        <tag>other</tag>
+        <tag>android</tag>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git-log备注</title>
+    <url>/2021/04/27/git-log%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h5 id="git-log-备注"><a href="#git-log-备注" class="headerlink" title="git log 备注"></a>git log 备注</h5><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%H</td>
+<td>提交的完整哈希值</td>
+</tr>
+<tr>
+<td>%h</td>
+<td>提交的简写哈希值</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>树的完整哈希值</td>
+</tr>
+<tr>
+<td>%t</td>
+<td>树的简写哈希值</td>
+</tr>
+<tr>
+<td>%P</td>
+<td>父提交的完整哈希值</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>父提交的简写哈希值</td>
+</tr>
+<tr>
+<td>%an</td>
+<td>作者名字</td>
+</tr>
+<tr>
+<td>%ae</td>
+<td>作者的电子邮件地址</td>
+</tr>
+<tr>
+<td>%ad</td>
+<td>作者修订日期(可以用 –date=选项 来定制格式)</td>
+</tr>
+<tr>
+<td>%ar</td>
+<td>作者修订日期，按多久以前的方式显示</td>
+</tr>
+<tr>
+<td>%cn</td>
+<td>提交者的名字</td>
+</tr>
+<tr>
+<td>%ce</td>
+<td>提交者的电子邮件地址</td>
+</tr>
+<tr>
+<td>%cd</td>
+<td>提交日期</td>
+</tr>
+<tr>
+<td>%cr</td>
+<td>提交日期(距今多长时间)</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>提交说明</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log    </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/30/Csgyt2ej8ScYDdo.png" alt="iShot2021-04-30下午05.45.46.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log --oneline</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/30/M6O4d1XrGuHgcwL.png" alt="iShot2021-04-30下午04.00.11.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git shortlog  </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/30/dLzT7g4ODRbXFW8.png" alt="iShot2021-04-30下午04.07.27.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git lg </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/30/YfJw4PqBZ5ozOAa.png" alt="iShot2021-04-30下午04.08.49.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git lg --pretty&#x3D;format:%cr-%s --after&#x3D;&quot;yesterday&quot; --before&#x3D;&quot;2021-04-30&quot; </span><br></pre></td></tr></table></figure>
+<p><code>after</code> 的参数可以很丰富 例如 <code>3.weeks.ago</code>、<code>2021-04-20</code>、<code>yesterday</code> ……</p>
+<h5 id="例如"><a href="#例如" class="headerlink" title="例如"></a>例如</h5><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取昨天到今天的Git日志信息</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">def</span> getGitLog() &#123;</span><br><span class="line">    <span class="keyword">def</span> todayYmd = <span class="keyword">new</span> Date().format(<span class="string">&quot;yyyy-MM-dd&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> beginYmd =<span class="string">&quot;yesterday&quot;</span></span><br><span class="line"></span><br><span class="line">    println(<span class="string">&quot;currentTime = &quot;</span> +System.currentTimeMillis())</span><br><span class="line">    StringBuffer stringBuffer = <span class="keyword">new</span> StringBuffer()</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; git log&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --pretty=format:%cr-%s&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --after=\&quot;$&#123;beginYmd&#125;\&quot;&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --before=\&quot;$&#123;todayYmd&#125;\&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> cmd = stringBuffer.toString()</span><br><span class="line">    println(<span class="string">&quot;cmd =$cmd&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span>  cmd.execute().text.trim()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取编译当前安装包的时间</span></span><br><span class="line"><span class="keyword">def</span> buildAppTime() &#123;</span><br><span class="line">    <span class="keyword">def</span> buildTime = <span class="keyword">new</span> Date().format(<span class="string">&quot;MM_dd_HH_mm&quot;</span>)</span><br><span class="line"><span class="comment">//    def buildTime = new Date().format(&quot;yyyy_MM_dd_HH_mm&quot;)</span></span><br><span class="line">    <span class="keyword">return</span> buildTime</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出git日志信息到文件中</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">def</span> buildLog() &#123;</span><br><span class="line">    FileWriter fw = <span class="keyword">new</span> FileWriter(project.rootDir.absolutePath + File.separator + <span class="string">&quot;log.txt&quot;</span>)</span><br><span class="line">    StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    builder.append(<span class="string">&quot;[构建时间]=&quot;</span> + buildAppTime())</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[版本编号]=&quot;</span> + project.android.defaultConfig.versionCode)</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[版本名称]=&quot;</span> + project.android.defaultConfig.versionName)</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[提交记录]=\r\n&quot;</span> + getGitLog())</span><br><span class="line">    println(<span class="string">&quot;kkkkk = $&#123;builder.toString()&#125;&quot;</span>)</span><br><span class="line">    fw.write(builder.toString())</span><br><span class="line">    fw.flush()</span><br><span class="line">    fw.close()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="重命名打包信息"><a href="#重命名打包信息" class="headerlink" title="重命名打包信息"></a>重命名打包信息</h5><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="comment">//备注 gradle插件版本  classpath &#x27;com.android.tools.build:gradle:3.2.0&#x27; </span></span><br><span class="line"><span class="comment">//应用名称缩写</span></span><br><span class="line"><span class="keyword">def</span> APP_NAME_ABBREVIATION = <span class="string">&quot;SXTTPJC&quot;</span></span><br><span class="line"><span class="keyword">def</span> DEFAULT_CHANNEL = <span class="string">&quot;official&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//修改打包后apk的名称</span></span><br><span class="line">    <span class="comment">//给打包出来的Apk修改一下名字</span></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line"><span class="comment">//            println(&quot;variant = &quot; + variant)</span></span><br><span class="line">            <span class="keyword">def</span> outputDir = variant.getPackageApplication().outputDirectory.getParentFile().getAbsoluteFile()</span><br><span class="line"><span class="comment">//            println(&quot;outputDir = $&#123;outputDir&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line">            <span class="keyword">def</span> newOutputDir = <span class="keyword">new</span> File(outputDir, <span class="string">&quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;</span>)</span><br><span class="line">            println(<span class="string">&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;</span>)</span><br><span class="line">            variant.getPackageApplication().outputDirectory = newOutputDir</span><br><span class="line"></span><br><span class="line">            <span class="keyword">def</span> versionName = project.android.defaultConfig.versionName</span><br><span class="line">            <span class="keyword">def</span> versionCode = project.android.defaultConfig.versionCode</span><br><span class="line"><span class="comment">//            versionName = versionName.replaceAll(&quot;\\.&quot;, &quot;_&quot;)</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;app-$&#123;variant.buildType.name&#125;_$&#123;APP_NAME&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;versionCode&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">            <span class="comment">//新的apk名称</span></span><br><span class="line">            <span class="keyword">def</span> newApkName = <span class="string">&quot;$&#123;APP_NAME_ABBREVIATION&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;variant.buildType.name&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">            println(<span class="string">&quot;newApkName = &quot;</span> + newApkName)</span><br><span class="line">            outputFileName = newApkName</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line"><span class="comment">//2 </span></span><br><span class="line">   android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//            def outputDir = variant.getPackageApplication().getOutputDirectory().host</span></span><br><span class="line"><span class="comment">//            println(&quot;outputDir = $&#123;outputDir&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line"><span class="comment">//            def newOutputDir = new File(outputDir, &quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            println(&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            variant.getPackageApplication().outputDirectory = newOutputDir</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line"><span class="comment">//            def newOutputDir = new File(outputDir, &quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            println(&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            variant.getPackageApplication().outputDirectory = newOutputDir</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//            def versionName = project.android.defaultConfig.versionName</span></span><br><span class="line"><span class="comment">//            def versionCode = project.android.defaultConfig.versionCode</span></span><br><span class="line"><span class="comment">//            versionName = versionName.replaceAll(&quot;\\.&quot;, &quot;_&quot;)</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;app-$&#123;variant.buildType.name&#125;_$&#123;APP_NAME&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;versionCode&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">                <span class="comment">//新的apk名称</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;$&#123;APP_NAME_ABBREVIATION&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;variant.buildType.name&#125;&#125;.apk&quot;</span></span><br><span class="line"><span class="comment">//            println(&quot;newApkName = &quot; + newApkName)</span></span><br><span class="line"><span class="comment">//            outputFileName = newApkName</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            output -&gt;</span><br><span class="line">                println(<span class="string">&quot;\nbuildDir = $&#123;buildDir&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\nandroid = $&#123;android.buildOutputs&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\nvariant = $&#123;variant.getPackageApplicationProvider()&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\noutput = $output&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\noutputFileName = $output.outputFileName&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        variant.getAssembleProvider().get().doLast&#123;</span><br><span class="line">            println(<span class="string">&quot;..........copy file begin.........&quot;</span>)</span><br><span class="line">            variant.outputs.forEach&#123;</span><br><span class="line">                file -&gt;</span><br><span class="line">                    println(<span class="string">&quot;\nfile = $&#123;file.outputFile&#125;&quot;</span>)</span><br><span class="line">                    copy&#123;</span><br><span class="line">                        from file.outputFile</span><br><span class="line">                        into <span class="keyword">new</span> File(<span class="string">&quot;/Users/xxx/apk&quot;</span>)</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            println(<span class="string">&quot;..........copy file end.........&quot;</span>)</span><br><span class="line"></span><br><span class="line">            println(<span class="string">&quot;..........ok.........&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.cnblogs.com/EnSnail/p/6772454.html">参考1</a></p>
+<p><a href="https://www.runoob.com/git/git-commit-history.html">参考2</a></p>
+<p><a href="https://blog.csdn.net/byhook/article/details/51746825">参考3</a></p>
+<p><a href="https://git-scm.com/docs/git-log">官网</a></p>
+<p><a href="https://blog.csdn.net/smallbabylong/article/details/111276762">apk打包命名</a></p>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>gradle</tag>
+        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -1019,23 +1014,6 @@
       </categories>
       <tags>
         <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>frida</tag>
       </tags>
   </entry>
   <entry>
@@ -1157,225 +1135,25 @@
       </tags>
   </entry>
   <entry>
-    <title>okhttp请求记录</title>
-    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<ul>
-<li><p>OkHttp请求</p>
-<ol>
-<li><p>创建Request对象</p>
-<p><code>Request对象的创建通过Builder模式创建</code> </p>
-<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
-</li>
-<li><p>创建OkHttpClient对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>异步方式http请求</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码</p>
-</li>
-</ol>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li><p>OkHttp 拦截器</p>
-<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
-</li>
-</ul>
+    <title>Hello Hexo</title>
+    <url>/2020/12/12/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<div class="justified-gallery"><p><img src="https://i.loli.net/2019/12/25/Fze9jchtnyJXMHN.jpg"><br><img src="https://i.loli.net/2019/12/25/ryLVePaqkYm4TEK.jpg"><br><img src="https://i.loli.net/2019/12/25/gEy5Zc1Ai6VuO4N.jpg"><br><img src="https://i.loli.net/2019/12/25/d6QHbytlSYO4FBG.jpg"><br><img src="https://i.loli.net/2019/12/25/6nepIJ1xTgufatZ.jpg"><br><img src="https://i.loli.net/2019/12/25/E7Jvr4eIPwUNmzq.jpg"><br><img src="https://i.loli.net/2019/12/25/mh19anwBSWIkGlH.jpg"><br><img src="https://i.loli.net/2019/12/25/2tu9JC8ewpBFagv.jpg"></p>
+          </div>
 ]]></content>
       <categories>
-        <category>android</category>
+        <category>other</category>
       </categories>
       <tags>
-        <tag>android</tag>
-        <tag>okhttp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>markdown 常用语法学习备注</title>
-    <url>/2018/03/12/markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h3 id="1-斜体和粗体"><a href="#1-斜体和粗体" class="headerlink" title="1. 斜体和粗体"></a>1. 斜体和粗体</h3><p>使用 * 和 ** 表示斜体和粗体。</p>
-<p>示例：</p>
-<p>这是 <em>斜体</em>，这是 <strong>粗体</strong>。</p>
-<h3 id="2-分级标题"><a href="#2-分级标题" class="headerlink" title="2. 分级标题"></a>2. 分级标题</h3><p>使用 === 表示一级标题，使用 — 表示二级标题。</p>
-<p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个一级标题</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">这是一个二级标题</span><br><span class="line">--------------------------------------------------</span><br><span class="line"></span><br><span class="line">### 这是一个三级标题</span><br></pre></td></tr></table></figure>
-<p>你也可以选择在行首加井号表示不同级别的标题 (H1-H6)，例如：# H1, ## H2, ### H3，#### H4。</p>
-<h3 id="3-外链接"><a href="#3-外链接" class="headerlink" title="3. 外链接"></a>3. 外链接</h3><p>使用 [描述](链接地址) 为文字增加外链接。</p>
-<p>示例：</p>
-<p>这是去往 <a href="https://boundless1024.com/">本人博客</a> 的链接。</p>
-<h3 id="4-无序列表"><a href="#4-无序列表" class="headerlink" title="4. 无序列表"></a>4. 无序列表</h3><p>使用 *，+，- 表示无序列表。</p>
-<p>示例：</p>
-<ul>
-<li>无序列表项 一</li>
-<li>无序列表项 二</li>
-<li>无序列表项 三</li>
-</ul>
-<h3 id="5-有序列表"><a href="#5-有序列表" class="headerlink" title="5. 有序列表"></a>5. 有序列表</h3><p>使用数字和点表示有序列表。</p>
-<p>示例：</p>
-<ol>
-<li>有序列表项 一</li>
-<li>有序列表项 二</li>
-<li>有序列表项 三</li>
-</ol>
-<h3 id="6-文字引用"><a href="#6-文字引用" class="headerlink" title="6. 文字引用"></a>6. 文字引用</h3><p>使用 &gt; 表示文字引用。</p>
-<p>示例：</p>
-<blockquote>
-<p>野火烧不尽，春风吹又生。</p>
-</blockquote>
-<h3 id="7-行内代码块"><a href="#7-行内代码块" class="headerlink" title="7. 行内代码块"></a>7. 行内代码块</h3><p>使用 `代码` 表示行内代码块。</p>
-<p>示例：</p>
-<p>让我们聊聊 <code>html</code>。</p>
-<h3 id="8-代码块"><a href="#8-代码块" class="headerlink" title="8.  代码块"></a>8.  代码块</h3><p>使用 四个缩进空格 表示代码块。</p>
-<p>示例：</p>
-<pre><code>这是一个代码块，此行左侧有四个不可见的空格。
-</code></pre>
-<h3 id="9-插入图像"><a href="#9-插入图像" class="headerlink" title="9.  插入图像"></a>9.  插入图像</h3><p>使用 ![描述](图片链接地址) 插入图像。</p>
-<p>示例：</p>
-<p><img src="https://i.loli.net/2021/02/22/JnUYy8q6ZvfTcVs.jpg" alt="我的头像"></p>
-<h1 id="高阶语法手册"><a href="#高阶语法手册" class="headerlink" title="高阶语法手册"></a>高阶语法手册</h1><h3 id="1-内容目录"><a href="#1-内容目录" class="headerlink" title="1. 内容目录"></a>1. 内容目录</h3><p>在段落中填写 <code>[TOC]</code> 以显示全文内容的目录结构。</p>
-<p>[TOC]</p>
-<h3 id="2-标签分类"><a href="#2-标签分类" class="headerlink" title="2. 标签分类"></a>2. 标签分类</h3><p>在编辑区任意行的列首位置输入以下代码给文稿标签：</p>
-<p>标签： 数学 英语 Markdown</p>
-<p>或者</p>
-<p>Tags： 数学 英语 Markdown</p>
-<h3 id="3-删除线"><a href="#3-删除线" class="headerlink" title="3. 删除线"></a>3. 删除线</h3><p>使用 ~~ 表示删除线。</p>
-<p><del>这是一段错误的文本。</del></p>
-<h3 id="4-注脚"><a href="#4-注脚" class="headerlink" title="4. 注脚"></a>4. 注脚</h3><p>使用 [^keyword] 表示注脚。</p>
-<p>这是一个注脚[^footnote]的样例。</p>
-<p>这是第二个注脚[^footnote2]的样例。</p>
-<h3 id="5-LaTeX-公式"><a href="#5-LaTeX-公式" class="headerlink" title="5. LaTeX 公式"></a>5. LaTeX 公式</h3><p>$ 表示行内公式：</p>
-<p>质能守恒方程可以用一个很简洁的方程式 $E=mc^2$ 来表达。</p>
-<p>$$ 表示整行公式：</p>
-<p>$$\sum_{i=1}^n a_i=0$$</p>
-<p>$$f(x_1,x_x,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2 $$</p>
-<p>$$\sum^{j-1}<em>{k=0}{\widehat{\gamma}</em>{kj} z_k}$$</p>
-<p>访问 <a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">MathJax</a> 参考更多使用方法。</p>
-<h3 id="6-加强的代码块"><a href="#6-加强的代码块" class="headerlink" title="6. 加强的代码块"></a>6. 加强的代码块</h3><p>支持四十一种编程语言的语法高亮的显示，行号显示。</p>
-<p>非代码示例：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install vim-gnome</span><br></pre></td></tr></table></figure>
-<p>Python 示例：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@requires_authorization</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">somefunc</span>(<span class="params">param1=<span class="string">&#x27;&#x27;</span>, param2=<span class="number">0</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;A docstring&#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> param1 &gt; param2: <span class="comment"># interesting</span></span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;Greater&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> (param2 - param1 + <span class="number">1</span>) <span class="keyword">or</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>message = <span class="string">&#x27;&#x27;&#x27;interpreter</span></span><br><span class="line"><span class="string"><span class="meta">... </span>prompt&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>JavaScript 示例：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* nth element in the fibonacci series.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>n &gt;= 0</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return </span>the nth element, &gt;= 0.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fib</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">1</span>, b = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">var</span> tmp;</span><br><span class="line">  <span class="keyword">while</span> (--n &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">    tmp = a;</span><br><span class="line">    a += b;</span><br><span class="line">    b = tmp;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.write(fib(<span class="number">10</span>));</span><br></pre></td></tr></table></figure>
-<h3 id="7-流程图"><a href="#7-流程图" class="headerlink" title="7. 流程图"></a>7. 流程图</h3><h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">st&#x3D;&gt;start: Start:&gt;https:&#x2F;&#x2F;www.zybuluo.com</span><br><span class="line">io&#x3D;&gt;inputoutput: verification</span><br><span class="line">op&#x3D;&gt;operation: Your Operation</span><br><span class="line">cond&#x3D;&gt;condition: Yes or No?</span><br><span class="line">sub&#x3D;&gt;subroutine: Your Subroutine</span><br><span class="line">e&#x3D;&gt;end</span><br><span class="line"></span><br><span class="line">st-&gt;io-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;sub-&gt;io</span><br></pre></td></tr></table></figure>
-<h4 id="更多语法参考：流程图语法参考"><a href="#更多语法参考：流程图语法参考" class="headerlink" title="更多语法参考：流程图语法参考"></a>更多语法参考：<a href="http://adrai.github.io/flowchart.js/">流程图语法参考</a></h4><h3 id="8-序列图"><a href="#8-序列图" class="headerlink" title="8. 序列图"></a>8. 序列图</h3><h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1"></a>示例 1</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alice-&gt;Bob: Hello Bob, how are you?</span><br><span class="line">Note right of Bob: Bob thinks</span><br><span class="line">Bob--&gt;Alice: I am good thanks!</span><br></pre></td></tr></table></figure>
-<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2"></a>示例 2</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Title: Here is a title</span><br><span class="line">A-&gt;B: Normal line</span><br><span class="line">B--&gt;C: Dashed line</span><br><span class="line">C-&gt;&gt;D: Open arrow</span><br><span class="line">D--&gt;&gt;A: Dashed open arrow</span><br></pre></td></tr></table></figure>
-<h4 id="更多语法参考：序列图语法参考"><a href="#更多语法参考：序列图语法参考" class="headerlink" title="更多语法参考：序列图语法参考"></a>更多语法参考：<a href="http://bramp.github.io/js-sequence-diagrams/">序列图语法参考</a></h4><h3 id="9-甘特图"><a href="#9-甘特图" class="headerlink" title="9. 甘特图"></a>9. 甘特图</h3><p>甘特图内在思想简单。基本是一条线条图，横轴表示时间，纵轴表示活动（项目），线条表示在整个期间上计划和实际的活动完成情况。它直观地表明任务计划在什么时候进行，及实际进展与计划要求的对比。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">%% 语法示例</span><br><span class="line">        gantt</span><br><span class="line">        dateFormat  YYYY-MM-DD</span><br><span class="line">        title 软件开发甘特图</span><br><span class="line">        section 设计</span><br><span class="line">        需求                      :done,    des1, 2014-01-06,2014-01-08</span><br><span class="line">        原型                      :active,  des2, 2014-01-09, 3d</span><br><span class="line">        UI设计                     :         des3, after des2, 5d</span><br><span class="line">    未来任务                     :         des4, after des3, 5d</span><br><span class="line">        section 开发</span><br><span class="line">        学习准备理解需求                      :crit, done, 2014-01-06,24h</span><br><span class="line">        设计框架                             :crit, done, after des2, 2d</span><br><span class="line">        开发                                 :crit, active, 3d</span><br><span class="line">        未来任务                              :crit, 5d</span><br><span class="line">        耍                                   :2d</span><br><span class="line">        section 测试</span><br><span class="line">        功能测试                              :active, a1, after des3, 3d</span><br><span class="line">        压力测试                               :after a1  , 20h</span><br><span class="line">        测试报告                               : 48h</span><br></pre></td></tr></table></figure>
-<h4 id="更多语法参考：甘特图语法参考"><a href="#更多语法参考：甘特图语法参考" class="headerlink" title="更多语法参考：甘特图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#gant-diagrams">甘特图语法参考</a></h4><h3 id="10-Mermaid-流程图"><a href="#10-Mermaid-流程图" class="headerlink" title="10. Mermaid 流程图"></a>10. Mermaid 流程图</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A[Hard edge] --&gt;|Link text| B(Round edge)</span><br><span class="line">B --&gt; C&#123;Decision&#125;</span><br><span class="line">C --&gt;|One| D[Result one]</span><br><span class="line">C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
-<h4 id="更多语法参考：Mermaid-流程图语法参考"><a href="#更多语法参考：Mermaid-流程图语法参考" class="headerlink" title="更多语法参考：Mermaid 流程图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#flowcharts-basic-syntax">Mermaid 流程图语法参考</a></h4><h3 id="11-Mermaid-序列图"><a href="#11-Mermaid-序列图" class="headerlink" title="11. Mermaid 序列图"></a>11. Mermaid 序列图</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alice-&gt;John: Hello John, how are you?</span><br><span class="line">loop every minute</span><br><span class="line">    John--&gt;Alice: Great!</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<h4 id="更多语法参考：Mermaid-序列图语法参考"><a href="#更多语法参考：Mermaid-序列图语法参考" class="headerlink" title="更多语法参考：Mermaid 序列图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#sequence-diagrams">Mermaid 序列图语法参考</a></h4><h3 id="12-表格支持"><a href="#12-表格支持" class="headerlink" title="12. 表格支持"></a>12. 表格支持</h3><table>
-<thead>
-<tr>
-<th>项目</th>
-<th align="right">价格</th>
-<th align="center">数量</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>计算机</td>
-<td align="right">$1600</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td>手机</td>
-<td align="right">$12</td>
-<td align="center">12</td>
-</tr>
-<tr>
-<td>管线</td>
-<td align="right">$1</td>
-<td align="center">234</td>
-</tr>
-</tbody></table>
-<h3 id="13-定义型列表"><a href="#13-定义型列表" class="headerlink" title="13. 定义型列表"></a>13. 定义型列表</h3><dl><dt>名词 1</dt><dd>定义 1（左侧有一个可见的冒号和四个不可见的空格）</dd></dl><dl><dt>代码块 2</dt><dd>这是代码块的定义（左侧有一个可见的冒号和四个不可见的空格）</dd></dl><pre><code>    代码块（左侧有八个不可见的空格）
-</code></pre>
-<h3 id="14-Html-标签"><a href="#14-Html-标签" class="headerlink" title="14. Html 标签"></a>14. Html 标签</h3><p>本站支持在 Markdown 语法中嵌套 Html 标签，譬如，你可以用 Html 写一个纵跨两行的表格：</p>
-<pre><code>&lt;table&gt;
-    &lt;tr&gt;
-        &lt;th rowspan=&quot;2&quot;&gt;值班人员&lt;/th&gt;
-        &lt;th&gt;星期一&lt;/th&gt;
-        &lt;th&gt;星期二&lt;/th&gt;
-        &lt;th&gt;星期三&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-        &lt;td&gt;李强&lt;/td&gt;
-        &lt;td&gt;张明&lt;/td&gt;
-        &lt;td&gt;王平&lt;/td&gt;
-    &lt;/tr&gt;
-&lt;/table&gt;
-</code></pre>
-<table>
-    <tr>
-        <th rowspan="2">值班人员</th>
-        <th>星期一</th>
-        <th>星期二</th>
-        <th>星期三</th>
-    </tr>
-    <tr>
-        <td>李强</td>
-        <td>张明</td>
-        <td>王平</td>
-    </tr>
-</table>
-
-<h3 id="15-内嵌图标"><a href="#15-内嵌图标" class="headerlink" title="15. 内嵌图标"></a>15. 内嵌图标</h3><p>本站的图标系统对外开放，在文档中输入</p>
-<pre><code>&lt;i class=&quot;icon-weibo&quot;&gt;&lt;/i&gt;
-</code></pre>
-<p>即显示微博的图标： <i class="icon-weibo icon-2x"></i></p>
-<p>替换 上述 <code>i 标签</code> 内的 <code>icon-weibo</code> 以显示不同的图标，例如：</p>
-<pre><code>&lt;i class=&quot;icon-renren&quot;&gt;&lt;/i&gt;
-</code></pre>
-<p>即显示人人的图标： <i class="icon-renren icon-2x"></i></p>
-<p>更多的图标和玩法可以参看 <a href="http://fortawesome.github.io/Font-Awesome/3.2.1/icons/">font-awesome</a> 官方网站。</p>
-<h3 id="16-待办事宜-Todo-列表"><a href="#16-待办事宜-Todo-列表" class="headerlink" title="16. 待办事宜 Todo 列表"></a>16. 待办事宜 Todo 列表</h3><p>使用带有 [ ] 或 [x] （未完成或已完成）项的列表语法撰写一个待办事宜列表，并且支持子列表嵌套以及混用Markdown语法，例如：</p>
-<pre><code>- [ ] ** Markdown 开发**
-    - [ ] 改进 xxxx 渲染算法，使用局部渲染技术提高渲染效率
-    - [ ] 支持以 PDF 格式导出文稿
-    - [x] 新增Todo列表功能 [语法参考](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments)
-    - [x] 改进 LaTex 功能
-        - [x] 修复 LaTex 公式渲染问题
-        - [x] 新增 LaTex 公式编号功能 [语法参考](http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers)
-- [ ] **七月旅行准备**
-    - [ ] 准备邮轮上需要携带的物品
-    - [ ] 浏览日本免税店的物品
-    - [x] 购买蓝宝石公主号七月一日的船票
-</code></pre>
-<p>对应显示如下待办事宜 Todo 列表：</p>
-<ul>
-<li><input disabled="" type="checkbox"> ** Markdown 开发**<ul>
-<li><input disabled="" type="checkbox"> 改进 xxxx 渲染算法，使用局部渲染技术提高渲染效率</li>
-<li><input disabled="" type="checkbox"> 支持以 PDF 格式导出文稿</li>
-<li><input checked="" disabled="" type="checkbox"> 新增Todo列表功能 <a href="https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments">语法参考</a></li>
-<li><input checked="" disabled="" type="checkbox"> 改进 LaTex 功能<ul>
-<li><input checked="" disabled="" type="checkbox"> 修复 LaTex 公式渲染问题</li>
-<li><input checked="" disabled="" type="checkbox"> 新增 LaTex 公式编号功能 <a href="http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers">语法参考</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"> <strong>七月旅行准备</strong><ul>
-<li><input disabled="" type="checkbox"> 准备邮轮上需要携带的物品</li>
-<li><input disabled="" type="checkbox"> 浏览日本免税店的物品</li>
-<li><input checked="" disabled="" type="checkbox"> 购买蓝宝石公主号七月一日的船票</li>
-</ul>
-</li>
-</ul>
-<p>[^footnote]: 这是一个 <em>注脚</em> 的 <strong>文本</strong>。</p>
-<p>[^footnote2]: 这是另一个 <em>注脚</em> 的 <strong>文本</strong>。</p>
-<p><a href="https://www.runoob.com/markdown/md-advance.html">mermaid参考</a></p>
-]]></content>
-      <categories>
-        <category>markdown</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-        <tag>md</tag>
+        <tag>other</tag>
       </tags>
   </entry>
   <entry>
@@ -1762,19 +1540,186 @@
       </tags>
   </entry>
   <entry>
-    <title>RecyclerView嵌套滑动</title>
-    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
-<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
-<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
+    <title>markdown 常用语法学习备注</title>
+    <url>/2018/03/12/markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h3 id="1-斜体和粗体"><a href="#1-斜体和粗体" class="headerlink" title="1. 斜体和粗体"></a>1. 斜体和粗体</h3><p>使用 * 和 ** 表示斜体和粗体。</p>
+<p>示例：</p>
+<p>这是 <em>斜体</em>，这是 <strong>粗体</strong>。</p>
+<h3 id="2-分级标题"><a href="#2-分级标题" class="headerlink" title="2. 分级标题"></a>2. 分级标题</h3><p>使用 === 表示一级标题，使用 — 表示二级标题。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">这是一个一级标题</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">这是一个二级标题</span><br><span class="line">--------------------------------------------------</span><br><span class="line"></span><br><span class="line">### 这是一个三级标题</span><br></pre></td></tr></table></figure>
+<p>你也可以选择在行首加井号表示不同级别的标题 (H1-H6)，例如：# H1, ## H2, ### H3，#### H4。</p>
+<h3 id="3-外链接"><a href="#3-外链接" class="headerlink" title="3. 外链接"></a>3. 外链接</h3><p>使用 [描述](链接地址) 为文字增加外链接。</p>
+<p>示例：</p>
+<p>这是去往 <a href="https://boundless1024.com/">本人博客</a> 的链接。</p>
+<h3 id="4-无序列表"><a href="#4-无序列表" class="headerlink" title="4. 无序列表"></a>4. 无序列表</h3><p>使用 *，+，- 表示无序列表。</p>
+<p>示例：</p>
+<ul>
+<li>无序列表项 一</li>
+<li>无序列表项 二</li>
+<li>无序列表项 三</li>
+</ul>
+<h3 id="5-有序列表"><a href="#5-有序列表" class="headerlink" title="5. 有序列表"></a>5. 有序列表</h3><p>使用数字和点表示有序列表。</p>
+<p>示例：</p>
+<ol>
+<li>有序列表项 一</li>
+<li>有序列表项 二</li>
+<li>有序列表项 三</li>
+</ol>
+<h3 id="6-文字引用"><a href="#6-文字引用" class="headerlink" title="6. 文字引用"></a>6. 文字引用</h3><p>使用 &gt; 表示文字引用。</p>
+<p>示例：</p>
+<blockquote>
+<p>野火烧不尽，春风吹又生。</p>
+</blockquote>
+<h3 id="7-行内代码块"><a href="#7-行内代码块" class="headerlink" title="7. 行内代码块"></a>7. 行内代码块</h3><p>使用 `代码` 表示行内代码块。</p>
+<p>示例：</p>
+<p>让我们聊聊 <code>html</code>。</p>
+<h3 id="8-代码块"><a href="#8-代码块" class="headerlink" title="8.  代码块"></a>8.  代码块</h3><p>使用 四个缩进空格 表示代码块。</p>
+<p>示例：</p>
+<pre><code>这是一个代码块，此行左侧有四个不可见的空格。
+</code></pre>
+<h3 id="9-插入图像"><a href="#9-插入图像" class="headerlink" title="9.  插入图像"></a>9.  插入图像</h3><p>使用 ![描述](图片链接地址) 插入图像。</p>
+<p>示例：</p>
+<p><img src="https://i.loli.net/2021/02/22/JnUYy8q6ZvfTcVs.jpg" alt="我的头像"></p>
+<h1 id="高阶语法手册"><a href="#高阶语法手册" class="headerlink" title="高阶语法手册"></a>高阶语法手册</h1><h3 id="1-内容目录"><a href="#1-内容目录" class="headerlink" title="1. 内容目录"></a>1. 内容目录</h3><p>在段落中填写 <code>[TOC]</code> 以显示全文内容的目录结构。</p>
+<p>[TOC]</p>
+<h3 id="2-标签分类"><a href="#2-标签分类" class="headerlink" title="2. 标签分类"></a>2. 标签分类</h3><p>在编辑区任意行的列首位置输入以下代码给文稿标签：</p>
+<p>标签： 数学 英语 Markdown</p>
+<p>或者</p>
+<p>Tags： 数学 英语 Markdown</p>
+<h3 id="3-删除线"><a href="#3-删除线" class="headerlink" title="3. 删除线"></a>3. 删除线</h3><p>使用 ~~ 表示删除线。</p>
+<p><del>这是一段错误的文本。</del></p>
+<h3 id="4-注脚"><a href="#4-注脚" class="headerlink" title="4. 注脚"></a>4. 注脚</h3><p>使用 [^keyword] 表示注脚。</p>
+<p>这是一个注脚[^footnote]的样例。</p>
+<p>这是第二个注脚[^footnote2]的样例。</p>
+<h3 id="5-LaTeX-公式"><a href="#5-LaTeX-公式" class="headerlink" title="5. LaTeX 公式"></a>5. LaTeX 公式</h3><p>$ 表示行内公式：</p>
+<p>质能守恒方程可以用一个很简洁的方程式 $E=mc^2$ 来表达。</p>
+<p>$$ 表示整行公式：</p>
+<p>$$\sum_{i=1}^n a_i=0$$</p>
+<p>$$f(x_1,x_x,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2 $$</p>
+<p>$$\sum^{j-1}<em>{k=0}{\widehat{\gamma}</em>{kj} z_k}$$</p>
+<p>访问 <a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">MathJax</a> 参考更多使用方法。</p>
+<h3 id="6-加强的代码块"><a href="#6-加强的代码块" class="headerlink" title="6. 加强的代码块"></a>6. 加强的代码块</h3><p>支持四十一种编程语言的语法高亮的显示，行号显示。</p>
+<p>非代码示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install vim-gnome</span><br></pre></td></tr></table></figure>
+<p>Python 示例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@requires_authorization</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">somefunc</span>(<span class="params">param1=<span class="string">&#x27;&#x27;</span>, param2=<span class="number">0</span></span>):</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;A docstring&#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> param1 &gt; param2: <span class="comment"># interesting</span></span><br><span class="line">        <span class="built_in">print</span> <span class="string">&#x27;Greater&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> (param2 - param1 + <span class="number">1</span>) <span class="keyword">or</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>message = <span class="string">&#x27;&#x27;&#x27;interpreter</span></span><br><span class="line"><span class="string"><span class="meta">... </span>prompt&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>JavaScript 示例：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* nth element in the fibonacci series.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param </span>n &gt;= 0</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return </span>the nth element, &gt;= 0.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fib</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">1</span>, b = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">var</span> tmp;</span><br><span class="line">  <span class="keyword">while</span> (--n &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">    tmp = a;</span><br><span class="line">    a += b;</span><br><span class="line">    b = tmp;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.write(fib(<span class="number">10</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="7-流程图"><a href="#7-流程图" class="headerlink" title="7. 流程图"></a>7. 流程图</h3><h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">st&#x3D;&gt;start: Start:&gt;https:&#x2F;&#x2F;www.zybuluo.com</span><br><span class="line">io&#x3D;&gt;inputoutput: verification</span><br><span class="line">op&#x3D;&gt;operation: Your Operation</span><br><span class="line">cond&#x3D;&gt;condition: Yes or No?</span><br><span class="line">sub&#x3D;&gt;subroutine: Your Subroutine</span><br><span class="line">e&#x3D;&gt;end</span><br><span class="line"></span><br><span class="line">st-&gt;io-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;sub-&gt;io</span><br></pre></td></tr></table></figure>
+<h4 id="更多语法参考：流程图语法参考"><a href="#更多语法参考：流程图语法参考" class="headerlink" title="更多语法参考：流程图语法参考"></a>更多语法参考：<a href="http://adrai.github.io/flowchart.js/">流程图语法参考</a></h4><h3 id="8-序列图"><a href="#8-序列图" class="headerlink" title="8. 序列图"></a>8. 序列图</h3><h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1"></a>示例 1</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alice-&gt;Bob: Hello Bob, how are you?</span><br><span class="line">Note right of Bob: Bob thinks</span><br><span class="line">Bob--&gt;Alice: I am good thanks!</span><br></pre></td></tr></table></figure>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2"></a>示例 2</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Title: Here is a title</span><br><span class="line">A-&gt;B: Normal line</span><br><span class="line">B--&gt;C: Dashed line</span><br><span class="line">C-&gt;&gt;D: Open arrow</span><br><span class="line">D--&gt;&gt;A: Dashed open arrow</span><br></pre></td></tr></table></figure>
+<h4 id="更多语法参考：序列图语法参考"><a href="#更多语法参考：序列图语法参考" class="headerlink" title="更多语法参考：序列图语法参考"></a>更多语法参考：<a href="http://bramp.github.io/js-sequence-diagrams/">序列图语法参考</a></h4><h3 id="9-甘特图"><a href="#9-甘特图" class="headerlink" title="9. 甘特图"></a>9. 甘特图</h3><p>甘特图内在思想简单。基本是一条线条图，横轴表示时间，纵轴表示活动（项目），线条表示在整个期间上计划和实际的活动完成情况。它直观地表明任务计划在什么时候进行，及实际进展与计划要求的对比。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">%% 语法示例</span><br><span class="line">        gantt</span><br><span class="line">        dateFormat  YYYY-MM-DD</span><br><span class="line">        title 软件开发甘特图</span><br><span class="line">        section 设计</span><br><span class="line">        需求                      :done,    des1, 2014-01-06,2014-01-08</span><br><span class="line">        原型                      :active,  des2, 2014-01-09, 3d</span><br><span class="line">        UI设计                     :         des3, after des2, 5d</span><br><span class="line">    未来任务                     :         des4, after des3, 5d</span><br><span class="line">        section 开发</span><br><span class="line">        学习准备理解需求                      :crit, done, 2014-01-06,24h</span><br><span class="line">        设计框架                             :crit, done, after des2, 2d</span><br><span class="line">        开发                                 :crit, active, 3d</span><br><span class="line">        未来任务                              :crit, 5d</span><br><span class="line">        耍                                   :2d</span><br><span class="line">        section 测试</span><br><span class="line">        功能测试                              :active, a1, after des3, 3d</span><br><span class="line">        压力测试                               :after a1  , 20h</span><br><span class="line">        测试报告                               : 48h</span><br></pre></td></tr></table></figure>
+<h4 id="更多语法参考：甘特图语法参考"><a href="#更多语法参考：甘特图语法参考" class="headerlink" title="更多语法参考：甘特图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#gant-diagrams">甘特图语法参考</a></h4><h3 id="10-Mermaid-流程图"><a href="#10-Mermaid-流程图" class="headerlink" title="10. Mermaid 流程图"></a>10. Mermaid 流程图</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">A[Hard edge] --&gt;|Link text| B(Round edge)</span><br><span class="line">B --&gt; C&#123;Decision&#125;</span><br><span class="line">C --&gt;|One| D[Result one]</span><br><span class="line">C --&gt;|Two| E[Result two]</span><br></pre></td></tr></table></figure>
+<h4 id="更多语法参考：Mermaid-流程图语法参考"><a href="#更多语法参考：Mermaid-流程图语法参考" class="headerlink" title="更多语法参考：Mermaid 流程图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#flowcharts-basic-syntax">Mermaid 流程图语法参考</a></h4><h3 id="11-Mermaid-序列图"><a href="#11-Mermaid-序列图" class="headerlink" title="11. Mermaid 序列图"></a>11. Mermaid 序列图</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Alice-&gt;John: Hello John, how are you?</span><br><span class="line">loop every minute</span><br><span class="line">    John--&gt;Alice: Great!</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h4 id="更多语法参考：Mermaid-序列图语法参考"><a href="#更多语法参考：Mermaid-序列图语法参考" class="headerlink" title="更多语法参考：Mermaid 序列图语法参考"></a>更多语法参考：<a href="https://knsv.github.io/mermaid/#sequence-diagrams">Mermaid 序列图语法参考</a></h4><h3 id="12-表格支持"><a href="#12-表格支持" class="headerlink" title="12. 表格支持"></a>12. 表格支持</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th align="right">价格</th>
+<th align="center">数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>计算机</td>
+<td align="right">$1600</td>
+<td align="center">5</td>
+</tr>
+<tr>
+<td>手机</td>
+<td align="right">$12</td>
+<td align="center">12</td>
+</tr>
+<tr>
+<td>管线</td>
+<td align="right">$1</td>
+<td align="center">234</td>
+</tr>
+</tbody></table>
+<h3 id="13-定义型列表"><a href="#13-定义型列表" class="headerlink" title="13. 定义型列表"></a>13. 定义型列表</h3><dl><dt>名词 1</dt><dd>定义 1（左侧有一个可见的冒号和四个不可见的空格）</dd></dl><dl><dt>代码块 2</dt><dd>这是代码块的定义（左侧有一个可见的冒号和四个不可见的空格）</dd></dl><pre><code>    代码块（左侧有八个不可见的空格）
+</code></pre>
+<h3 id="14-Html-标签"><a href="#14-Html-标签" class="headerlink" title="14. Html 标签"></a>14. Html 标签</h3><p>本站支持在 Markdown 语法中嵌套 Html 标签，譬如，你可以用 Html 写一个纵跨两行的表格：</p>
+<pre><code>&lt;table&gt;
+    &lt;tr&gt;
+        &lt;th rowspan=&quot;2&quot;&gt;值班人员&lt;/th&gt;
+        &lt;th&gt;星期一&lt;/th&gt;
+        &lt;th&gt;星期二&lt;/th&gt;
+        &lt;th&gt;星期三&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;李强&lt;/td&gt;
+        &lt;td&gt;张明&lt;/td&gt;
+        &lt;td&gt;王平&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+<table>
+    <tr>
+        <th rowspan="2">值班人员</th>
+        <th>星期一</th>
+        <th>星期二</th>
+        <th>星期三</th>
+    </tr>
+    <tr>
+        <td>李强</td>
+        <td>张明</td>
+        <td>王平</td>
+    </tr>
+</table>
+
+<h3 id="15-内嵌图标"><a href="#15-内嵌图标" class="headerlink" title="15. 内嵌图标"></a>15. 内嵌图标</h3><p>本站的图标系统对外开放，在文档中输入</p>
+<pre><code>&lt;i class=&quot;icon-weibo&quot;&gt;&lt;/i&gt;
+</code></pre>
+<p>即显示微博的图标： <i class="icon-weibo icon-2x"></i></p>
+<p>替换 上述 <code>i 标签</code> 内的 <code>icon-weibo</code> 以显示不同的图标，例如：</p>
+<pre><code>&lt;i class=&quot;icon-renren&quot;&gt;&lt;/i&gt;
+</code></pre>
+<p>即显示人人的图标： <i class="icon-renren icon-2x"></i></p>
+<p>更多的图标和玩法可以参看 <a href="http://fortawesome.github.io/Font-Awesome/3.2.1/icons/">font-awesome</a> 官方网站。</p>
+<h3 id="16-待办事宜-Todo-列表"><a href="#16-待办事宜-Todo-列表" class="headerlink" title="16. 待办事宜 Todo 列表"></a>16. 待办事宜 Todo 列表</h3><p>使用带有 [ ] 或 [x] （未完成或已完成）项的列表语法撰写一个待办事宜列表，并且支持子列表嵌套以及混用Markdown语法，例如：</p>
+<pre><code>- [ ] ** Markdown 开发**
+    - [ ] 改进 xxxx 渲染算法，使用局部渲染技术提高渲染效率
+    - [ ] 支持以 PDF 格式导出文稿
+    - [x] 新增Todo列表功能 [语法参考](https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments)
+    - [x] 改进 LaTex 功能
+        - [x] 修复 LaTex 公式渲染问题
+        - [x] 新增 LaTex 公式编号功能 [语法参考](http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers)
+- [ ] **七月旅行准备**
+    - [ ] 准备邮轮上需要携带的物品
+    - [ ] 浏览日本免税店的物品
+    - [x] 购买蓝宝石公主号七月一日的船票
+</code></pre>
+<p>对应显示如下待办事宜 Todo 列表：</p>
+<ul>
+<li><input disabled="" type="checkbox"> ** Markdown 开发**<ul>
+<li><input disabled="" type="checkbox"> 改进 xxxx 渲染算法，使用局部渲染技术提高渲染效率</li>
+<li><input disabled="" type="checkbox"> 支持以 PDF 格式导出文稿</li>
+<li><input checked="" disabled="" type="checkbox"> 新增Todo列表功能 <a href="https://github.com/blog/1375-task-lists-in-gfm-issues-pulls-comments">语法参考</a></li>
+<li><input checked="" disabled="" type="checkbox"> 改进 LaTex 功能<ul>
+<li><input checked="" disabled="" type="checkbox"> 修复 LaTex 公式渲染问题</li>
+<li><input checked="" disabled="" type="checkbox"> 新增 LaTex 公式编号功能 <a href="http://docs.mathjax.org/en/latest/tex.html#tex-eq-numbers">语法参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"> <strong>七月旅行准备</strong><ul>
+<li><input disabled="" type="checkbox"> 准备邮轮上需要携带的物品</li>
+<li><input disabled="" type="checkbox"> 浏览日本免税店的物品</li>
+<li><input checked="" disabled="" type="checkbox"> 购买蓝宝石公主号七月一日的船票</li>
+</ul>
+</li>
+</ul>
+<p>[^footnote]: 这是一个 <em>注脚</em> 的 <strong>文本</strong>。</p>
+<p>[^footnote2]: 这是另一个 <em>注脚</em> 的 <strong>文本</strong>。</p>
+<p><a href="https://www.runoob.com/markdown/md-advance.html">mermaid参考</a></p>
 ]]></content>
       <categories>
-        <category>android</category>
+        <category>markdown</category>
       </categories>
       <tags>
-        <tag>android</tag>
-        <tag>recyclerview</tag>
+        <tag>markdown</tag>
+        <tag>md</tag>
       </tags>
   </entry>
   <entry>
@@ -1818,6 +1763,61 @@
       <tags>
         <tag>gradle</tag>
         <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>okhttp请求记录</title>
+    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<ul>
+<li><p>OkHttp请求</p>
+<ol>
+<li><p>创建Request对象</p>
+<p><code>Request对象的创建通过Builder模式创建</code> </p>
+<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
+</li>
+<li><p>创建OkHttpClient对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>异步方式http请求</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>OkHttp 拦截器</p>
+<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>okhttp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RecyclerView嵌套滑动</title>
+    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
+<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
+<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>recyclerview</tag>
       </tags>
   </entry>
   <entry>
