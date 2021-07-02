@@ -1,6 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>adb命令相关记录</title>
+    <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
+<li>adb devices          <code>显示连接到计算机的设备</code></li>
+<li>adb  [-s] shell        <code>进入设备的shell界面</code></li>
+<li>adb kill-server       <code>终止adb服务进程</code></li>
+<li>adb start-server     <code>重启adb服务进程</code></li>
+<li>adb connect ip       <code>连接到指定的ip,配合无线调试</code></li>
+</ul>
+<h5 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h5><ul>
+<li>adb  shell pm    <code>和包相关的操作</code></li>
+<li>adb shell pm path 包名         <code>打印出给定包名对应应用的apk路径</code><pre><code>- adb shell pm list packages    ```列出包相关的信息，参考[-f] [-d] [-e] [-s] [-3] [-i] [-l] [-u] [-U]……```
+- adb shell pm list permissions     ```列出权限相关的```
+- adb install apk文件       ```安装apk```
+- adb uninstall 包名        ```卸载apk```
+- adb shell pm start 包名/启动activity       ```启动apk```
+- adb shell pm clear 包名      ```清除apk数据```
+</code></pre>
+</li>
+</ul>
+<h5 id="内存、进程相关"><a href="#内存、进程相关" class="headerlink" title="内存、进程相关"></a>内存、进程相关</h5><ul>
+<li>adb  shell dumpsys cupinfo     <code>查看CPU信息</code></li>
+<li>adb shell dumpsys meminfo  [包名]   <code>查看应用的内存信息</code></li>
+<li>adb shell top          <code>查看设备cpu和内存占用情况</code></li>
+<li>adb shell top -m 2       <code>查看占用内存前2的app</code></li>
+<li>adb shell ps | grep[findStr] 关键字         <code>查看某一程序进程</code></li>
+<li>adb shell ps -x [PID]        <code>查看指定进程状态</code></li>
+<li>adb shell kill [PID]        <code>杀死进程</code></li>
+<li>adb shell top -n 1       <code>刷新一次内存信息，然后返回</code></li>
+<li>adb shell cat /proc/meminfo     <code>查看当前内存占用</code></li>
+</ul>
+<h5 id="Android四大组件"><a href="#Android四大组件" class="headerlink" title="Android四大组件"></a>Android四大组件</h5><p>![image-20201022173705225](/Users/libo/Library/Application Support/typora-user-images/image-20201022173705225.png)</p>
+<ul>
+<li>adb shell dumpsys activity top      <code>查看栈顶Activity</code></li>
+<li>adb shell dumpsys activity activities | grep mResumedActivity   <code>查看当前正在显示的activity</code></li>
+<li>adb shell am      <code>和activity相关 start、force-stop 包名、kill-all、kill 包名</code></li>
+<li>adb shell service list     <code>查看后台services信息</code></li>
+<li>adb shell dumpsys notification      <code>获取通知信息</code></li>
+</ul>
+<h5 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h5><ul>
+<li>adb shell cd  <code>进入某个目录</code></li>
+<li>adb shell ls -a   <code>查看这个目录下的文件</code></li>
+<li>adb pull 远程路径(手机) 本地路径(电脑) <code>手机复制文件出来</code></li>
+<li>adb push 本地路径(电脑)  远程路径(手机)  <code>向手机发送文件</code></li>
+<li>adb shell makedir   <code>创建一个文件夹</code></li>
+<li>adb shell cat      ````查看文件内容```</li>
+</ul>
+<h5 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screencap -p &#x2F;sdcard&#x2F;sc.png</span><br></pre></td></tr></table></figure>
+<h5 id="视频录制"><a href="#视频录制" class="headerlink" title="视频录制"></a>视频录制</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screenrecord &#x2F;sdcard&#x2F;filename.mp4</span><br></pre></td></tr></table></figure>
+<h5 id="获取手机中的apk"><a href="#获取手机中的apk" class="headerlink" title="获取手机中的apk"></a>获取手机中的apk</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity   --获取包名</span><br><span class="line">adb shell pm path com.aoyindsptv.phonelive --获取安装包地址</span><br><span class="line">adb pull 安装包地址  电脑地址</span><br></pre></td></tr></table></figure>
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity --查看包名和Activity</span><br><span class="line">adb shell dumpsys window | grep mCurrentFocus --同上</span><br></pre></td></tr></table></figure>
+
+
+<p><a href="https://www.jianshu.com/p/0693b841c83b">参考</a></p>
+<p><a href="https://weiwangqiang.github.io/2020/03/16/dumpsys-debug-detail/">参考2</a></p>
+<div class="gallery-group-main">
+
+  <figure class="gallery-group">
+  <img class="gallery-group-img" src='https://i.loli.net/2019/11/10/T7Mu8Aod3egmC4Q.png' alt="Group Image Gallery">
+  <figcaption>
+  <div class="gallery-group-name">壁紙</div>
+  <p>收藏的一些壁紙</p>
+  <a href='/Gallery/wallpaper'></a>
+  </figcaption>
+  </figure>
+  
+
+  <figure class="gallery-group">
+  <img class="gallery-group-img" src='https://i.loli.net/2019/12/25/8t97aVlp4hgyBGu.jpg' alt="Group Image Gallery">
+  <figcaption>
+  <div class="gallery-group-name">漫威</div>
+  <p>關於漫威的圖片</p>
+  <a href='/Gallery/marvel'></a>
+  </figcaption>
+  </figure>
+  
+
+  <figure class="gallery-group">
+  <img class="gallery-group-img" src='https://i.loli.net/2019/12/25/hOqbQ3BIwa6KWpo.jpg' alt="Group Image Gallery">
+  <figcaption>
+  <div class="gallery-group-name">OH MY GIRL</div>
+  <p>關於OH MY GIRL的圖片</p>
+  <a href='/Gallery/ohmygirl'></a>
+  </figcaption>
+  </figure>
+  
+</div>
+
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>adb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android icon 大小</title>
+    <url>/2021/04/17/android-icon%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h5 id="launcher图标"><a href="#launcher图标" class="headerlink" title="launcher图标"></a>launcher图标</h5><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>像素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mdpi（160dpi）</td>
+<td>48 * 48</td>
+<td>1x</td>
+</tr>
+<tr>
+<td>hdpi （240dpi）</td>
+<td>72 * 72</td>
+<td>1.5x</td>
+</tr>
+<tr>
+<td>xhdpi （320dpi）</td>
+<td>96 * 96</td>
+<td>2x</td>
+</tr>
+<tr>
+<td>xxhdpi （480dpi）</td>
+<td>144 * 144</td>
+<td>3x</td>
+</tr>
+<tr>
+<td>xxxhdpi （640dpi）</td>
+<td>192 * 192</td>
+<td>4x</td>
+</tr>
+</tbody></table>
+<h4 id="dpi表"><a href="#dpi表" class="headerlink" title="dpi表"></a>dpi表</h4><table>
+<thead>
+<tr>
+<th>dpi范围</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0-120dpi</td>
+<td>ldpi</td>
+</tr>
+<tr>
+<td>120-160dpi</td>
+<td>mdpi</td>
+</tr>
+<tr>
+<td>160-240dpi</td>
+<td>hdpi</td>
+</tr>
+<tr>
+<td>240-320dpi</td>
+<td>xhdpi</td>
+</tr>
+<tr>
+<td>320-480dpi</td>
+<td>xxhdpi</td>
+</tr>
+<tr>
+<td>480-640dpi</td>
+<td>xxxhdpi</td>
+</tr>
+</tbody></table>
+<h4 id="drawable查找顺序"><a href="#drawable查找顺序" class="headerlink" title="drawable查找顺序"></a>drawable查找顺序</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">手机dpi处于320-480之间，属于xxhdpi的范围，drawable的查找顺序</span><br><span class="line">xxhdpi -&gt; xxxhdpi -&gt; nohdpi -&gt; xhdpi -&gt; hdpi -&gt; mdpi -&gt; ldpi</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="单位计算"><a href="#单位计算" class="headerlink" title="单位计算"></a>单位计算</h5><p><code>dpi</code> 像素密度，屏幕单位面积内的像素数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dpi &#x3D; 屏幕宽度&#x2F;屏幕宽度英寸 或者  dpi &#x3D; 屏幕高度&#x2F;屏幕高度英寸</span><br><span class="line">dp &#x3D; (宽度像素 x 160)&#x2F; dpi </span><br><span class="line">例如  一加 8 手机， dpi为 411 ，屏幕分辨率 1080 * 2400 ，屏幕尺寸 2.8 * 5.9 </span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">分辨率 px</th>
+<th align="left">dpi</th>
+<th align="left">像素比</th>
+<th align="left">示例 dp</th>
+<th align="left">对应像素</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">xxxhdpi</td>
+<td align="left">2160 x 3840</td>
+<td align="left">640</td>
+<td align="left">4.0</td>
+<td align="left">48dp</td>
+<td align="left">192px</td>
+</tr>
+<tr>
+<td align="left">xxhdpi</td>
+<td align="left">1080 x 1920</td>
+<td align="left">480</td>
+<td align="left">3.0</td>
+<td align="left">48dp</td>
+<td align="left">144px</td>
+</tr>
+<tr>
+<td align="left">xhdpi</td>
+<td align="left">720 x 1280</td>
+<td align="left">320</td>
+<td align="left">2.0</td>
+<td align="left">48dp</td>
+<td align="left">96px</td>
+</tr>
+<tr>
+<td align="left">hdpi</td>
+<td align="left">480 x 800</td>
+<td align="left">240</td>
+<td align="left">1.5</td>
+<td align="left">48dp</td>
+<td align="left">72px</td>
+</tr>
+<tr>
+<td align="left">mdpi</td>
+<td align="left">320 x 480</td>
+<td align="left">160</td>
+<td align="left">1.0</td>
+<td align="left">48dp</td>
+<td align="left">48px</td>
+</tr>
+</tbody></table>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p><code> mipmap</code> 和 <code>drawable</code>区别  <code>mipmap</code>文件夹只用于存放应用的启动icon </p>
+<p><code>通知栏icon</code> 大小 <code>24 * 24</code>   <code>ActionBar</code> 高度 <code>56</code>  <code>48</code> 基准</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://developer.android.com/training/multiscreen/screendensities?hl=zh-cn">官网</a></p>
+<p><a href="https://uiiiuiii.com/screen/android.htm">参考1</a></p>
+<p><a href="https://www.zybuluo.com/TryLoveCatch/note/590965">参考2</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>icon</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>android library上传</title>
     <url>/2021/01/01/android-library%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h5 id="Android-Library上传"><a href="#Android-Library上传" class="headerlink" title="Android Library上传"></a>Android Library上传</h5><ol>
@@ -39,24 +277,6 @@
       <tags>
         <tag>android</tag>
         <tag>library</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>android10创建文件失败</title>
-    <url>/2021/01/11/android10-create-file/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
-<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
-<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
-<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -249,6 +469,24 @@
       <tags>
         <tag>android</tag>
         <tag>intent</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>android10创建文件失败</title>
+    <url>/2021/01/11/android10-create-file/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
+<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
+<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
+<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -451,273 +689,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Android icon 大小</title>
-    <url>/2021/04/17/android-icon%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h5 id="launcher图标"><a href="#launcher图标" class="headerlink" title="launcher图标"></a>launcher图标</h5><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>像素</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>mdpi（160dpi）</td>
-<td>48 * 48</td>
-<td>1x</td>
-</tr>
-<tr>
-<td>hdpi （240dpi）</td>
-<td>72 * 72</td>
-<td>1.5x</td>
-</tr>
-<tr>
-<td>xhdpi （320dpi）</td>
-<td>96 * 96</td>
-<td>2x</td>
-</tr>
-<tr>
-<td>xxhdpi （480dpi）</td>
-<td>144 * 144</td>
-<td>3x</td>
-</tr>
-<tr>
-<td>xxxhdpi （640dpi）</td>
-<td>192 * 192</td>
-<td>4x</td>
-</tr>
-</tbody></table>
-<h4 id="dpi表"><a href="#dpi表" class="headerlink" title="dpi表"></a>dpi表</h4><table>
-<thead>
-<tr>
-<th>dpi范围</th>
-<th>名称</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0-120dpi</td>
-<td>ldpi</td>
-</tr>
-<tr>
-<td>120-160dpi</td>
-<td>mdpi</td>
-</tr>
-<tr>
-<td>160-240dpi</td>
-<td>hdpi</td>
-</tr>
-<tr>
-<td>240-320dpi</td>
-<td>xhdpi</td>
-</tr>
-<tr>
-<td>320-480dpi</td>
-<td>xxhdpi</td>
-</tr>
-<tr>
-<td>480-640dpi</td>
-<td>xxxhdpi</td>
-</tr>
-</tbody></table>
-<h4 id="drawable查找顺序"><a href="#drawable查找顺序" class="headerlink" title="drawable查找顺序"></a>drawable查找顺序</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">手机dpi处于320-480之间，属于xxhdpi的范围，drawable的查找顺序</span><br><span class="line">xxhdpi -&gt; xxxhdpi -&gt; nohdpi -&gt; xhdpi -&gt; hdpi -&gt; mdpi -&gt; ldpi</span><br></pre></td></tr></table></figure>
-
-
-<h5 id="单位计算"><a href="#单位计算" class="headerlink" title="单位计算"></a>单位计算</h5><p><code>dpi</code> 像素密度，屏幕单位面积内的像素数</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">dpi &#x3D; 屏幕宽度&#x2F;屏幕宽度英寸 或者  dpi &#x3D; 屏幕高度&#x2F;屏幕高度英寸</span><br><span class="line">dp &#x3D; (宽度像素 x 160)&#x2F; dpi </span><br><span class="line">例如  一加 8 手机， dpi为 411 ，屏幕分辨率 1080 * 2400 ，屏幕尺寸 2.8 * 5.9 </span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th align="left">名称</th>
-<th align="left">分辨率 px</th>
-<th align="left">dpi</th>
-<th align="left">像素比</th>
-<th align="left">示例 dp</th>
-<th align="left">对应像素</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">xxxhdpi</td>
-<td align="left">2160 x 3840</td>
-<td align="left">640</td>
-<td align="left">4.0</td>
-<td align="left">48dp</td>
-<td align="left">192px</td>
-</tr>
-<tr>
-<td align="left">xxhdpi</td>
-<td align="left">1080 x 1920</td>
-<td align="left">480</td>
-<td align="left">3.0</td>
-<td align="left">48dp</td>
-<td align="left">144px</td>
-</tr>
-<tr>
-<td align="left">xhdpi</td>
-<td align="left">720 x 1280</td>
-<td align="left">320</td>
-<td align="left">2.0</td>
-<td align="left">48dp</td>
-<td align="left">96px</td>
-</tr>
-<tr>
-<td align="left">hdpi</td>
-<td align="left">480 x 800</td>
-<td align="left">240</td>
-<td align="left">1.5</td>
-<td align="left">48dp</td>
-<td align="left">72px</td>
-</tr>
-<tr>
-<td align="left">mdpi</td>
-<td align="left">320 x 480</td>
-<td align="left">160</td>
-<td align="left">1.0</td>
-<td align="left">48dp</td>
-<td align="left">48px</td>
-</tr>
-</tbody></table>
-<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p><code> mipmap</code> 和 <code>drawable</code>区别  <code>mipmap</code>文件夹只用于存放应用的启动icon </p>
-<p><code>通知栏icon</code> 大小 <code>24 * 24</code>   <code>ActionBar</code> 高度 <code>56</code>  <code>48</code> 基准</p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://developer.android.com/training/multiscreen/screendensities?hl=zh-cn">官网</a></p>
-<p><a href="https://uiiiuiii.com/screen/android.htm">参考1</a></p>
-<p><a href="https://www.zybuluo.com/TryLoveCatch/note/590965">参考2</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>icon</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>adb命令相关记录</title>
-    <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
-<li>adb devices          <code>显示连接到计算机的设备</code></li>
-<li>adb  [-s] shell        <code>进入设备的shell界面</code></li>
-<li>adb kill-server       <code>终止adb服务进程</code></li>
-<li>adb start-server     <code>重启adb服务进程</code></li>
-<li>adb connect ip       <code>连接到指定的ip,配合无线调试</code></li>
-</ul>
-<h5 id="应用管理"><a href="#应用管理" class="headerlink" title="应用管理"></a>应用管理</h5><ul>
-<li>adb  shell pm    <code>和包相关的操作</code></li>
-<li>adb shell pm path 包名         <code>打印出给定包名对应应用的apk路径</code><pre><code>- adb shell pm list packages    ```列出包相关的信息，参考[-f] [-d] [-e] [-s] [-3] [-i] [-l] [-u] [-U]……```
-- adb shell pm list permissions     ```列出权限相关的```
-- adb install apk文件       ```安装apk```
-- adb uninstall 包名        ```卸载apk```
-- adb shell pm start 包名/启动activity       ```启动apk```
-- adb shell pm clear 包名      ```清除apk数据```
-</code></pre>
-</li>
-</ul>
-<h5 id="内存、进程相关"><a href="#内存、进程相关" class="headerlink" title="内存、进程相关"></a>内存、进程相关</h5><ul>
-<li>adb  shell dumpsys cupinfo     <code>查看CPU信息</code></li>
-<li>adb shell dumpsys meminfo  [包名]   <code>查看应用的内存信息</code></li>
-<li>adb shell top          <code>查看设备cpu和内存占用情况</code></li>
-<li>adb shell top -m 2       <code>查看占用内存前2的app</code></li>
-<li>adb shell ps | grep[findStr] 关键字         <code>查看某一程序进程</code></li>
-<li>adb shell ps -x [PID]        <code>查看指定进程状态</code></li>
-<li>adb shell kill [PID]        <code>杀死进程</code></li>
-<li>adb shell top -n 1       <code>刷新一次内存信息，然后返回</code></li>
-<li>adb shell cat /proc/meminfo     <code>查看当前内存占用</code></li>
-</ul>
-<h5 id="Android四大组件"><a href="#Android四大组件" class="headerlink" title="Android四大组件"></a>Android四大组件</h5><p>![image-20201022173705225](/Users/libo/Library/Application Support/typora-user-images/image-20201022173705225.png)</p>
-<ul>
-<li>adb shell dumpsys activity top      <code>查看栈顶Activity</code></li>
-<li>adb shell dumpsys activity activities | grep mResumedActivity   <code>查看当前正在显示的activity</code></li>
-<li>adb shell am      <code>和activity相关 start、force-stop 包名、kill-all、kill 包名</code></li>
-<li>adb shell service list     <code>查看后台services信息</code></li>
-<li>adb shell dumpsys notification      <code>获取通知信息</code></li>
-</ul>
-<h5 id="文件相关"><a href="#文件相关" class="headerlink" title="文件相关"></a>文件相关</h5><ul>
-<li>adb shell cd  <code>进入某个目录</code></li>
-<li>adb shell ls -a   <code>查看这个目录下的文件</code></li>
-<li>adb pull 远程路径(手机) 本地路径(电脑) <code>手机复制文件出来</code></li>
-<li>adb push 本地路径(电脑)  远程路径(手机)  <code>向手机发送文件</code></li>
-<li>adb shell makedir   <code>创建一个文件夹</code></li>
-<li>adb shell cat      ````查看文件内容```</li>
-</ul>
-<h5 id="屏幕截图"><a href="#屏幕截图" class="headerlink" title="屏幕截图"></a>屏幕截图</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screencap -p &#x2F;sdcard&#x2F;sc.png</span><br></pre></td></tr></table></figure>
-<h5 id="视频录制"><a href="#视频录制" class="headerlink" title="视频录制"></a>视频录制</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell screenrecord &#x2F;sdcard&#x2F;filename.mp4</span><br></pre></td></tr></table></figure>
-<h5 id="获取手机中的apk"><a href="#获取手机中的apk" class="headerlink" title="获取手机中的apk"></a>获取手机中的apk</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity   --获取包名</span><br><span class="line">adb shell pm path com.aoyindsptv.phonelive --获取安装包地址</span><br><span class="line">adb pull 安装包地址  电脑地址</span><br></pre></td></tr></table></figure>
-<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">adb shell dumpsys activity activities | grep mResumedActivity --查看包名和Activity</span><br><span class="line">adb shell dumpsys window | grep mCurrentFocus --同上</span><br></pre></td></tr></table></figure>
-
-
-<p><a href="https://www.jianshu.com/p/0693b841c83b">参考</a></p>
-<p><a href="https://weiwangqiang.github.io/2020/03/16/dumpsys-debug-detail/">参考2</a></p>
-<div class="gallery-group-main">
-
-  <figure class="gallery-group">
-  <img class="gallery-group-img" src='https://i.loli.net/2019/11/10/T7Mu8Aod3egmC4Q.png' alt="Group Image Gallery">
-  <figcaption>
-  <div class="gallery-group-name">壁紙</div>
-  <p>收藏的一些壁紙</p>
-  <a href='/Gallery/wallpaper'></a>
-  </figcaption>
-  </figure>
-  
-
-  <figure class="gallery-group">
-  <img class="gallery-group-img" src='https://i.loli.net/2019/12/25/8t97aVlp4hgyBGu.jpg' alt="Group Image Gallery">
-  <figcaption>
-  <div class="gallery-group-name">漫威</div>
-  <p>關於漫威的圖片</p>
-  <a href='/Gallery/marvel'></a>
-  </figcaption>
-  </figure>
-  
-
-  <figure class="gallery-group">
-  <img class="gallery-group-img" src='https://i.loli.net/2019/12/25/hOqbQ3BIwa6KWpo.jpg' alt="Group Image Gallery">
-  <figcaption>
-  <div class="gallery-group-name">OH MY GIRL</div>
-  <p>關於OH MY GIRL的圖片</p>
-  <a href='/Gallery/ohmygirl'></a>
-  </figcaption>
-  </figure>
-  
-</div>
-
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>adb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>cross platform 个人认知</title>
     <url>/2021/01/02/cross-platform/</url>
     <content><![CDATA[<h2 id="跨平台"><a href="#跨平台" class="headerlink" title="跨平台"></a>跨平台</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">目前流行的跨平台WebApp开发技术的特点,使用 HTML5 + CSS + JavaScript 开发、跨平台重用代码、丰富的</span><br><span class="line">UI库、提供访问设备原生API的 JavaScript API 包装器、提供打包、部署的工具或服务……，Cordova、Ionic、</span><br><span class="line">AppCan、DCloud、APICloud、React Native、Flutter</span><br></pre></td></tr></table></figure>
@@ -868,6 +839,177 @@
       </tags>
   </entry>
   <entry>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git-log备注</title>
+    <url>/2021/04/27/git-log%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h5 id="git-log-备注"><a href="#git-log-备注" class="headerlink" title="git log 备注"></a>git log 备注</h5><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%H</td>
+<td>提交的完整哈希值</td>
+</tr>
+<tr>
+<td>%h</td>
+<td>提交的简写哈希值</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>树的完整哈希值</td>
+</tr>
+<tr>
+<td>%t</td>
+<td>树的简写哈希值</td>
+</tr>
+<tr>
+<td>%P</td>
+<td>父提交的完整哈希值</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>父提交的简写哈希值</td>
+</tr>
+<tr>
+<td>%an</td>
+<td>作者名字</td>
+</tr>
+<tr>
+<td>%ae</td>
+<td>作者的电子邮件地址</td>
+</tr>
+<tr>
+<td>%ad</td>
+<td>作者修订日期(可以用 –date=选项 来定制格式)</td>
+</tr>
+<tr>
+<td>%ar</td>
+<td>作者修订日期，按多久以前的方式显示</td>
+</tr>
+<tr>
+<td>%cn</td>
+<td>提交者的名字</td>
+</tr>
+<tr>
+<td>%ce</td>
+<td>提交者的电子邮件地址</td>
+</tr>
+<tr>
+<td>%cd</td>
+<td>提交日期</td>
+</tr>
+<tr>
+<td>%cr</td>
+<td>提交日期(距今多长时间)</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>提交说明</td>
+</tr>
+</tbody></table>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log    </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/30/Csgyt2ej8ScYDdo.png" alt="iShot2021-04-30下午05.45.46.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log --oneline</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/30/M6O4d1XrGuHgcwL.png" alt="iShot2021-04-30下午04.00.11.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git shortlog  </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/30/dLzT7g4ODRbXFW8.png" alt="iShot2021-04-30下午04.07.27.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git lg </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/30/YfJw4PqBZ5ozOAa.png" alt="iShot2021-04-30下午04.08.49.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git lg --pretty&#x3D;format:%cr-%s --after&#x3D;&quot;yesterday&quot; --before&#x3D;&quot;2021-04-30&quot; </span><br></pre></td></tr></table></figure>
+<p><code>after</code> 的参数可以很丰富 例如 <code>3.weeks.ago</code>、<code>2021-04-20</code>、<code>yesterday</code> ……</p>
+<h5 id="例如"><a href="#例如" class="headerlink" title="例如"></a>例如</h5><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取昨天到今天的Git日志信息</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">def</span> getGitLog() &#123;</span><br><span class="line">    <span class="keyword">def</span> todayYmd = <span class="keyword">new</span> Date().format(<span class="string">&quot;yyyy-MM-dd&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> beginYmd =<span class="string">&quot;yesterday&quot;</span></span><br><span class="line"></span><br><span class="line">    println(<span class="string">&quot;currentTime = &quot;</span> +System.currentTimeMillis())</span><br><span class="line">    StringBuffer stringBuffer = <span class="keyword">new</span> StringBuffer()</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; git log&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --pretty=format:%cr-%s&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --after=\&quot;$&#123;beginYmd&#125;\&quot;&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --before=\&quot;$&#123;todayYmd&#125;\&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> cmd = stringBuffer.toString()</span><br><span class="line">    println(<span class="string">&quot;cmd =$cmd&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span>  cmd.execute().text.trim()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取编译当前安装包的时间</span></span><br><span class="line"><span class="keyword">def</span> buildAppTime() &#123;</span><br><span class="line">    <span class="keyword">def</span> buildTime = <span class="keyword">new</span> Date().format(<span class="string">&quot;MM_dd_HH_mm&quot;</span>)</span><br><span class="line"><span class="comment">//    def buildTime = new Date().format(&quot;yyyy_MM_dd_HH_mm&quot;)</span></span><br><span class="line">    <span class="keyword">return</span> buildTime</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出git日志信息到文件中</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">def</span> buildLog() &#123;</span><br><span class="line">    FileWriter fw = <span class="keyword">new</span> FileWriter(project.rootDir.absolutePath + File.separator + <span class="string">&quot;log.txt&quot;</span>)</span><br><span class="line">    StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    builder.append(<span class="string">&quot;[构建时间]=&quot;</span> + buildAppTime())</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[版本编号]=&quot;</span> + project.android.defaultConfig.versionCode)</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[版本名称]=&quot;</span> + project.android.defaultConfig.versionName)</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[提交记录]=\r\n&quot;</span> + getGitLog())</span><br><span class="line">    println(<span class="string">&quot;kkkkk = $&#123;builder.toString()&#125;&quot;</span>)</span><br><span class="line">    fw.write(builder.toString())</span><br><span class="line">    fw.flush()</span><br><span class="line">    fw.close()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="重命名打包信息"><a href="#重命名打包信息" class="headerlink" title="重命名打包信息"></a>重命名打包信息</h5><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="comment">//备注 gradle插件版本  classpath &#x27;com.android.tools.build:gradle:3.2.0&#x27; </span></span><br><span class="line"><span class="comment">//应用名称缩写</span></span><br><span class="line"><span class="keyword">def</span> APP_NAME_ABBREVIATION = <span class="string">&quot;SXTTPJC&quot;</span></span><br><span class="line"><span class="keyword">def</span> DEFAULT_CHANNEL = <span class="string">&quot;official&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//修改打包后apk的名称</span></span><br><span class="line">    <span class="comment">//给打包出来的Apk修改一下名字</span></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line"><span class="comment">//            println(&quot;variant = &quot; + variant)</span></span><br><span class="line">            <span class="keyword">def</span> outputDir = variant.getPackageApplication().outputDirectory.getParentFile().getAbsoluteFile()</span><br><span class="line"><span class="comment">//            println(&quot;outputDir = $&#123;outputDir&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line">            <span class="keyword">def</span> newOutputDir = <span class="keyword">new</span> File(outputDir, <span class="string">&quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;</span>)</span><br><span class="line">            println(<span class="string">&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;</span>)</span><br><span class="line">            variant.getPackageApplication().outputDirectory = newOutputDir</span><br><span class="line"></span><br><span class="line">            <span class="keyword">def</span> versionName = project.android.defaultConfig.versionName</span><br><span class="line">            <span class="keyword">def</span> versionCode = project.android.defaultConfig.versionCode</span><br><span class="line"><span class="comment">//            versionName = versionName.replaceAll(&quot;\\.&quot;, &quot;_&quot;)</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;app-$&#123;variant.buildType.name&#125;_$&#123;APP_NAME&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;versionCode&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">            <span class="comment">//新的apk名称</span></span><br><span class="line">            <span class="keyword">def</span> newApkName = <span class="string">&quot;$&#123;APP_NAME_ABBREVIATION&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;variant.buildType.name&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">            println(<span class="string">&quot;newApkName = &quot;</span> + newApkName)</span><br><span class="line">            outputFileName = newApkName</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line"><span class="comment">//2 </span></span><br><span class="line">   android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//            def outputDir = variant.getPackageApplication().getOutputDirectory().host</span></span><br><span class="line"><span class="comment">//            println(&quot;outputDir = $&#123;outputDir&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line"><span class="comment">//            def newOutputDir = new File(outputDir, &quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            println(&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            variant.getPackageApplication().outputDirectory = newOutputDir</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line"><span class="comment">//            def newOutputDir = new File(outputDir, &quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            println(&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            variant.getPackageApplication().outputDirectory = newOutputDir</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//            def versionName = project.android.defaultConfig.versionName</span></span><br><span class="line"><span class="comment">//            def versionCode = project.android.defaultConfig.versionCode</span></span><br><span class="line"><span class="comment">//            versionName = versionName.replaceAll(&quot;\\.&quot;, &quot;_&quot;)</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;app-$&#123;variant.buildType.name&#125;_$&#123;APP_NAME&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;versionCode&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">                <span class="comment">//新的apk名称</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;$&#123;APP_NAME_ABBREVIATION&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;variant.buildType.name&#125;&#125;.apk&quot;</span></span><br><span class="line"><span class="comment">//            println(&quot;newApkName = &quot; + newApkName)</span></span><br><span class="line"><span class="comment">//            outputFileName = newApkName</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            output -&gt;</span><br><span class="line">                println(<span class="string">&quot;\nbuildDir = $&#123;buildDir&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\nandroid = $&#123;android.buildOutputs&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\nvariant = $&#123;variant.getPackageApplicationProvider()&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\noutput = $output&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\noutputFileName = $output.outputFileName&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        variant.getAssembleProvider().get().doLast&#123;</span><br><span class="line">            println(<span class="string">&quot;..........copy file begin.........&quot;</span>)</span><br><span class="line">            variant.outputs.forEach&#123;</span><br><span class="line">                file -&gt;</span><br><span class="line">                    println(<span class="string">&quot;\nfile = $&#123;file.outputFile&#125;&quot;</span>)</span><br><span class="line">                    copy&#123;</span><br><span class="line">                        from file.outputFile</span><br><span class="line">                        into <span class="keyword">new</span> File(<span class="string">&quot;/Users/xxx/apk&quot;</span>)</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            println(<span class="string">&quot;..........copy file end.........&quot;</span>)</span><br><span class="line"></span><br><span class="line">            println(<span class="string">&quot;..........ok.........&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.cnblogs.com/EnSnail/p/6772454.html">参考1</a></p>
+<p><a href="https://www.runoob.com/git/git-commit-history.html">参考2</a></p>
+<p><a href="https://blog.csdn.net/byhook/article/details/51746825">参考3</a></p>
+<p><a href="https://git-scm.com/docs/git-log">官网</a></p>
+<p><a href="https://blog.csdn.net/smallbabylong/article/details/111276762">apk打包命名</a></p>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>gradle</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>github无法访问</title>
+    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
+<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
+<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
+<li>Linux 系统：<code>/etc/hosts</code></li>
+<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
+<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
+<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
+</ul>
+<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
+<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
+<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
+<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
+]]></content>
+      <categories>
+        <category>github</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>git相关记录</title>
     <url>/2021/02/28/git%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h3 id="建立分支追踪关系方法"><a href="#建立分支追踪关系方法" class="headerlink" title="建立分支追踪关系方法"></a>建立分支追踪关系方法</h3><ul>
@@ -986,49 +1128,6 @@
       </tags>
   </entry>
   <entry>
-    <title>github无法访问</title>
-    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
-<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
-<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
-<li>Linux 系统：<code>/etc/hosts</code></li>
-<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
-<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
-<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
-</ul>
-<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
-<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
-<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
-<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
-]]></content>
-      <categories>
-        <category>github</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello Hexo</title>
     <url>/2020/12/12/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -1048,188 +1147,6 @@
       </categories>
       <tags>
         <tag>other</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>let、run、with、also、apply</title>
-    <url>/2021/06/14/kotlin-ext-fun%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h4 id="let"><a href="#let" class="headerlink" title="let"></a>let</h4><ol>
-<li>对一个可null的对象统一做判空处理</li>
-<li>明确变量所处特定的作用域范围内使用</li>
-</ol>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//with let </span></span><br><span class="line">Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">20</span>, <span class="string">&quot;Amsterdam&quot;</span>).let &#123;</span><br><span class="line">    println(it)</span><br><span class="line">    it.moveTo(<span class="string">&quot;London&quot;</span>)</span><br><span class="line">    it.incrementAge()</span><br><span class="line">    println(it)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//without let </span></span><br><span class="line"><span class="keyword">val</span> alice = Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">20</span>, <span class="string">&quot;Amsterdam&quot;</span>)</span><br><span class="line">println(alice)</span><br><span class="line">alice.moveTo(<span class="string">&quot;London&quot;</span>)</span><br><span class="line">alice.incrementAge()</span><br><span class="line">println(alice)</span><br></pre></td></tr></table></figure>
-<h4 id="with"><a href="#with" class="headerlink" title="with"></a>with</h4><ol>
-<li>省去类名重复，直接调用类的方法</li>
-</ol>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//with with </span></span><br><span class="line">with(binding) &#123;</span><br><span class="line">     tvSymbol.text = symbol</span><br><span class="line">     tvAnswer.text = <span class="keyword">data</span>.text</span><br><span class="line">     root.tag = <span class="keyword">data</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">//without with </span></span><br><span class="line">binding.tvSymbol.text = symbol</span><br><span class="line">binding.tvAnswer.text = <span class="keyword">data</span>.text</span><br><span class="line">binding.root.tag = <span class="keyword">data</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="run"><a href="#run" class="headerlink" title="run"></a>run</h4><ol>
-<li>用于let,with函数任何场景</li>
-<li>弥补let函数在函数体内必须使用it参数替代对象,弥补了with函数传入对象判空问题</li>
-</ol>
-<h4 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h4><ol>
-<li>功能和run函数很像，不同点apply返回的值是对象本身，而run函数是一个闭包形式返回</li>
-</ol>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//with apply</span></span><br><span class="line"><span class="keyword">val</span> dataList = mutableListOf&lt;OptionItem&gt;().apply &#123;</span><br><span class="line">    add(OptionItem(answerItem.correctAnswer, <span class="literal">true</span>))</span><br><span class="line">    add(OptionItem(answerItem.errorAnswer1, <span class="literal">false</span>))</span><br><span class="line">    add(OptionItem(answerItem.errorAnswer2, <span class="literal">false</span>))</span><br><span class="line">    shuffle()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//without apply</span></span><br><span class="line"> <span class="keyword">val</span> dataList = mutableListOf&lt;OptionItem&gt;()</span><br><span class="line">     dataList.add(OptionItem(answerItem.correctAnswer, <span class="literal">true</span>))</span><br><span class="line">     dataList.add(OptionItem(answerItem.errorAnswer1, <span class="literal">false</span>))</span><br><span class="line">     dataList.add(OptionItem(answerItem.errorAnswer2, <span class="literal">false</span>))</span><br><span class="line">     dataList.shuffle()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="also"><a href="#also" class="headerlink" title="also"></a>also</h4><ol>
-<li>用于let函数的任何场景，不同点also返回的值是对象本身，而let函数是一个闭包形式返回</li>
-</ol>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//with also</span></span><br><span class="line"><span class="keyword">val</span> alice = Person(<span class="string">&quot;Alice&quot;</span>,<span class="number">20</span>,<span class="string">&quot;Amsterdam&quot;</span>).also &#123;</span><br><span class="line">    println(it)</span><br><span class="line">    it.moveTo(<span class="string">&quot;London&quot;</span>)</span><br><span class="line">    it.incrementAge()</span><br><span class="line">    println(it)</span><br><span class="line">&#125;</span><br><span class="line">println(alice)</span><br><span class="line"></span><br><span class="line"><span class="comment">//without also </span></span><br><span class="line"><span class="keyword">val</span> alice = Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">20</span>, <span class="string">&quot;Amsterdam&quot;</span>)</span><br><span class="line">println(alice)</span><br><span class="line">alice.moveTo(<span class="string">&quot;London&quot;</span>)</span><br><span class="line">alice.incrementAge()</span><br><span class="line">println(alice)</span><br></pre></td></tr></table></figure>
-
-
-
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th align="left">inline的结构</th>
-<th>块内对象、返回值</th>
-<th align="center">扩展函数</th>
-<th>场景</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>let</td>
-<td align="left"><code>inline fun &lt;T, R&gt; T.let(block: (T) -&gt; R): R </code></td>
-<td>it、闭包返回</td>
-<td align="center">是</td>
-<td>处理不为null的操作场景</td>
-</tr>
-<tr>
-<td>with</td>
-<td align="left"><code>inline fun &lt;T, R&gt; with(receiver: T, block: T.() -&gt; R): R</code></td>
-<td>this 、闭包返回</td>
-<td align="center">否</td>
-<td>省去类名，直接调用类的方法即可</td>
-</tr>
-<tr>
-<td>run</td>
-<td align="left"><code>inline fun &lt;R&gt; run(block: () -&gt; R): R</code></td>
-<td>this、闭包返回</td>
-<td align="center">是</td>
-<td>适用于let,with函数任何场景</td>
-</tr>
-<tr>
-<td>apply</td>
-<td align="left"><code>inline fun &lt;T&gt; T.apply(block: T.() -&gt; Unit): T</code></td>
-<td>this、返回this</td>
-<td align="center">是</td>
-<td>初始化对象实例时，操作对象属性， 并最终返回对象，    多个扩展函数链式调用，数据model多层级包裹判空处理的</td>
-</tr>
-<tr>
-<td>also</td>
-<td align="left"><code>inline fun &lt;T&gt; T.also(block: (T) -&gt; Unit): T </code></td>
-<td>it、返回this</td>
-<td align="center">是</td>
-<td>let函数的任何场景,可用于多个扩展函数链式调用</td>
-</tr>
-</tbody></table>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://kotlinlang.org/docs/scope-functions.html">文档</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>git-log备注</title>
-    <url>/2021/04/27/git-log%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h5 id="git-log-备注"><a href="#git-log-备注" class="headerlink" title="git log 备注"></a>git log 备注</h5><table>
-<thead>
-<tr>
-<th>选项</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>%H</td>
-<td>提交的完整哈希值</td>
-</tr>
-<tr>
-<td>%h</td>
-<td>提交的简写哈希值</td>
-</tr>
-<tr>
-<td>%T</td>
-<td>树的完整哈希值</td>
-</tr>
-<tr>
-<td>%t</td>
-<td>树的简写哈希值</td>
-</tr>
-<tr>
-<td>%P</td>
-<td>父提交的完整哈希值</td>
-</tr>
-<tr>
-<td>%p</td>
-<td>父提交的简写哈希值</td>
-</tr>
-<tr>
-<td>%an</td>
-<td>作者名字</td>
-</tr>
-<tr>
-<td>%ae</td>
-<td>作者的电子邮件地址</td>
-</tr>
-<tr>
-<td>%ad</td>
-<td>作者修订日期(可以用 –date=选项 来定制格式)</td>
-</tr>
-<tr>
-<td>%ar</td>
-<td>作者修订日期，按多久以前的方式显示</td>
-</tr>
-<tr>
-<td>%cn</td>
-<td>提交者的名字</td>
-</tr>
-<tr>
-<td>%ce</td>
-<td>提交者的电子邮件地址</td>
-</tr>
-<tr>
-<td>%cd</td>
-<td>提交日期</td>
-</tr>
-<tr>
-<td>%cr</td>
-<td>提交日期(距今多长时间)</td>
-</tr>
-<tr>
-<td>%s</td>
-<td>提交说明</td>
-</tr>
-</tbody></table>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log    </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/30/Csgyt2ej8ScYDdo.png" alt="iShot2021-04-30下午05.45.46.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git log --oneline</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/30/M6O4d1XrGuHgcwL.png" alt="iShot2021-04-30下午04.00.11.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git shortlog  </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/30/dLzT7g4ODRbXFW8.png" alt="iShot2021-04-30下午04.07.27.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git lg </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/30/YfJw4PqBZ5ozOAa.png" alt="iShot2021-04-30下午04.08.49.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git lg --pretty&#x3D;format:%cr-%s --after&#x3D;&quot;yesterday&quot; --before&#x3D;&quot;2021-04-30&quot; </span><br></pre></td></tr></table></figure>
-<p><code>after</code> 的参数可以很丰富 例如 <code>3.weeks.ago</code>、<code>2021-04-20</code>、<code>yesterday</code> ……</p>
-<h5 id="例如"><a href="#例如" class="headerlink" title="例如"></a>例如</h5><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 读取昨天到今天的Git日志信息</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">def</span> getGitLog() &#123;</span><br><span class="line">    <span class="keyword">def</span> todayYmd = <span class="keyword">new</span> Date().format(<span class="string">&quot;yyyy-MM-dd&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> beginYmd =<span class="string">&quot;yesterday&quot;</span></span><br><span class="line"></span><br><span class="line">    println(<span class="string">&quot;currentTime = &quot;</span> +System.currentTimeMillis())</span><br><span class="line">    StringBuffer stringBuffer = <span class="keyword">new</span> StringBuffer()</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; git log&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --pretty=format:%cr-%s&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --after=\&quot;$&#123;beginYmd&#125;\&quot;&quot;</span>)</span><br><span class="line">    stringBuffer.append(<span class="string">&quot; --before=\&quot;$&#123;todayYmd&#125;\&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">def</span> cmd = stringBuffer.toString()</span><br><span class="line">    println(<span class="string">&quot;cmd =$cmd&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span>  cmd.execute().text.trim()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取编译当前安装包的时间</span></span><br><span class="line"><span class="keyword">def</span> buildAppTime() &#123;</span><br><span class="line">    <span class="keyword">def</span> buildTime = <span class="keyword">new</span> Date().format(<span class="string">&quot;MM_dd_HH_mm&quot;</span>)</span><br><span class="line"><span class="comment">//    def buildTime = new Date().format(&quot;yyyy_MM_dd_HH_mm&quot;)</span></span><br><span class="line">    <span class="keyword">return</span> buildTime</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 输出git日志信息到文件中</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">def</span> buildLog() &#123;</span><br><span class="line">    FileWriter fw = <span class="keyword">new</span> FileWriter(project.rootDir.absolutePath + File.separator + <span class="string">&quot;log.txt&quot;</span>)</span><br><span class="line">    StringBuilder builder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    builder.append(<span class="string">&quot;[构建时间]=&quot;</span> + buildAppTime())</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[版本编号]=&quot;</span> + project.android.defaultConfig.versionCode)</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[版本名称]=&quot;</span> + project.android.defaultConfig.versionName)</span><br><span class="line">    builder.append(<span class="string">&quot;\r\n&quot;</span>)</span><br><span class="line">    builder.append(<span class="string">&quot;[提交记录]=\r\n&quot;</span> + getGitLog())</span><br><span class="line">    println(<span class="string">&quot;kkkkk = $&#123;builder.toString()&#125;&quot;</span>)</span><br><span class="line">    fw.write(builder.toString())</span><br><span class="line">    fw.flush()</span><br><span class="line">    fw.close()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="重命名打包信息"><a href="#重命名打包信息" class="headerlink" title="重命名打包信息"></a>重命名打包信息</h5><figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="comment">//备注 gradle插件版本  classpath &#x27;com.android.tools.build:gradle:3.2.0&#x27; </span></span><br><span class="line"><span class="comment">//应用名称缩写</span></span><br><span class="line"><span class="keyword">def</span> APP_NAME_ABBREVIATION = <span class="string">&quot;SXTTPJC&quot;</span></span><br><span class="line"><span class="keyword">def</span> DEFAULT_CHANNEL = <span class="string">&quot;official&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//修改打包后apk的名称</span></span><br><span class="line">    <span class="comment">//给打包出来的Apk修改一下名字</span></span><br><span class="line">    android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line"><span class="comment">//            println(&quot;variant = &quot; + variant)</span></span><br><span class="line">            <span class="keyword">def</span> outputDir = variant.getPackageApplication().outputDirectory.getParentFile().getAbsoluteFile()</span><br><span class="line"><span class="comment">//            println(&quot;outputDir = $&#123;outputDir&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line">            <span class="keyword">def</span> newOutputDir = <span class="keyword">new</span> File(outputDir, <span class="string">&quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;</span>)</span><br><span class="line">            println(<span class="string">&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;</span>)</span><br><span class="line">            variant.getPackageApplication().outputDirectory = newOutputDir</span><br><span class="line"></span><br><span class="line">            <span class="keyword">def</span> versionName = project.android.defaultConfig.versionName</span><br><span class="line">            <span class="keyword">def</span> versionCode = project.android.defaultConfig.versionCode</span><br><span class="line"><span class="comment">//            versionName = versionName.replaceAll(&quot;\\.&quot;, &quot;_&quot;)</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;app-$&#123;variant.buildType.name&#125;_$&#123;APP_NAME&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;versionCode&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">            <span class="comment">//新的apk名称</span></span><br><span class="line">            <span class="keyword">def</span> newApkName = <span class="string">&quot;$&#123;APP_NAME_ABBREVIATION&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;variant.buildType.name&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">            println(<span class="string">&quot;newApkName = &quot;</span> + newApkName)</span><br><span class="line">            outputFileName = newApkName</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line"><span class="comment">//2 </span></span><br><span class="line">   android.applicationVariants.all &#123; variant -&gt;</span><br><span class="line">        variant.outputs.all &#123;</span><br><span class="line"></span><br><span class="line">                <span class="comment">//            def outputDir = variant.getPackageApplication().getOutputDirectory().host</span></span><br><span class="line"><span class="comment">//            println(&quot;outputDir = $&#123;outputDir&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line"><span class="comment">//            def newOutputDir = new File(outputDir, &quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            println(&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            variant.getPackageApplication().outputDirectory = newOutputDir</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">//重新定义生成的apk目录信息</span></span><br><span class="line"><span class="comment">//            def newOutputDir = new File(outputDir, &quot;$&#123;File.separator&#125;$&#123;APP_NAME_ABBREVIATION&#125;$&#123;File.separator&#125;$&#123;variant.buildType.name&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            println(&quot;newOutputDir = $&#123;newOutputDir&#125;&quot;)</span></span><br><span class="line"><span class="comment">//            variant.getPackageApplication().outputDirectory = newOutputDir</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//            def versionName = project.android.defaultConfig.versionName</span></span><br><span class="line"><span class="comment">//            def versionCode = project.android.defaultConfig.versionCode</span></span><br><span class="line"><span class="comment">//            versionName = versionName.replaceAll(&quot;\\.&quot;, &quot;_&quot;)</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;app-$&#123;variant.buildType.name&#125;_$&#123;APP_NAME&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;versionCode&#125;_$&#123;buildAppTime()&#125;.apk&quot;</span></span><br><span class="line">                <span class="comment">//新的apk名称</span></span><br><span class="line"><span class="comment">//            def newApkName = &quot;$&#123;APP_NAME_ABBREVIATION&#125;_$&#123;DEFAULT_CHANNEL&#125;_$&#123;versionName&#125;_$&#123;variant.buildType.name&#125;&#125;.apk&quot;</span></span><br><span class="line"><span class="comment">//            println(&quot;newApkName = &quot; + newApkName)</span></span><br><span class="line"><span class="comment">//            outputFileName = newApkName</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            output -&gt;</span><br><span class="line">                println(<span class="string">&quot;\nbuildDir = $&#123;buildDir&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\nandroid = $&#123;android.buildOutputs&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\nvariant = $&#123;variant.getPackageApplicationProvider()&#125;&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\noutput = $output&quot;</span>)</span><br><span class="line">                println(<span class="string">&quot;\noutputFileName = $output.outputFileName&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        variant.getAssembleProvider().get().doLast&#123;</span><br><span class="line">            println(<span class="string">&quot;..........copy file begin.........&quot;</span>)</span><br><span class="line">            variant.outputs.forEach&#123;</span><br><span class="line">                file -&gt;</span><br><span class="line">                    println(<span class="string">&quot;\nfile = $&#123;file.outputFile&#125;&quot;</span>)</span><br><span class="line">                    copy&#123;</span><br><span class="line">                        from file.outputFile</span><br><span class="line">                        into <span class="keyword">new</span> File(<span class="string">&quot;/Users/xxx/apk&quot;</span>)</span><br><span class="line">                    &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            println(<span class="string">&quot;..........copy file end.........&quot;</span>)</span><br><span class="line"></span><br><span class="line">            println(<span class="string">&quot;..........ok.........&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.cnblogs.com/EnSnail/p/6772454.html">参考1</a></p>
-<p><a href="https://www.runoob.com/git/git-commit-history.html">参考2</a></p>
-<p><a href="https://blog.csdn.net/byhook/article/details/51746825">参考3</a></p>
-<p><a href="https://git-scm.com/docs/git-log">官网</a></p>
-<p><a href="https://blog.csdn.net/smallbabylong/article/details/111276762">apk打包命名</a></p>
-]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>gradle</tag>
-        <tag>git</tag>
       </tags>
   </entry>
   <entry>
@@ -1616,178 +1533,86 @@
       </tags>
   </entry>
   <entry>
-    <title>maven-gradle插件备注记录</title>
-    <url>/2021/04/21/maven-gradle%E6%8F%92%E4%BB%B6/</url>
-    <content><![CDATA[<h5 id="电脑安装maven"><a href="#电脑安装maven" class="headerlink" title="电脑安装maven"></a>电脑安装maven</h5><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">从 Maven 官方地址：http://maven.apache.org/download.cgi 下载最新版的zip包，解压缩后配置环境变量</span><br></pre></td></tr></table></figure>
-<h5 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile <span class="comment">#编辑.bash_profile文件添加配置</span></span><br><span class="line"><span class="built_in">export</span> M2_HOME=/Users/xxx/soft/apache-maven-3.6.3  <span class="comment">#本机maven地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$M2_HOME</span>/bin</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile  <span class="comment">#同步.bash_profile文件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="验证配置"><a href="#验证配置" class="headerlink" title="验证配置"></a>验证配置</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">mvn -version </span><br><span class="line">Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f) <span class="comment">#表示生效</span></span><br><span class="line">Maven home: /Users/xxx/soft/apache-maven-3.6.3  <span class="comment">#maven目录</span></span><br><span class="line">Java version: 1.8.0_251, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">&quot;mac os x&quot;</span>, version: <span class="string">&quot;10.15.7&quot;</span>, arch: <span class="string">&quot;x86_64&quot;</span>, family: <span class="string">&quot;mac&quot;</span></span><br></pre></td></tr></table></figure>
-<h5 id="maven仓库"><a href="#maven仓库" class="headerlink" title="maven仓库"></a>maven仓库</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">1. 本地仓库 <span class="comment"># 默认在用户的目录下.m2/repository/的仓库目录。</span></span><br><span class="line">2. 远程仓库 <span class="comment"># mavenCentral 和 jcenter 或者 内网服务器的私有仓库</span></span><br></pre></td></tr></table></figure>
-<h5 id="物料存储路径对应"><a href="#物料存储路径对应" class="headerlink" title="物料存储路径对应"></a>物料存储路径对应</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">groupId # 唯一标识符 例如 com.xxx.helper</span><br><span class="line">artifactId # 项目名称  log</span><br><span class="line">version # 版本 1.1.1</span><br><span class="line">implementation &#x27;com.xxx.helper:log:1.1.1&#x27; # 引入时对应</span><br></pre></td></tr></table></figure>
-<h5 id="发布本地库流程"><a href="#发布本地库流程" class="headerlink" title="发布本地库流程"></a>发布本地库流程</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">创建一个Android 库项目 或者 创建一个gradle插件<span class="keyword">module</span>，在build.gradle文件中配置maven信息</span><br><span class="line">apply plugin: <span class="string">&#x27;maven&#x27;</span> <span class="comment">//引入maven 插件</span></span><br><span class="line">ext &#123;</span><br><span class="line">    PUBLISH_VERSION =<span class="string">&quot;1.1.1-beta&quot;</span> <span class="comment">//定义版本信息</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// maven配置</span></span><br><span class="line">uploadArchives &#123;</span><br><span class="line">    repositories.mavenDeployer &#123;</span><br><span class="line">        repository(url: uri(<span class="string">&#x27;../repos&#x27;</span>)) <span class="comment">//自定义本地maven仓库地址</span></span><br><span class="line">        pom.project &#123;</span><br><span class="line">            groupId <span class="string">&#x27;com.xxx.helper&#x27;</span> <span class="comment">//唯一标识</span></span><br><span class="line">            artifactId <span class="string">&#x27;log&#x27;</span> <span class="comment">//名称</span></span><br><span class="line">            version project.PUBLISH_VERSION <span class="comment">//版本</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="发布到本地仓库命令"><a href="#发布到本地仓库命令" class="headerlink" title="发布到本地仓库命令"></a>发布到本地仓库命令</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew uploadArchives</span><br></pre></td></tr></table></figure>
-<h5 id="发布远程仓库流程"><a href="#发布远程仓库流程" class="headerlink" title="发布远程仓库流程"></a>发布远程仓库流程</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">创建一个Android 库项目 或者 创建一个gradle插件<span class="keyword">module</span>，在build.gradle文件中配置maven信息</span><br><span class="line">  </span><br><span class="line"><span class="comment">//https://github.com/novoda/bintray-release</span></span><br><span class="line"><span class="comment">//apply plugin: &#x27;com.novoda.bintray-release&#x27;  //gradle版本限制，6.+版本不支持</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">//https://github.com/panpf/bintray-publish</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.github.panpf.bintray-publish&#x27;</span> <span class="comment">//6.+以上版本使用 </span></span><br><span class="line"></span><br><span class="line">ext &#123;</span><br><span class="line">    PUBLISH_VERSION = <span class="string">&quot;1.1.1&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">&#x27;xxx&#x27;</span>             <span class="comment">// Binary用户名</span></span><br><span class="line">    repoName = <span class="string">&#x27;xxx&#x27;</span>          <span class="comment">// Binary上的刚才新建的仓库名（Repository）</span></span><br><span class="line">    groupId = <span class="string">&#x27;com.xxx.helper&#x27;</span>        <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的包名a</span></span><br><span class="line">    artifactId = <span class="string">&#x27;log&#x27;</span>        <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的项目名b</span></span><br><span class="line">    publishVersion = project.PUBLISH_VERSION          <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的版本号c</span></span><br><span class="line">    desc = <span class="string">&#x27;xxx插件&#x27;</span>            <span class="comment">// 对该开源组件的说明</span></span><br><span class="line">    website = <span class="string">&#x27;https://github.com/xxx/log&#x27;</span>  <span class="comment">// VCS地址，即填写项目上传的Github地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="发布到远程仓库命令"><a href="#发布到远程仓库命令" class="headerlink" title="发布到远程仓库命令"></a>发布到远程仓库命令</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">./gradlew clean build bintrayUpload -PbintrayUser=xxx -PbintrayKey=xxxx -PdryRun=<span class="keyword">false</span> </span><br><span class="line"> -x javadocRelease <span class="comment">// -x 跳过命令</span></span><br></pre></td></tr></table></figure>
-<h5 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在子项目下的build.gradle文件中配置编译脚本信息，也可以在根目录下的build.gradle文件配置</span></span><br><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenLocal()</span><br><span class="line">        google()</span><br><span class="line">        mavenCentral()</span><br><span class="line">        jcenter()</span><br><span class="line"><span class="comment">//        maven &#123;</span></span><br><span class="line"><span class="comment">//            url uri(&#x27;../repos&#x27;) //本地Maven仓库地址</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">         classpath <span class="string">&#x27;com.xxx.helper:log:1.1.1&#x27;</span> <span class="comment">//插件依赖</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="引入插件信息"><a href="#引入插件信息" class="headerlink" title="引入插件信息"></a>引入插件信息</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.application&#x27;</span> <span class="comment">//android项目</span></span><br><span class="line">apply plugin: <span class="string">&#x27;kotlin-android&#x27;</span> <span class="comment">//kotlin</span></span><br><span class="line">apply plugin: <span class="string">&#x27;plugin.log&#x27;</span> <span class="comment">//引入自定义插件</span></span><br></pre></td></tr></table></figure>
-<h5 id="插件调试"><a href="#插件调试" class="headerlink" title="插件调试"></a>插件调试</h5><ol>
-<li><p>创建远程调试配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Android Studio -&gt; Run -&gt; Edit Configurations -&gt; 如下图</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/22/m1E9aWPAplJMoOC.png" alt="iShot2021-04-22上午11.45.31.png"></p>
-</li>
-<li><p>复制命令行参数信息</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=<span class="number">5006</span></span><br></pre></td></tr></table></figure></li>
-<li><p>在引入插件的项目中创建一个Run Configurations ，配置信息如下</p>
-<p><img src="https://i.loli.net/2021/04/22/fLEpqT7vXRo6KC5.png" alt="iShot2021-04-22上午11.51.01.png"><br><img src="https://i.loli.net/2021/04/22/JIQvn8LUCWatlPH.png" alt="iShot2021-04-22上午11.52.59.png"></p>
-</li>
-<li><p>以debug的形式运行Remote配置，然后再运行【:app:build】,如果没有问题的话就可以调试</p>
-<p><img src="https://i.loli.net/2021/04/22/UjoRI6sbyW5r1AJ.png" alt="iShot2021-04-22上午11.57.43.png"></p>
-</li>
+    <title>let、run、with、also、apply</title>
+    <url>/2021/06/14/kotlin-ext-fun%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h4 id="let"><a href="#let" class="headerlink" title="let"></a>let</h4><ol>
+<li>对一个可null的对象统一做判空处理</li>
+<li>明确变量所处特定的作用域范围内使用</li>
 </ol>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.jianshu.com/p/cff4684803f3">参考1</a></p>
-<p><a href="https://juejin.cn/post/6948626628637360135">参考2</a></p>
-<p><a href="https://mwping.github.io/android/gradle-plugin.html">参考3</a></p>
-<p><a href="https://www.milovetingting.cn/2020/02/25/Android/%E5%9C%A8Android%20Studio%E4%B8%AD%E8%B0%83%E8%AF%95Gradle%E6%8F%92%E4%BB%B6/#%E8%B0%83%E8%AF%95">gradle插件调试参考</a></p>
-<p><a href="https://blog.csdn.net/dbs1215/article/details/108569013?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242">gradle插件调试2参考</a> </p>
-<p><a href="https://doc.yonyoucloud.com/doc/wiki/project/GradleUserGuide-Wiki/dependency_management_basics/publishing_artifacts.html">gradle-指南</a></p>
-]]></content>
-      <categories>
-        <category>gradle</category>
-      </categories>
-      <tags>
-        <tag>gradle</tag>
-        <tag>maven</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>okhttp请求记录</title>
-    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<ul>
-<li><p>OkHttp请求</p>
-<ol>
-<li><p>创建Request对象</p>
-<p><code>Request对象的创建通过Builder模式创建</code> </p>
-<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
-</li>
-<li><p>创建OkHttpClient对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>异步方式http请求</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>代码</p>
-</li>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//with let </span></span><br><span class="line">Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">20</span>, <span class="string">&quot;Amsterdam&quot;</span>).let &#123;</span><br><span class="line">    println(it)</span><br><span class="line">    it.moveTo(<span class="string">&quot;London&quot;</span>)</span><br><span class="line">    it.incrementAge()</span><br><span class="line">    println(it)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//without let </span></span><br><span class="line"><span class="keyword">val</span> alice = Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">20</span>, <span class="string">&quot;Amsterdam&quot;</span>)</span><br><span class="line">println(alice)</span><br><span class="line">alice.moveTo(<span class="string">&quot;London&quot;</span>)</span><br><span class="line">alice.incrementAge()</span><br><span class="line">println(alice)</span><br></pre></td></tr></table></figure>
+<h4 id="with"><a href="#with" class="headerlink" title="with"></a>with</h4><ol>
+<li>省去类名重复，直接调用类的方法</li>
 </ol>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ul>
-<li><p>OkHttp 拦截器</p>
-<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>okhttp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RecyclerView嵌套滑动</title>
-    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
-<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
-<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>recyclerview</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>查看so库的方法</title>
-    <url>/2021/06/30/%E6%9F%A5%E7%9C%8Bso%E5%BA%93%E7%9A%84%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<h4 id="查看so库的方法"><a href="#查看so库的方法" class="headerlink" title="查看so库的方法"></a>查看so库的方法</h4><ol>
-<li><p><code>nm -D so文件</code> 打印出符号信息</p>
-</li>
-<li><p><code>readelf -a so文件</code> 用来读取elf信息</p>
-</li>
-<li><p><code>objdump -d so文件</code> </p>
-</li>
-<li><p><code>file so文件</code> 查看so库的属性</p>
-</li>
-<li><p><code>strings so文件</code></p>
-</li>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//with with </span></span><br><span class="line">with(binding) &#123;</span><br><span class="line">     tvSymbol.text = symbol</span><br><span class="line">     tvAnswer.text = <span class="keyword">data</span>.text</span><br><span class="line">     root.tag = <span class="keyword">data</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="comment">//without with </span></span><br><span class="line">binding.tvSymbol.text = symbol</span><br><span class="line">binding.tvAnswer.text = <span class="keyword">data</span>.text</span><br><span class="line">binding.root.tag = <span class="keyword">data</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="run"><a href="#run" class="headerlink" title="run"></a>run</h4><ol>
+<li>用于let,with函数任何场景</li>
+<li>弥补let函数在函数体内必须使用it参数替代对象,弥补了with函数传入对象判空问题</li>
 </ol>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/ray_zty/article/details/84612286">参考1</a></p>
-<p><a href="https://man.linuxde.net/nm">参考2</a></p>
-<p><a href="https://blog.csdn.net/xuanguofeng/article/details/53888314">参考3</a></p>
+<h4 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h4><ol>
+<li>功能和run函数很像，不同点apply返回的值是对象本身，而run函数是一个闭包形式返回</li>
+</ol>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//with apply</span></span><br><span class="line"><span class="keyword">val</span> dataList = mutableListOf&lt;OptionItem&gt;().apply &#123;</span><br><span class="line">    add(OptionItem(answerItem.correctAnswer, <span class="literal">true</span>))</span><br><span class="line">    add(OptionItem(answerItem.errorAnswer1, <span class="literal">false</span>))</span><br><span class="line">    add(OptionItem(answerItem.errorAnswer2, <span class="literal">false</span>))</span><br><span class="line">    shuffle()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//without apply</span></span><br><span class="line"> <span class="keyword">val</span> dataList = mutableListOf&lt;OptionItem&gt;()</span><br><span class="line">     dataList.add(OptionItem(answerItem.correctAnswer, <span class="literal">true</span>))</span><br><span class="line">     dataList.add(OptionItem(answerItem.errorAnswer1, <span class="literal">false</span>))</span><br><span class="line">     dataList.add(OptionItem(answerItem.errorAnswer2, <span class="literal">false</span>))</span><br><span class="line">     dataList.shuffle()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="also"><a href="#also" class="headerlink" title="also"></a>also</h4><ol>
+<li>用于let函数的任何场景，不同点also返回的值是对象本身，而let函数是一个闭包形式返回</li>
+</ol>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="comment">//with also</span></span><br><span class="line"><span class="keyword">val</span> alice = Person(<span class="string">&quot;Alice&quot;</span>,<span class="number">20</span>,<span class="string">&quot;Amsterdam&quot;</span>).also &#123;</span><br><span class="line">    println(it)</span><br><span class="line">    it.moveTo(<span class="string">&quot;London&quot;</span>)</span><br><span class="line">    it.incrementAge()</span><br><span class="line">    println(it)</span><br><span class="line">&#125;</span><br><span class="line">println(alice)</span><br><span class="line"></span><br><span class="line"><span class="comment">//without also </span></span><br><span class="line"><span class="keyword">val</span> alice = Person(<span class="string">&quot;Alice&quot;</span>, <span class="number">20</span>, <span class="string">&quot;Amsterdam&quot;</span>)</span><br><span class="line">println(alice)</span><br><span class="line">alice.moveTo(<span class="string">&quot;London&quot;</span>)</span><br><span class="line">alice.incrementAge()</span><br><span class="line">println(alice)</span><br></pre></td></tr></table></figure>
+
+
+
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th align="left">inline的结构</th>
+<th>块内对象、返回值</th>
+<th align="center">扩展函数</th>
+<th>场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>let</td>
+<td align="left"><code>inline fun &lt;T, R&gt; T.let(block: (T) -&gt; R): R </code></td>
+<td>it、闭包返回</td>
+<td align="center">是</td>
+<td>处理不为null的操作场景</td>
+</tr>
+<tr>
+<td>with</td>
+<td align="left"><code>inline fun &lt;T, R&gt; with(receiver: T, block: T.() -&gt; R): R</code></td>
+<td>this 、闭包返回</td>
+<td align="center">否</td>
+<td>省去类名，直接调用类的方法即可</td>
+</tr>
+<tr>
+<td>run</td>
+<td align="left"><code>inline fun &lt;R&gt; run(block: () -&gt; R): R</code></td>
+<td>this、闭包返回</td>
+<td align="center">是</td>
+<td>适用于let,with函数任何场景</td>
+</tr>
+<tr>
+<td>apply</td>
+<td align="left"><code>inline fun &lt;T&gt; T.apply(block: T.() -&gt; Unit): T</code></td>
+<td>this、返回this</td>
+<td align="center">是</td>
+<td>初始化对象实例时，操作对象属性， 并最终返回对象，    多个扩展函数链式调用，数据model多层级包裹判空处理的</td>
+</tr>
+<tr>
+<td>also</td>
+<td align="left"><code>inline fun &lt;T&gt; T.also(block: (T) -&gt; Unit): T </code></td>
+<td>it、返回this</td>
+<td align="center">是</td>
+<td>let函数的任何场景,可用于多个扩展函数链式调用</td>
+</tr>
+</tbody></table>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://kotlinlang.org/docs/scope-functions.html">文档</a></p>
 ]]></content>
       <categories>
         <category>android</category>
       </categories>
       <tags>
         <tag>android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通知栏使用备注</title>
-    <url>/2021/03/27/%E9%80%9A%E7%9F%A5%E6%A0%8F%E4%BD%BF%E7%94%A8%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h3 id="通知栏使用备注"><a href="#通知栏使用备注" class="headerlink" title="通知栏使用备注"></a>通知栏使用备注</h3><h4 id="RemoteViews"><a href="#RemoteViews" class="headerlink" title="RemoteViews"></a>RemoteViews</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一个能够被显示在其他进程中的View。该View的层次结构来自资源文件，并且此类提供了一下基础的操作来帮助修改View</span><br><span class="line">的内容。RemoteViews运行在另一个进程中， RemoteViews在开发中主要会作用于两个方面通知栏和桌面小部件。因为</span><br><span class="line">View是存在于另一个进程中的，所以我们不能够像直接操作View的那样来操作RemoteView，为了帮助我们操作RemoteView，</span><br><span class="line">Google为我们提供了 RemoteViews 类来帮助我们操作。提示，提供的资源文件中，只能包含部分ViewGroup和View,</span><br><span class="line">不支持扩展，不支持自定义View。支持的ViewGroup有：GridView、AdapterViewFlipper、FrameLayout、</span><br><span class="line">GridLayout、LinearLayout、ListView、RelativeLayout、StackView、ViewFlipper。</span><br><span class="line">支持的View有：AnalogClock、Button、Chronometer、ImageButton、ImageView、ProgressBar、</span><br><span class="line">TextClock、TextView</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="PendingIntent"><a href="#PendingIntent" class="headerlink" title="PendingIntent"></a>PendingIntent</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">PendingIntent 是一种特殊的 Intent， 作用和 Intent 一样是用于启动一个 Activity或者Service，或发送</span><br><span class="line"> 一条 Broadcast。通知响应用户动作便是用这个， 当对通知做出一个动作后，系统便会调用 PendingIntent，</span><br><span class="line"> 启动一个活动，服务或广播，这取决于你获取的是那种 PendingIntent。</span><br><span class="line"></span><br><span class="line">在 PendingIntent 中传入的 Context 销毁以后，PendingIntent 依旧有效，它一般使用在当 Context 销毁</span><br><span class="line">  后需要执行 Intent的地方，一般不是用于立即执行的时候，比如在点击通知后唤醒一个 Activity。</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用于启动 Activity </span></span><br><span class="line">PendingIntent.getActivity(Context context, <span class="keyword">int</span> requestCode, Intent intent, <span class="keyword">int</span> flags);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用于发送 Broadcast</span></span><br><span class="line">PendingIntent.getBroadcast(Context context, <span class="keyword">int</span> requestCode, Intent intent, <span class="keyword">int</span> flags);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用于启动服务</span></span><br><span class="line">PendingIntent.getService(Context context, <span class="keyword">int</span> requestCode, Intent intent, <span class="keyword">int</span> flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getActivities(Context context, <span class="keyword">int</span> reqeustCode, Intent[] intents, <span class="keyword">int</span> flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getForgroundService(Context, <span class="keyword">int</span> reqeustCode, Intent intent, <span class="keyword">int</span> flags)</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_CANCEL_CURRENT，如果当前已存在则取消当前的并返回一个新的 PendingIntent</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_UPDATE_CURRENT，如果已存在则更新之前的</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_NO_CREATE，如果已存在则返回当前存在的，否则返回 <span class="keyword">null</span></span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_ONE_SHOT，表明这个 PendingIntent 只能用一次，触发一次后自动 cancel</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_IMMUTABLE，表明这个PendingIntent 不可变</span><br><span class="line"></span><br><span class="line">requestCode 和 flags 是相关联的，如果多次获取 PendingIntent 时 requestCode 相同，此时返回的结果</span><br><span class="line">就需要参考 flags 的值。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 创建Notification，配置参数</span><br><span class="line"><span class="number">2.</span> 获取NotificationManager，发送通知</span><br><span class="line"><span class="number">3.</span> Android <span class="number">8.0</span>之后，注意添加 NotificationChannel</span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"> * 创建通知栏</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Notification <span class="title">createNotification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String channelId = CHANNEL_ID + <span class="string">&quot;&quot;</span>; <span class="comment">//channel id</span></span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123; <span class="comment">//8.0系统之后 增加 NotificationChannel</span></span><br><span class="line">        CharSequence channelName = getString(R.string.app_name);</span><br><span class="line">        <span class="keyword">int</span> importance = NotificationManager.IMPORTANCE_HIGH;</span><br><span class="line">        NotificationChannel mChannel = <span class="keyword">new</span> NotificationChannel(channelId, channelName, importance);</span><br><span class="line">        mNotificationManager.createNotificationChannel(mChannel);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">null</span> == mRemoteViews) &#123; <span class="comment">//自定义通知栏view ,创建RemoteViews</span></span><br><span class="line">        mRemoteViews = <span class="keyword">new</span> RemoteViews(getPackageName(), R.layout.layout_notification_bar_tool);</span><br><span class="line">        initRemoteViews(mRemoteViews); <span class="comment">//初始化自定义view </span></span><br><span class="line">    &#125;</span><br><span class="line">    Notification notification = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>, channelId)</span><br><span class="line">            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)</span><br><span class="line">            .setOngoing(<span class="keyword">true</span>) <span class="comment">//前台显示</span></span><br><span class="line">            .setSmallIcon(R.drawable.ic_launcher)</span><br><span class="line">            .setContent(mRemoteViews)</span><br><span class="line">            .build();</span><br><span class="line">    notification.when = System.currentTimeMillis();</span><br><span class="line">    IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter(ACTION_DK);</span><br><span class="line">    registerReceiver(mBroadcastReceiver, intentFilter);</span><br><span class="line">    <span class="keyword">return</span> notification;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"> * 发送通知栏</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">sendNotification</span><span class="params">()</span></span>&#123;</span><br><span class="line">    mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</span><br><span class="line">    mNotification = createNotification(); <span class="comment">//上面方法，创建一个通知栏对象</span></span><br><span class="line">    mNotificationManager.notify(CHANNEL_ID ,mNotification);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="相关方法"><a href="#相关方法" class="headerlink" title="相关方法"></a>相关方法</h4><ul>
-<li><p>setVisibility(int visibility)</p>
-<p><code>Notification.VISIBILITY_PUBLIC</code>   - 显示所有通知内容</p>
-<p><code>Notification.VISIBILITY_PRIVATE</code> - 只显示标题</p>
-<p><code>Notification.VISIBILITY_SECRET</code>   - 不显示任何内容</p>
-</li>
-<li><p>setDefaults(int defaults)</p>
-<p><code>Notification.DEFAULT_VIBRATE</code> - 震动提示</p>
-<p><code>Notification.DEFAULT_SOUND</code> - 提示音</p>
-<p><code>Notification.DEFAULT_LIGHTS</code> - 三色灯</p>
-<p><code>Notification.DEFAULT_ALL</code> -上面3个集合</p>
-</li>
-<li><p>setVibrate(long[] pattern)</p>
-<p><code>pattern</code> long类型数组， 下标为奇数为延时，偶数为震动时长，例如long[]{0, 300, 200, 300}</p>
-<p>表示 延时0ms，震动300ms，延时200ms，震动300ms</p>
-</li>
-<li><p>setSound(Uri sound) </p>
-</li>
-<li><p>setLights(@ColorInt int argb, int onMs, int offMs)   颜色值、亮的时长、不亮的时长</p>
-</li>
-<li><p>setOngoing(boolean ongoing)  //表示正在进行的</p>
-</li>
-<li><p>setProgress(int max, int progress, boolean indeterminate) //展示进度条</p>
-</li>
-<li><p>setAutoCancel(boolean autoCancel) //点击后自动取消</p>
-</li>
-</ul>
-<h4 id="取消通知"><a href="#取消通知" class="headerlink" title="取消通知"></a>取消通知</h4><ul>
-<li>setAutoCancel()  //点击通知会清除</li>
-<li>NotificationManager.cancel(int id)  //取消给定的id</li>
-<li>NotificationManager.cancelAll()  //清除所有该应用的通知</li>
-</ul>
-<h4 id="实现类似360清理大师常驻通知栏"><a href="#实现类似360清理大师常驻通知栏" class="headerlink" title="实现类似360清理大师常驻通知栏"></a>实现类似360清理大师常驻通知栏</h4><p><img src="https://i.loli.net/2021/03/27/gmPSRtKFEifnzlL.png" alt="iShot2021-03-27上午10.25.23.png"></p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://my.oschina.net/Agnes2017/blog/3151339">参考</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>adb</tag>
+        <tag>kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -1974,6 +1799,49 @@
       </tags>
   </entry>
   <entry>
+    <title>maven-gradle插件备注记录</title>
+    <url>/2021/04/21/maven-gradle%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[<h5 id="电脑安装maven"><a href="#电脑安装maven" class="headerlink" title="电脑安装maven"></a>电脑安装maven</h5><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">从 Maven 官方地址：http://maven.apache.org/download.cgi 下载最新版的zip包，解压缩后配置环境变量</span><br></pre></td></tr></table></figure>
+<h5 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vi ~/.bash_profile <span class="comment">#编辑.bash_profile文件添加配置</span></span><br><span class="line"><span class="built_in">export</span> M2_HOME=/Users/xxx/soft/apache-maven-3.6.3  <span class="comment">#本机maven地址</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$M2_HOME</span>/bin</span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile  <span class="comment">#同步.bash_profile文件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="验证配置"><a href="#验证配置" class="headerlink" title="验证配置"></a>验证配置</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">mvn -version </span><br><span class="line">Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f) <span class="comment">#表示生效</span></span><br><span class="line">Maven home: /Users/xxx/soft/apache-maven-3.6.3  <span class="comment">#maven目录</span></span><br><span class="line">Java version: 1.8.0_251, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home/jre</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">&quot;mac os x&quot;</span>, version: <span class="string">&quot;10.15.7&quot;</span>, arch: <span class="string">&quot;x86_64&quot;</span>, family: <span class="string">&quot;mac&quot;</span></span><br></pre></td></tr></table></figure>
+<h5 id="maven仓库"><a href="#maven仓库" class="headerlink" title="maven仓库"></a>maven仓库</h5><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">1. 本地仓库 <span class="comment"># 默认在用户的目录下.m2/repository/的仓库目录。</span></span><br><span class="line">2. 远程仓库 <span class="comment"># mavenCentral 和 jcenter 或者 内网服务器的私有仓库</span></span><br></pre></td></tr></table></figure>
+<h5 id="物料存储路径对应"><a href="#物料存储路径对应" class="headerlink" title="物料存储路径对应"></a>物料存储路径对应</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">groupId # 唯一标识符 例如 com.xxx.helper</span><br><span class="line">artifactId # 项目名称  log</span><br><span class="line">version # 版本 1.1.1</span><br><span class="line">implementation &#x27;com.xxx.helper:log:1.1.1&#x27; # 引入时对应</span><br></pre></td></tr></table></figure>
+<h5 id="发布本地库流程"><a href="#发布本地库流程" class="headerlink" title="发布本地库流程"></a>发布本地库流程</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">创建一个Android 库项目 或者 创建一个gradle插件<span class="keyword">module</span>，在build.gradle文件中配置maven信息</span><br><span class="line">apply plugin: <span class="string">&#x27;maven&#x27;</span> <span class="comment">//引入maven 插件</span></span><br><span class="line">ext &#123;</span><br><span class="line">    PUBLISH_VERSION =<span class="string">&quot;1.1.1-beta&quot;</span> <span class="comment">//定义版本信息</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// maven配置</span></span><br><span class="line">uploadArchives &#123;</span><br><span class="line">    repositories.mavenDeployer &#123;</span><br><span class="line">        repository(url: uri(<span class="string">&#x27;../repos&#x27;</span>)) <span class="comment">//自定义本地maven仓库地址</span></span><br><span class="line">        pom.project &#123;</span><br><span class="line">            groupId <span class="string">&#x27;com.xxx.helper&#x27;</span> <span class="comment">//唯一标识</span></span><br><span class="line">            artifactId <span class="string">&#x27;log&#x27;</span> <span class="comment">//名称</span></span><br><span class="line">            version project.PUBLISH_VERSION <span class="comment">//版本</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="发布到本地仓库命令"><a href="#发布到本地仓库命令" class="headerlink" title="发布到本地仓库命令"></a>发布到本地仓库命令</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;gradlew uploadArchives</span><br></pre></td></tr></table></figure>
+<h5 id="发布远程仓库流程"><a href="#发布远程仓库流程" class="headerlink" title="发布远程仓库流程"></a>发布远程仓库流程</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">创建一个Android 库项目 或者 创建一个gradle插件<span class="keyword">module</span>，在build.gradle文件中配置maven信息</span><br><span class="line">  </span><br><span class="line"><span class="comment">//https://github.com/novoda/bintray-release</span></span><br><span class="line"><span class="comment">//apply plugin: &#x27;com.novoda.bintray-release&#x27;  //gradle版本限制，6.+版本不支持</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">//https://github.com/panpf/bintray-publish</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.github.panpf.bintray-publish&#x27;</span> <span class="comment">//6.+以上版本使用 </span></span><br><span class="line"></span><br><span class="line">ext &#123;</span><br><span class="line">    PUBLISH_VERSION = <span class="string">&quot;1.1.1&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">publish &#123;</span><br><span class="line">    userOrg = <span class="string">&#x27;xxx&#x27;</span>             <span class="comment">// Binary用户名</span></span><br><span class="line">    repoName = <span class="string">&#x27;xxx&#x27;</span>          <span class="comment">// Binary上的刚才新建的仓库名（Repository）</span></span><br><span class="line">    groupId = <span class="string">&#x27;com.xxx.helper&#x27;</span>        <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的包名a</span></span><br><span class="line">    artifactId = <span class="string">&#x27;log&#x27;</span>        <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的项目名b</span></span><br><span class="line">    publishVersion = project.PUBLISH_VERSION          <span class="comment">// 依赖名compile &#x27;a:b:c&#x27;中的版本号c</span></span><br><span class="line">    desc = <span class="string">&#x27;xxx插件&#x27;</span>            <span class="comment">// 对该开源组件的说明</span></span><br><span class="line">    website = <span class="string">&#x27;https://github.com/xxx/log&#x27;</span>  <span class="comment">// VCS地址，即填写项目上传的Github地址</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="发布到远程仓库命令"><a href="#发布到远程仓库命令" class="headerlink" title="发布到远程仓库命令"></a>发布到远程仓库命令</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">./gradlew clean build bintrayUpload -PbintrayUser=xxx -PbintrayKey=xxxx -PdryRun=<span class="keyword">false</span> </span><br><span class="line"> -x javadocRelease <span class="comment">// -x 跳过命令</span></span><br></pre></td></tr></table></figure>
+<h5 id="插件使用"><a href="#插件使用" class="headerlink" title="插件使用"></a>插件使用</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//在子项目下的build.gradle文件中配置编译脚本信息，也可以在根目录下的build.gradle文件配置</span></span><br><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenLocal()</span><br><span class="line">        google()</span><br><span class="line">        mavenCentral()</span><br><span class="line">        jcenter()</span><br><span class="line"><span class="comment">//        maven &#123;</span></span><br><span class="line"><span class="comment">//            url uri(&#x27;../repos&#x27;) //本地Maven仓库地址</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">         classpath <span class="string">&#x27;com.xxx.helper:log:1.1.1&#x27;</span> <span class="comment">//插件依赖</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="引入插件信息"><a href="#引入插件信息" class="headerlink" title="引入插件信息"></a>引入插件信息</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.application&#x27;</span> <span class="comment">//android项目</span></span><br><span class="line">apply plugin: <span class="string">&#x27;kotlin-android&#x27;</span> <span class="comment">//kotlin</span></span><br><span class="line">apply plugin: <span class="string">&#x27;plugin.log&#x27;</span> <span class="comment">//引入自定义插件</span></span><br></pre></td></tr></table></figure>
+<h5 id="插件调试"><a href="#插件调试" class="headerlink" title="插件调试"></a>插件调试</h5><ol>
+<li><p>创建远程调试配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Android Studio -&gt; Run -&gt; Edit Configurations -&gt; 如下图</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/22/m1E9aWPAplJMoOC.png" alt="iShot2021-04-22上午11.45.31.png"></p>
+</li>
+<li><p>复制命令行参数信息</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=<span class="number">5006</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在引入插件的项目中创建一个Run Configurations ，配置信息如下</p>
+<p><img src="https://i.loli.net/2021/04/22/fLEpqT7vXRo6KC5.png" alt="iShot2021-04-22上午11.51.01.png"><br><img src="https://i.loli.net/2021/04/22/JIQvn8LUCWatlPH.png" alt="iShot2021-04-22上午11.52.59.png"></p>
+</li>
+<li><p>以debug的形式运行Remote配置，然后再运行【:app:build】,如果没有问题的话就可以调试</p>
+<p><img src="https://i.loli.net/2021/04/22/UjoRI6sbyW5r1AJ.png" alt="iShot2021-04-22上午11.57.43.png"></p>
+</li>
+</ol>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://www.jianshu.com/p/cff4684803f3">参考1</a></p>
+<p><a href="https://juejin.cn/post/6948626628637360135">参考2</a></p>
+<p><a href="https://mwping.github.io/android/gradle-plugin.html">参考3</a></p>
+<p><a href="https://www.milovetingting.cn/2020/02/25/Android/%E5%9C%A8Android%20Studio%E4%B8%AD%E8%B0%83%E8%AF%95Gradle%E6%8F%92%E4%BB%B6/#%E8%B0%83%E8%AF%95">gradle插件调试参考</a></p>
+<p><a href="https://blog.csdn.net/dbs1215/article/details/108569013?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&spm=1001.2101.3001.4242">gradle插件调试2参考</a> </p>
+<p><a href="https://doc.yonyoucloud.com/doc/wiki/project/GradleUserGuide-Wiki/dependency_management_basics/publishing_artifacts.html">gradle-指南</a></p>
+]]></content>
+      <categories>
+        <category>gradle</category>
+      </categories>
+      <tags>
+        <tag>gradle</tag>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>3大特性5大原则</title>
     <url>/2021/05/21/object-feature-principle/</url>
     <content><![CDATA[<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><p><code>封装</code> 隐藏对象的属性和实现细节，仅对外提供公共访问方式，将变化隔离，便于使用，提高复用性和安全性</p>
@@ -1996,6 +1864,61 @@
       </categories>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>okhttp请求记录</title>
+    <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<ul>
+<li><p>OkHttp请求</p>
+<ol>
+<li><p>创建Request对象</p>
+<p><code>Request对象的创建通过Builder模式创建</code> </p>
+<p><img src="https://i.loli.net/2021/03/06/3QG4lKkuFVfXzyA.png" alt="iShot2021-03-06下午05.30.12.png"></p>
+</li>
+<li><p>创建OkHttpClient对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient client = <span class="keyword">new</span> OkHttpClient.Builder().build();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>异步方式http请求</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">client.newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">                    v.post(() -&gt; &#123;</span><br><span class="line">                        TextView textView = (TextView) v;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            textView.setText(response.body().string());</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (IOException exception) &#123;</span><br><span class="line">                            exception.printStackTrace();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码</p>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2021/03/06/uRUrCxn92BDJEAP.png" alt="iShot2021-03-06下午05.24.24.png"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">okhttp.newCall -&gt; realCall</span><br><span class="line">realCall.enqueue -&gt; asyncCall</span><br><span class="line">asyncCall.execute -&gt; getResponseWithInterceptorChain -&gt; chain.proceed</span><br><span class="line">realInterceptorChain.process -&gt; ……</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>OkHttp 拦截器</p>
+<p><img src="https://i.loli.net/2021/03/06/Okm1cglFZznp6bx.png" alt="iShot2021-03-06下午05.21.32.png"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>okhttp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RecyclerView嵌套滑动</title>
+    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
+<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
+<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>recyclerview</tag>
       </tags>
   </entry>
   <entry>
@@ -2033,6 +1956,83 @@
       <tags>
         <tag>android</tag>
         <tag>xposed</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>查看so库的方法</title>
+    <url>/2021/06/30/%E6%9F%A5%E7%9C%8Bso%E5%BA%93%E7%9A%84%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h4 id="查看so库的方法"><a href="#查看so库的方法" class="headerlink" title="查看so库的方法"></a>查看so库的方法</h4><ol>
+<li><p><code>nm -D so文件</code> 打印出符号信息</p>
+</li>
+<li><p><code>readelf -a so文件</code> 用来读取elf信息</p>
+</li>
+<li><p><code>objdump -d so文件</code> </p>
+</li>
+<li><p><code>file so文件</code> 查看so库的属性</p>
+</li>
+<li><p><code>strings so文件</code></p>
+</li>
+</ol>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/ray_zty/article/details/84612286">参考1</a></p>
+<p><a href="https://man.linuxde.net/nm">参考2</a></p>
+<p><a href="https://blog.csdn.net/xuanguofeng/article/details/53888314">参考3</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通知栏使用备注</title>
+    <url>/2021/03/27/%E9%80%9A%E7%9F%A5%E6%A0%8F%E4%BD%BF%E7%94%A8%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h3 id="通知栏使用备注"><a href="#通知栏使用备注" class="headerlink" title="通知栏使用备注"></a>通知栏使用备注</h3><h4 id="RemoteViews"><a href="#RemoteViews" class="headerlink" title="RemoteViews"></a>RemoteViews</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一个能够被显示在其他进程中的View。该View的层次结构来自资源文件，并且此类提供了一下基础的操作来帮助修改View</span><br><span class="line">的内容。RemoteViews运行在另一个进程中， RemoteViews在开发中主要会作用于两个方面通知栏和桌面小部件。因为</span><br><span class="line">View是存在于另一个进程中的，所以我们不能够像直接操作View的那样来操作RemoteView，为了帮助我们操作RemoteView，</span><br><span class="line">Google为我们提供了 RemoteViews 类来帮助我们操作。提示，提供的资源文件中，只能包含部分ViewGroup和View,</span><br><span class="line">不支持扩展，不支持自定义View。支持的ViewGroup有：GridView、AdapterViewFlipper、FrameLayout、</span><br><span class="line">GridLayout、LinearLayout、ListView、RelativeLayout、StackView、ViewFlipper。</span><br><span class="line">支持的View有：AnalogClock、Button、Chronometer、ImageButton、ImageView、ProgressBar、</span><br><span class="line">TextClock、TextView</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="PendingIntent"><a href="#PendingIntent" class="headerlink" title="PendingIntent"></a>PendingIntent</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">PendingIntent 是一种特殊的 Intent， 作用和 Intent 一样是用于启动一个 Activity或者Service，或发送</span><br><span class="line"> 一条 Broadcast。通知响应用户动作便是用这个， 当对通知做出一个动作后，系统便会调用 PendingIntent，</span><br><span class="line"> 启动一个活动，服务或广播，这取决于你获取的是那种 PendingIntent。</span><br><span class="line"></span><br><span class="line">在 PendingIntent 中传入的 Context 销毁以后，PendingIntent 依旧有效，它一般使用在当 Context 销毁</span><br><span class="line">  后需要执行 Intent的地方，一般不是用于立即执行的时候，比如在点击通知后唤醒一个 Activity。</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用于启动 Activity </span></span><br><span class="line">PendingIntent.getActivity(Context context, <span class="keyword">int</span> requestCode, Intent intent, <span class="keyword">int</span> flags);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用于发送 Broadcast</span></span><br><span class="line">PendingIntent.getBroadcast(Context context, <span class="keyword">int</span> requestCode, Intent intent, <span class="keyword">int</span> flags);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用于启动服务</span></span><br><span class="line">PendingIntent.getService(Context context, <span class="keyword">int</span> requestCode, Intent intent, <span class="keyword">int</span> flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getActivities(Context context, <span class="keyword">int</span> reqeustCode, Intent[] intents, <span class="keyword">int</span> flags);</span><br><span class="line"></span><br><span class="line">PendingIntent.getForgroundService(Context, <span class="keyword">int</span> reqeustCode, Intent intent, <span class="keyword">int</span> flags)</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_CANCEL_CURRENT，如果当前已存在则取消当前的并返回一个新的 PendingIntent</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_UPDATE_CURRENT，如果已存在则更新之前的</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_NO_CREATE，如果已存在则返回当前存在的，否则返回 <span class="keyword">null</span></span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_ONE_SHOT，表明这个 PendingIntent 只能用一次，触发一次后自动 cancel</span><br><span class="line"></span><br><span class="line">PendingIntent.FLAG_IMMUTABLE，表明这个PendingIntent 不可变</span><br><span class="line"></span><br><span class="line">requestCode 和 flags 是相关联的，如果多次获取 PendingIntent 时 requestCode 相同，此时返回的结果</span><br><span class="line">就需要参考 flags 的值。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 创建Notification，配置参数</span><br><span class="line"><span class="number">2.</span> 获取NotificationManager，发送通知</span><br><span class="line"><span class="number">3.</span> Android <span class="number">8.0</span>之后，注意添加 NotificationChannel</span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"> * 创建通知栏</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Notification <span class="title">createNotification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String channelId = CHANNEL_ID + <span class="string">&quot;&quot;</span>; <span class="comment">//channel id</span></span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123; <span class="comment">//8.0系统之后 增加 NotificationChannel</span></span><br><span class="line">        CharSequence channelName = getString(R.string.app_name);</span><br><span class="line">        <span class="keyword">int</span> importance = NotificationManager.IMPORTANCE_HIGH;</span><br><span class="line">        NotificationChannel mChannel = <span class="keyword">new</span> NotificationChannel(channelId, channelName, importance);</span><br><span class="line">        mNotificationManager.createNotificationChannel(mChannel);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">null</span> == mRemoteViews) &#123; <span class="comment">//自定义通知栏view ,创建RemoteViews</span></span><br><span class="line">        mRemoteViews = <span class="keyword">new</span> RemoteViews(getPackageName(), R.layout.layout_notification_bar_tool);</span><br><span class="line">        initRemoteViews(mRemoteViews); <span class="comment">//初始化自定义view </span></span><br><span class="line">    &#125;</span><br><span class="line">    Notification notification = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>, channelId)</span><br><span class="line">            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)</span><br><span class="line">            .setOngoing(<span class="keyword">true</span>) <span class="comment">//前台显示</span></span><br><span class="line">            .setSmallIcon(R.drawable.ic_launcher)</span><br><span class="line">            .setContent(mRemoteViews)</span><br><span class="line">            .build();</span><br><span class="line">    notification.when = System.currentTimeMillis();</span><br><span class="line">    IntentFilter intentFilter = <span class="keyword">new</span> IntentFilter(ACTION_DK);</span><br><span class="line">    registerReceiver(mBroadcastReceiver, intentFilter);</span><br><span class="line">    <span class="keyword">return</span> notification;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"> * 发送通知栏</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">sendNotification</span><span class="params">()</span></span>&#123;</span><br><span class="line">    mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</span><br><span class="line">    mNotification = createNotification(); <span class="comment">//上面方法，创建一个通知栏对象</span></span><br><span class="line">    mNotificationManager.notify(CHANNEL_ID ,mNotification);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="相关方法"><a href="#相关方法" class="headerlink" title="相关方法"></a>相关方法</h4><ul>
+<li><p>setVisibility(int visibility)</p>
+<p><code>Notification.VISIBILITY_PUBLIC</code>   - 显示所有通知内容</p>
+<p><code>Notification.VISIBILITY_PRIVATE</code> - 只显示标题</p>
+<p><code>Notification.VISIBILITY_SECRET</code>   - 不显示任何内容</p>
+</li>
+<li><p>setDefaults(int defaults)</p>
+<p><code>Notification.DEFAULT_VIBRATE</code> - 震动提示</p>
+<p><code>Notification.DEFAULT_SOUND</code> - 提示音</p>
+<p><code>Notification.DEFAULT_LIGHTS</code> - 三色灯</p>
+<p><code>Notification.DEFAULT_ALL</code> -上面3个集合</p>
+</li>
+<li><p>setVibrate(long[] pattern)</p>
+<p><code>pattern</code> long类型数组， 下标为奇数为延时，偶数为震动时长，例如long[]{0, 300, 200, 300}</p>
+<p>表示 延时0ms，震动300ms，延时200ms，震动300ms</p>
+</li>
+<li><p>setSound(Uri sound) </p>
+</li>
+<li><p>setLights(@ColorInt int argb, int onMs, int offMs)   颜色值、亮的时长、不亮的时长</p>
+</li>
+<li><p>setOngoing(boolean ongoing)  //表示正在进行的</p>
+</li>
+<li><p>setProgress(int max, int progress, boolean indeterminate) //展示进度条</p>
+</li>
+<li><p>setAutoCancel(boolean autoCancel) //点击后自动取消</p>
+</li>
+</ul>
+<h4 id="取消通知"><a href="#取消通知" class="headerlink" title="取消通知"></a>取消通知</h4><ul>
+<li>setAutoCancel()  //点击通知会清除</li>
+<li>NotificationManager.cancel(int id)  //取消给定的id</li>
+<li>NotificationManager.cancelAll()  //清除所有该应用的通知</li>
+</ul>
+<h4 id="实现类似360清理大师常驻通知栏"><a href="#实现类似360清理大师常驻通知栏" class="headerlink" title="实现类似360清理大师常驻通知栏"></a>实现类似360清理大师常驻通知栏</h4><p><img src="https://i.loli.net/2021/03/27/gmPSRtKFEifnzlL.png" alt="iShot2021-03-27上午10.25.23.png"></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://my.oschina.net/Agnes2017/blog/3151339">参考</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>adb</tag>
       </tags>
   </entry>
   <entry>
@@ -3113,6 +3113,7 @@
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://en.wikipedia.org/wiki/Java_bytecode_instruction_listings">参考1</a></p>
 <p><a href="https://cloud.tencent.com/developer/column/82294/tag-10688">参考2</a></p>
 <p><a href="https://cloud.tencent.com/developer/article/1543234">参考3</a></p>
+<p><a href="https://blog.csdn.net/m0_58350991/article/details/117306764">字节码学习</a></p>
 ]]></content>
       <categories>
         <category>android</category>
