@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>git相关记录 | Hello</title><meta name="keywords" content="git"><meta name="author" content="Leo"><meta name="copyright" content="Leo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="建立分支追踪关系方法 手动建立追踪关系   git branch --set-upstream-to&#x3D;&lt;远程主机名&gt;&#x2F;&lt;远程分支名&gt; &lt;本地分支名&gt;   git branch --set-upstream-to&#x3D;origin&#x2F;dev dev    push时建立追踪关系   git push -u &lt;远程主机名&gt; &lt;本地分支名&gt;   gi">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>git相关记录 | Hello</title><meta name="keywords" content="git"><meta name="author" content="Leo"><meta name="copyright" content="Leo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="git分支追踪 手动建立追踪关系   git branch --set-upstream-to&#x3D;&lt;远程主机名&gt;&#x2F;&lt;远程分支名&gt; &lt;本地分支名&gt;   git branch --set-upstream-to&#x3D;origin&#x2F;dev dev    push时建立追踪关系   git push -u &lt;远程主机名&gt; &lt;本地分支名&gt;   git p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git相关记录">
 <meta property="og:url" content="http://boundless1024.com/2021/02/28/git%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="Hello">
-<meta property="og:description" content="建立分支追踪关系方法 手动建立追踪关系   git branch --set-upstream-to&#x3D;&lt;远程主机名&gt;&#x2F;&lt;远程分支名&gt; &lt;本地分支名&gt;   git branch --set-upstream-to&#x3D;origin&#x2F;dev dev    push时建立追踪关系   git push -u &lt;远程主机名&gt; &lt;本地分支名&gt;   gi">
+<meta property="og:description" content="git分支追踪 手动建立追踪关系   git branch --set-upstream-to&#x3D;&lt;远程主机名&gt;&#x2F;&lt;远程分支名&gt; &lt;本地分支名&gt;   git branch --set-upstream-to&#x3D;origin&#x2F;dev dev    push时建立追踪关系   git push -u &lt;远程主机名&gt; &lt;本地分支名&gt;   git p">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/03/01/wIKEd4QWJ2iuUSf.jpg">
 <meta property="article:published_time" content="2021-02-28T04:23:42.000Z">
-<meta property="article:modified_time" content="2021-03-01T03:44:09.064Z">
+<meta property="article:modified_time" content="2021-12-07T02:15:38.766Z">
 <meta property="article:author" content="Leo">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
@@ -57,7 +57,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2021-03-01 11:44:09'
+  postUpdate: '2021-12-07 10:15:38'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -122,7 +122,7 @@
           document.documentElement.classList.remove('hide-aside')
         }
       }
-    })(window)</script><meta name="generator" content="Hexo 5.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/22/JnUYy8q6ZvfTcVs.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/03/01/wIKEd4QWJ2iuUSf.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Hello</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">git相关记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-28T04:23:42.000Z" title="发表于 2021-02-28 12:23:42">2021-02-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-01T03:44:09.064Z" title="更新于 2021-03-01 11:44:09">2021-03-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/git/">git</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="建立分支追踪关系方法"><a href="#建立分支追踪关系方法" class="headerlink" title="建立分支追踪关系方法"></a>建立分支追踪关系方法</h3><ul>
+    })(window)</script><meta name="generator" content="Hexo 5.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/22/JnUYy8q6ZvfTcVs.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/03/01/wIKEd4QWJ2iuUSf.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Hello</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">git相关记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-28T04:23:42.000Z" title="发表于 2021-02-28 12:23:42">2021-02-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-12-07T02:15:38.766Z" title="更新于 2021-12-07 10:15:38">2021-12-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/git/">git</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="git分支追踪"><a href="#git分支追踪" class="headerlink" title="git分支追踪"></a>git分支追踪</h3><ul>
 <li><p>手动建立追踪关系</p>
 <pre><code>  git branch --set-upstream-to=&lt;远程主机名&gt;/&lt;远程分支名&gt; &lt;本地分支名&gt;
   git branch --set-upstream-to=origin/dev dev 
@@ -145,6 +145,12 @@
 <li><p>查看所有的分支信息</p>
 <pre><code>  git branch -va
 </code></pre>
+</li>
+</ul>
+<ul>
+<li><p>处理文件重命名后无法提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Git默认是不区分大小写的，所以你需要设置为区分大小写</span><br><span class="line">git config --global core.ignorecase false --全局设置</span><br><span class="line"> ignorecase &#x3D; false  --项目设置</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_12564104/2896738">参考-重命名文件提交</a></p>
 </li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42780289/article/details/97762596">参考</a></p>
@@ -229,7 +235,866 @@
 </code></pre>
 </li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Leo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://boundless1024.com/2021/02/28/git%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/">http://boundless1024.com/2021/02/28/git%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://boundless1024.com" target="_blank">Hello</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/git/">git</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/03/01/wIKEd4QWJ2iuUSf.jpg" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/"><img class="prev-cover" src="https://i.loli.net/2021/03/06/vzGDImF9L8d7XfS.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">okhttp请求记录</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/23/frida_test/"><img class="next-cover" src="https://i.loli.net/2021/02/24/F4NRyT35qfb7vHc.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">frida测试-修改vip</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/27/git-log备注/" title="git-log备注"><img class="cover" src="https://i.loli.net/2021/04/30/qF1LiEs8Rk5YOmo.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-27</div><div class="title">git-log备注</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%88%86%E6%94%AF%E8%BF%BD%E8%B8%AA%E5%85%B3%E7%B3%BB%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">建立分支追踪关系方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">git忽略文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E6%9A%82%E5%AD%98%E4%BF%AE%E6%94%B9"><span class="toc-number">3.</span> <span class="toc-text">git 暂存修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E6%8B%89%E5%8F%96%E5%A4%B1%E8%B4%A5"><span class="toc-number">4.</span> <span class="toc-text">git拉取失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="toc-number">5.</span> <span class="toc-text">git 删除分支</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Leo</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="http://boundless1024.com">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+<h3 id="git-重置相关"><a href="#git-重置相关" class="headerlink" title="git 重置相关"></a>git 重置相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">- 工作区、暂存区都重置</span><br><span class="line">git reset --soft HEAD^</span><br><span class="line">- 保留工作区、暂存区，会把reset节点之后修改的内容存放到暂存区</span><br><span class="line">git reset  &#x2F;&#x2F;缺省参数 [ --mixed ]</span><br><span class="line">- 只保留工作区，重置暂存区</span><br></pre></td></tr></table></figure>
+
+
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c2ec5f06cf1a">参考</a></p>
+<h3 id="git-简写相关"><a href="#git-简写相关" class="headerlink" title="git 简写相关"></a>git 简写相关</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[alias]</span><br><span class="line">          s &#x3D; status</span><br><span class="line">          a &#x3D; !git add . &amp;&amp; git status</span><br><span class="line">          au &#x3D; !git add -u . &amp;&amp; git status</span><br><span class="line">          aa &#x3D; !git add . &amp;&amp; git add -u . &amp;&amp; git status</span><br><span class="line">          c &#x3D; commit</span><br><span class="line">          cm &#x3D; commit -m</span><br><span class="line">          ca &#x3D; commit --amend # careful</span><br><span class="line">          ac &#x3D; !git add . &amp;&amp; git commit</span><br><span class="line">          acm &#x3D; !git add . &amp;&amp; git commit -m</span><br><span class="line">          l &#x3D; log --graph --all --pretty&#x3D;format:&#39;%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset&#39;</span><br><span class="line">          ll &#x3D; log --stat --abbrev-commit</span><br><span class="line">          lg &#x3D; log --color --graph --pretty&#x3D;format:&#39;%C(bold white)%h%Creset -%C(bold green)%d%Creset %s %C(bold green)(%cr)%Creset %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date&#x3D;relative</span><br><span class="line">          llg &#x3D; log --color --graph --pretty&#x3D;format:&#39;%C(bold white)%H %d%Creset%n%s%n%+b%C(bold blue)%an &lt;%ae&gt;%Creset %C(bold green)%cr (%ci)&#39; --abbrev-commit</span><br><span class="line">          d &#x3D; diff</span><br><span class="line">          master &#x3D; checkout master</span><br><span class="line">          spull &#x3D; svn rebase</span><br><span class="line">          spush &#x3D; svn dcommit</span><br><span class="line">          alias &#x3D; !git config --list | grep &#39;alias\\.&#39; | sed &#39;s&#x2F;alias\\.\\([^&#x3D;]*\\)&#x3D;\\(.*\\)&#x2F;\\1\\\t &#x3D;&gt; \\2&#x2F;&#39; | sort</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"># Aliases for git.</span><br><span class="line">alias g&#x3D;&#39;git&#39;</span><br><span class="line">alias gs&#x3D;&#39;git status&#39;</span><br><span class="line"></span><br><span class="line">alias ga&#x3D;&#39;git add&#39;</span><br><span class="line">alias gaa&#x3D;&#39;git add --all&#39;</span><br><span class="line"></span><br><span class="line">alias gc&#x3D;&#39;git commit&#39;</span><br><span class="line">alias gcm&#x3D;&#39;git commit --message&#39;</span><br><span class="line">alias gca&#x3D;&#39;git commit --add&#39;</span><br><span class="line">alias gcam&#x3D;&#39;git commit --add --message&#39;</span><br><span class="line">alias gce&#x3D;&#39;git commit --amend&#39;  # Edit commit message. &#39;gce&#39; &#x3D; &#39;git commit edit&#39;</span><br><span class="line"></span><br><span class="line">alias gb&#x3D;&#39;git branch&#39;</span><br><span class="line">alias gba&#x3D;&#39;git branch --all&#39;</span><br><span class="line"></span><br><span class="line">alias gd&#x3D;&#39;git diff&#39;</span><br><span class="line">alias gds&#x3D;&#39;git diff --staged&#39;</span><br><span class="line">alias gdt&#x3D;&#39;git difftool&#39;</span><br><span class="line"></span><br><span class="line">alias gmt&#x3D;&#39;git mergetool&#39;</span><br><span class="line"></span><br><span class="line">alias gch&#x3D;&#39;git checkout&#39;</span><br><span class="line">alias gchm&#x3D;&#39;git checkout master&#39;</span><br><span class="line">alias gchb&#x3D;&#39;git checkout -b&#39;</span><br><span class="line"></span><br><span class="line">alias gl&#x3D;&#39;git log --decorate&#39;</span><br><span class="line">alias glo&#x3D;&#39;git log --decorate --graph --oneline&#39;</span><br><span class="line">alias gloa&#x3D;&#39;git log --decorate --graph --oneline --all&#39;</span><br><span class="line">alias glao&#x3D;&#39;gloa&#39;</span><br><span class="line">alias gls&#x3D;&#39;git log --decorate --graph --stat&#39;</span><br><span class="line">alias gla&#x3D;&#39;git log --decorate --graph --all&#39;</span><br><span class="line">alias gld&#x3D;&#39;git log --decorate --graph --patch&#39;  # Show diff. &#39;gld&#39; &#x3D; &#39;git log diff&#39;</span><br><span class="line">alias glda&#x3D;&#39;git log --decorate --graph --patch --all&#39;</span><br><span class="line">alias glad&#x3D;&#39;glda&#39;</span><br><span class="line"></span><br><span class="line">alias gp&#x3D;&#39;git push&#39;</span><br><span class="line">alias gpo&#x3D;&#39;git push origin&#39;</span><br><span class="line">alias gpom&#x3D;&#39;git push origin master&#39;</span><br><span class="line"></span><br><span class="line">alias gri&#x3D;&#39;git rebase --interactive&#39;</span><br><span class="line">alias grc&#x3D;&#39;git rebase --continue&#39;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Oh-My-Zsh Git Aliases</span><br><span class="line">enable (git) plugin.</span><br><span class="line"></span><br><span class="line">g	git	gst	git status</span><br><span class="line">gl	git pull	gup	git fetch &amp;&amp; git rebase</span><br><span class="line">gp	git push	gc	git commit -v</span><br><span class="line">gca	git commit -v -a	gco	git checkout</span><br><span class="line">gcm	git checkout master	gb	git branch</span><br><span class="line">gba	git branch -a	gcount	git shortlog -sn</span><br><span class="line">gcp	git cherry-pick	glg	git log --stat --max-count&#x3D;5</span><br><span class="line">glgg	git log --graph --max-count&#x3D;5	gss	git status -s</span><br><span class="line">ga	git add	gm	git merge</span><br><span class="line">grh	git reset HEAD	grhh	git reset HEAD --hard</span><br><span class="line">gsr	git svn rebase	gsd	git svn dcommit</span><br><span class="line">ggpull	git pull origin $(current_branch)	ggpush	git push origin $(current_branch)</span><br><span class="line">gdv	git diff -w &quot;$@&quot; | view -</span><br><span class="line">ggpnp	git pull origin $(current_branch) &amp;&amp; git push origin $(current_branch)</span><br><span class="line">git-svn-dcommit-push	git svn dcommit &amp;&amp; git push github master:svntrunk</span><br><span class="line">gpa	git add .; git commit -m &quot;$1&quot;; git push; # only in the ocodo fork.</span><br></pre></td></tr></table></figure>
+
+
+<p><a target="_blank" rel="noopener" href="https://www.monolune.com/useful-aliases-for-git-commands/">参考</a></p>
+<p><a target="_blank" rel="noopener" href="https://gist.github.com/DavidToca/3086571">参考2</a></p>
+<h3 id="git-plugin"><a href="#git-plugin" class="headerlink" title="git plugin"></a>git plugin</h3><p>The git plugin provides many <a href="#aliases">aliases</a> and a few useful <a href="#functions">functions</a>.</p>
+<p>To use it, add <code>git</code> to the plugins array in your zshrc file:</p>
+<figure class="highlight zsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(... git)</span><br></pre></td></tr></table></figure>
+<h3 id="Aliases"><a href="#Aliases" class="headerlink" title="Aliases"></a>Aliases</h3><table>
+<thead>
+<tr>
+<th align="left">Alias</th>
+<th align="left">Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">g</td>
+<td align="left">git</td>
+</tr>
+<tr>
+<td align="left">ga</td>
+<td align="left">git add</td>
+</tr>
+<tr>
+<td align="left">gaa</td>
+<td align="left">git add –all</td>
+</tr>
+<tr>
+<td align="left">gapa</td>
+<td align="left">git add –patch</td>
+</tr>
+<tr>
+<td align="left">gau</td>
+<td align="left">git add –update</td>
+</tr>
+<tr>
+<td align="left">gav</td>
+<td align="left">git add –verbose</td>
+</tr>
+<tr>
+<td align="left">gap</td>
+<td align="left">git apply</td>
+</tr>
+<tr>
+<td align="left">gapt</td>
+<td align="left">git apply –3way</td>
+</tr>
+<tr>
+<td align="left">gb</td>
+<td align="left">git branch</td>
+</tr>
+<tr>
+<td align="left">gba</td>
+<td align="left">git branch -a</td>
+</tr>
+<tr>
+<td align="left">gbd</td>
+<td align="left">git branch -d</td>
+</tr>
+<tr>
+<td align="left">gbda</td>
+<td align="left">git branch –no-color –merged | grep -vE “^([+<em>]|\s</em>($(git_main_branch)|$(git_develop_branch))\s*$)” | xargs git branch -d 2&gt;/dev/null</td>
+</tr>
+<tr>
+<td align="left">gbD</td>
+<td align="left">git branch -D</td>
+</tr>
+<tr>
+<td align="left">gbl</td>
+<td align="left">git blame -b -w</td>
+</tr>
+<tr>
+<td align="left">gbnm</td>
+<td align="left">git branch –no-merged</td>
+</tr>
+<tr>
+<td align="left">gbr</td>
+<td align="left">git branch –remote</td>
+</tr>
+<tr>
+<td align="left">gbs</td>
+<td align="left">git bisect</td>
+</tr>
+<tr>
+<td align="left">gbsb</td>
+<td align="left">git bisect bad</td>
+</tr>
+<tr>
+<td align="left">gbsg</td>
+<td align="left">git bisect good</td>
+</tr>
+<tr>
+<td align="left">gbsr</td>
+<td align="left">git bisect reset</td>
+</tr>
+<tr>
+<td align="left">gbss</td>
+<td align="left">git bisect start</td>
+</tr>
+<tr>
+<td align="left">gc</td>
+<td align="left">git commit -v</td>
+</tr>
+<tr>
+<td align="left">gc!</td>
+<td align="left">git commit -v –amend</td>
+</tr>
+<tr>
+<td align="left">gcn!</td>
+<td align="left">git commit -v –no-edit –amend</td>
+</tr>
+<tr>
+<td align="left">gca</td>
+<td align="left">git commit -v -a</td>
+</tr>
+<tr>
+<td align="left">gca!</td>
+<td align="left">git commit -v -a –amend</td>
+</tr>
+<tr>
+<td align="left">gcan!</td>
+<td align="left">git commit -v -a –no-edit –amend</td>
+</tr>
+<tr>
+<td align="left">gcans!</td>
+<td align="left">git commit -v -a -s –no-edit –amend</td>
+</tr>
+<tr>
+<td align="left">gcam</td>
+<td align="left">git commit -a -m</td>
+</tr>
+<tr>
+<td align="left">gcas</td>
+<td align="left">git commit -a -s</td>
+</tr>
+<tr>
+<td align="left">gcasm</td>
+<td align="left">git commit -a -s -m</td>
+</tr>
+<tr>
+<td align="left">gcsm</td>
+<td align="left">git commit -s -m</td>
+</tr>
+<tr>
+<td align="left">gcb</td>
+<td align="left">git checkout -b</td>
+</tr>
+<tr>
+<td align="left">gcf</td>
+<td align="left">git config –list</td>
+</tr>
+<tr>
+<td align="left">gcl</td>
+<td align="left">git clone –recurse-submodules</td>
+</tr>
+<tr>
+<td align="left">gccd</td>
+<td align="left">git clone –recurse-submodules “$@” &amp;&amp; cd “$(basename $_ .git)”</td>
+</tr>
+<tr>
+<td align="left">gclean</td>
+<td align="left">git clean -id</td>
+</tr>
+<tr>
+<td align="left">gpristine</td>
+<td align="left">git reset –hard &amp;&amp; git clean -dffx</td>
+</tr>
+<tr>
+<td align="left">gcm</td>
+<td align="left">git checkout $(git_main_branch)</td>
+</tr>
+<tr>
+<td align="left">gcd</td>
+<td align="left">git checkout $(git_develop_branch)</td>
+</tr>
+<tr>
+<td align="left">gcmsg</td>
+<td align="left">git commit -m</td>
+</tr>
+<tr>
+<td align="left">gco</td>
+<td align="left">git checkout</td>
+</tr>
+<tr>
+<td align="left">gcor</td>
+<td align="left">git checkout –recurse-submodules</td>
+</tr>
+<tr>
+<td align="left">gcount</td>
+<td align="left">git shortlog -sn</td>
+</tr>
+<tr>
+<td align="left">gcp</td>
+<td align="left">git cherry-pick</td>
+</tr>
+<tr>
+<td align="left">gcpa</td>
+<td align="left">git cherry-pick –abort</td>
+</tr>
+<tr>
+<td align="left">gcpc</td>
+<td align="left">git cherry-pick –continue</td>
+</tr>
+<tr>
+<td align="left">gcs</td>
+<td align="left">git commit -S</td>
+</tr>
+<tr>
+<td align="left">gd</td>
+<td align="left">git diff</td>
+</tr>
+<tr>
+<td align="left">gdca</td>
+<td align="left">git diff –cached</td>
+</tr>
+<tr>
+<td align="left">gdcw</td>
+<td align="left">git diff –cached –word-diff</td>
+</tr>
+<tr>
+<td align="left">gdct</td>
+<td align="left">git describe –tags $(git rev-list –tags –max-count=1)</td>
+</tr>
+<tr>
+<td align="left">gds</td>
+<td align="left">git diff –staged</td>
+</tr>
+<tr>
+<td align="left">gdt</td>
+<td align="left">git diff-tree –no-commit-id –name-only -r</td>
+</tr>
+<tr>
+<td align="left">gdnolock</td>
+<td align="left">git diff $@ “:(exclude)package-lock.json” “:(exclude)&ast;.lock”</td>
+</tr>
+<tr>
+<td align="left">gdup</td>
+<td align="left">git diff @{upstream}</td>
+</tr>
+<tr>
+<td align="left">gdv</td>
+<td align="left">git diff -w $@ | view -</td>
+</tr>
+<tr>
+<td align="left">gdw</td>
+<td align="left">git diff –word-diff</td>
+</tr>
+<tr>
+<td align="left">gf</td>
+<td align="left">git fetch</td>
+</tr>
+<tr>
+<td align="left">gfa</td>
+<td align="left">git fetch –all –prune</td>
+</tr>
+<tr>
+<td align="left">gfg</td>
+<td align="left">git ls-files | grep</td>
+</tr>
+<tr>
+<td align="left">gfo</td>
+<td align="left">git fetch origin</td>
+</tr>
+<tr>
+<td align="left">gg</td>
+<td align="left">git gui citool</td>
+</tr>
+<tr>
+<td align="left">gga</td>
+<td align="left">git gui citool –amend</td>
+</tr>
+<tr>
+<td align="left">ggf</td>
+<td align="left">git push –force origin $(current_branch)</td>
+</tr>
+<tr>
+<td align="left">ggfl</td>
+<td align="left">git push –force-with-lease origin $(current_branch)</td>
+</tr>
+<tr>
+<td align="left">ggl</td>
+<td align="left">git pull origin $(current_branch)</td>
+</tr>
+<tr>
+<td align="left">ggp</td>
+<td align="left">git push origin $(current_branch)</td>
+</tr>
+<tr>
+<td align="left">ggpnp</td>
+<td align="left">ggl &amp;&amp; ggp</td>
+</tr>
+<tr>
+<td align="left">ggpull</td>
+<td align="left">git pull origin “$(git_current_branch)”</td>
+</tr>
+<tr>
+<td align="left">ggpur</td>
+<td align="left">ggu</td>
+</tr>
+<tr>
+<td align="left">ggpush</td>
+<td align="left">git push origin “$(git_current_branch)”</td>
+</tr>
+<tr>
+<td align="left">ggsup</td>
+<td align="left">git branch –set-upstream-to=origin/$(git_current_branch)</td>
+</tr>
+<tr>
+<td align="left">ggu</td>
+<td align="left">git pull –rebase origin $(current_branch)</td>
+</tr>
+<tr>
+<td align="left">gpsup</td>
+<td align="left">git push –set-upstream origin $(git_current_branch)</td>
+</tr>
+<tr>
+<td align="left">ghh</td>
+<td align="left">git help</td>
+</tr>
+<tr>
+<td align="left">gignore</td>
+<td align="left">git update-index –assume-unchanged</td>
+</tr>
+<tr>
+<td align="left">gignored</td>
+<td align="left">git ls-files -v | grep “^[[:lower:]]”</td>
+</tr>
+<tr>
+<td align="left">git-svn-dcommit-push</td>
+<td align="left">git svn dcommit &amp;&amp; git push github $(git_main_branch):svntrunk</td>
+</tr>
+<tr>
+<td align="left">gk</td>
+<td align="left">gitk –all –branches &amp;!</td>
+</tr>
+<tr>
+<td align="left">gke</td>
+<td align="left">gitk –all $(git log -g –pretty=%h) &amp;!</td>
+</tr>
+<tr>
+<td align="left">gl</td>
+<td align="left">git pull</td>
+</tr>
+<tr>
+<td align="left">glg</td>
+<td align="left">git log –stat</td>
+</tr>
+<tr>
+<td align="left">glgp</td>
+<td align="left">git log –stat -p</td>
+</tr>
+<tr>
+<td align="left">glgg</td>
+<td align="left">git log –graph</td>
+</tr>
+<tr>
+<td align="left">glgga</td>
+<td align="left">git log –graph –decorate –all</td>
+</tr>
+<tr>
+<td align="left">glgm</td>
+<td align="left">git log –graph –max-count=10</td>
+</tr>
+<tr>
+<td align="left">glo</td>
+<td align="left">git log –oneline –decorate</td>
+</tr>
+<tr>
+<td align="left">glol</td>
+<td align="left">git log –graph –pretty=’%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)&lt;%an&gt;%Creset’</td>
+</tr>
+<tr>
+<td align="left">glols</td>
+<td align="left">git log –graph –pretty=’%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)&lt;%an&gt;%Creset’ –stat</td>
+</tr>
+<tr>
+<td align="left">glod</td>
+<td align="left">git log –graph –pretty=’%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)&lt;%an&gt;%Creset’</td>
+</tr>
+<tr>
+<td align="left">glods</td>
+<td align="left">git log –graph –pretty=’%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)&lt;%an&gt;%Creset’ –date=short</td>
+</tr>
+<tr>
+<td align="left">glola</td>
+<td align="left">git log –graph –pretty=’%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)&lt;%an&gt;%Creset’ –all</td>
+</tr>
+<tr>
+<td align="left">glog</td>
+<td align="left">git log –oneline –decorate –graph</td>
+</tr>
+<tr>
+<td align="left">gloga</td>
+<td align="left">git log –oneline –decorate –graph –all</td>
+</tr>
+<tr>
+<td align="left">glp</td>
+<td align="left">git log –pretty=&lt;format&gt;</td>
+</tr>
+<tr>
+<td align="left">gm</td>
+<td align="left">git merge</td>
+</tr>
+<tr>
+<td align="left">gmom</td>
+<td align="left">git merge origin/$(git_main_branch)</td>
+</tr>
+<tr>
+<td align="left">gmtl</td>
+<td align="left">git mergetool –no-prompt</td>
+</tr>
+<tr>
+<td align="left">gmtlvim</td>
+<td align="left">git mergetool –no-prompt –tool=vimdiff</td>
+</tr>
+<tr>
+<td align="left">gmum</td>
+<td align="left">git merge upstream/$(git_main_branch)</td>
+</tr>
+<tr>
+<td align="left">gma</td>
+<td align="left">git merge –abort</td>
+</tr>
+<tr>
+<td align="left">gp</td>
+<td align="left">git push</td>
+</tr>
+<tr>
+<td align="left">gpd</td>
+<td align="left">git push –dry-run</td>
+</tr>
+<tr>
+<td align="left">gpf</td>
+<td align="left">git push –force-with-lease</td>
+</tr>
+<tr>
+<td align="left">gpf!</td>
+<td align="left">git push –force</td>
+</tr>
+<tr>
+<td align="left">gpoat</td>
+<td align="left">git push origin –all &amp;&amp; git push origin –tags</td>
+</tr>
+<tr>
+<td align="left">gpr</td>
+<td align="left">git pull –rebase</td>
+</tr>
+<tr>
+<td align="left">gpu</td>
+<td align="left">git push upstream</td>
+</tr>
+<tr>
+<td align="left">gpv</td>
+<td align="left">git push -v</td>
+</tr>
+<tr>
+<td align="left">gr</td>
+<td align="left">git remote</td>
+</tr>
+<tr>
+<td align="left">gra</td>
+<td align="left">git remote add</td>
+</tr>
+<tr>
+<td align="left">grb</td>
+<td align="left">git rebase</td>
+</tr>
+<tr>
+<td align="left">grba</td>
+<td align="left">git rebase –abort</td>
+</tr>
+<tr>
+<td align="left">grbc</td>
+<td align="left">git rebase –continue</td>
+</tr>
+<tr>
+<td align="left">grbd</td>
+<td align="left">git rebase $(git_develop_branch)</td>
+</tr>
+<tr>
+<td align="left">grbi</td>
+<td align="left">git rebase -i</td>
+</tr>
+<tr>
+<td align="left">grbm</td>
+<td align="left">git rebase $(git_main_branch)</td>
+</tr>
+<tr>
+<td align="left">grbo</td>
+<td align="left">git rebase –onto</td>
+</tr>
+<tr>
+<td align="left">grbs</td>
+<td align="left">git rebase –skip</td>
+</tr>
+<tr>
+<td align="left">grev</td>
+<td align="left">git revert</td>
+</tr>
+<tr>
+<td align="left">grh</td>
+<td align="left">git reset</td>
+</tr>
+<tr>
+<td align="left">grhh</td>
+<td align="left">git reset –hard</td>
+</tr>
+<tr>
+<td align="left">groh</td>
+<td align="left">git reset origin/$(git_current_branch) –hard</td>
+</tr>
+<tr>
+<td align="left">grm</td>
+<td align="left">git rm</td>
+</tr>
+<tr>
+<td align="left">grmc</td>
+<td align="left">git rm –cached</td>
+</tr>
+<tr>
+<td align="left">grmv</td>
+<td align="left">git remote rename</td>
+</tr>
+<tr>
+<td align="left">grrm</td>
+<td align="left">git remote remove</td>
+</tr>
+<tr>
+<td align="left">grs</td>
+<td align="left">git restore</td>
+</tr>
+<tr>
+<td align="left">grset</td>
+<td align="left">git remote set-url</td>
+</tr>
+<tr>
+<td align="left">grss</td>
+<td align="left">git restore –source</td>
+</tr>
+<tr>
+<td align="left">grst</td>
+<td align="left">git restore –staged</td>
+</tr>
+<tr>
+<td align="left">grt</td>
+<td align="left">cd “$(git rev-parse –show-toplevel || echo .)”</td>
+</tr>
+<tr>
+<td align="left">gru</td>
+<td align="left">git reset –</td>
+</tr>
+<tr>
+<td align="left">grup</td>
+<td align="left">git remote update</td>
+</tr>
+<tr>
+<td align="left">grv</td>
+<td align="left">git remote -v</td>
+</tr>
+<tr>
+<td align="left">gsb</td>
+<td align="left">git status -sb</td>
+</tr>
+<tr>
+<td align="left">gsd</td>
+<td align="left">git svn dcommit</td>
+</tr>
+<tr>
+<td align="left">gsh</td>
+<td align="left">git show</td>
+</tr>
+<tr>
+<td align="left">gsi</td>
+<td align="left">git submodule init</td>
+</tr>
+<tr>
+<td align="left">gsps</td>
+<td align="left">git show –pretty=short –show-signature</td>
+</tr>
+<tr>
+<td align="left">gsr</td>
+<td align="left">git svn rebase</td>
+</tr>
+<tr>
+<td align="left">gss</td>
+<td align="left">git status -s</td>
+</tr>
+<tr>
+<td align="left">gst</td>
+<td align="left">git status</td>
+</tr>
+<tr>
+<td align="left">gsta</td>
+<td align="left">git stash push</td>
+</tr>
+<tr>
+<td align="left">gsta</td>
+<td align="left">git stash save</td>
+</tr>
+<tr>
+<td align="left">gstaa</td>
+<td align="left">git stash apply</td>
+</tr>
+<tr>
+<td align="left">gstc</td>
+<td align="left">git stash clear</td>
+</tr>
+<tr>
+<td align="left">gstd</td>
+<td align="left">git stash drop</td>
+</tr>
+<tr>
+<td align="left">gstl</td>
+<td align="left">git stash list</td>
+</tr>
+<tr>
+<td align="left">gstp</td>
+<td align="left">git stash pop</td>
+</tr>
+<tr>
+<td align="left">gsts</td>
+<td align="left">git stash show –text</td>
+</tr>
+<tr>
+<td align="left">gstu</td>
+<td align="left">git stash –include-untracked</td>
+</tr>
+<tr>
+<td align="left">gstall</td>
+<td align="left">git stash –all</td>
+</tr>
+<tr>
+<td align="left">gsu</td>
+<td align="left">git submodule update</td>
+</tr>
+<tr>
+<td align="left">gsw</td>
+<td align="left">git switch</td>
+</tr>
+<tr>
+<td align="left">gswc</td>
+<td align="left">git switch -c</td>
+</tr>
+<tr>
+<td align="left">gswm</td>
+<td align="left">git switch $(git_main_branch)</td>
+</tr>
+<tr>
+<td align="left">gswd</td>
+<td align="left">git switch $(git_develop_branch)</td>
+</tr>
+<tr>
+<td align="left">gts</td>
+<td align="left">git tag -s</td>
+</tr>
+<tr>
+<td align="left">gtv</td>
+<td align="left">git tag | sort -V</td>
+</tr>
+<tr>
+<td align="left">gtl</td>
+<td align="left">gtl(){ git tag –sort=-v:refname -n -l ${1}* }; noglob gtl</td>
+</tr>
+<tr>
+<td align="left">gunignore</td>
+<td align="left">git update-index –no-assume-unchanged</td>
+</tr>
+<tr>
+<td align="left">gunwip</td>
+<td align="left">git log -n 1 | grep -q -c “--wip--“ &amp;&amp; git reset HEAD~1</td>
+</tr>
+<tr>
+<td align="left">gup</td>
+<td align="left">git pull –rebase</td>
+</tr>
+<tr>
+<td align="left">gupv</td>
+<td align="left">git pull –rebase -v</td>
+</tr>
+<tr>
+<td align="left">gupa</td>
+<td align="left">git pull –rebase –autostash</td>
+</tr>
+<tr>
+<td align="left">gupav</td>
+<td align="left">git pull –rebase –autostash -v</td>
+</tr>
+<tr>
+<td align="left">glum</td>
+<td align="left">git pull upstream $(git_main_branch)</td>
+</tr>
+<tr>
+<td align="left">gwch</td>
+<td align="left">git whatchanged -p –abbrev-commit –pretty=medium</td>
+</tr>
+<tr>
+<td align="left">gwip</td>
+<td align="left">git add -A; git rm $(git ls-files –deleted) 2&gt; /dev/null; git commit –no-verify –no-gpg-sign -m “–wip– [skip ci]”</td>
+</tr>
+<tr>
+<td align="left">gam</td>
+<td align="left">git am</td>
+</tr>
+<tr>
+<td align="left">gamc</td>
+<td align="left">git am –continue</td>
+</tr>
+<tr>
+<td align="left">gams</td>
+<td align="left">git am –skip</td>
+</tr>
+<tr>
+<td align="left">gama</td>
+<td align="left">git am –abort</td>
+</tr>
+<tr>
+<td align="left">gamscp</td>
+<td align="left">git am –show-current-patch</td>
+</tr>
+</tbody></table>
+<h3 id="Main-branch-preference"><a href="#Main-branch-preference" class="headerlink" title="Main branch preference"></a>Main branch preference</h3><p>Following the recent push for removing racially-charged words from our technical vocabulary, the git plugin favors using<br>a branch name other than <code>master</code>. In this case, we favor the shorter, neutral and descriptive term <code>main</code>. This means<br>that any aliases and functions that previously used <code>master</code>, will use <code>main</code> if that branch exists. We do this via the<br>function <code>git_main_branch</code>.</p>
+<h3 id="Deprecated-aliases"><a href="#Deprecated-aliases" class="headerlink" title="Deprecated aliases"></a>Deprecated aliases</h3><p>These are aliases that have been removed, renamed, or otherwise modified in a way that may, or may not, receive further support.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Alias</th>
+<th align="left">Command</th>
+<th align="left">Modification</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">gap</td>
+<td align="left"><code>git add --patch</code></td>
+<td align="left">new alias <code>gapa</code></td>
+</tr>
+<tr>
+<td align="left">gcl</td>
+<td align="left"><code>git config --list</code></td>
+<td align="left">new alias <code>gcf</code></td>
+</tr>
+<tr>
+<td align="left">gdc</td>
+<td align="left"><code>git diff --cached</code></td>
+<td align="left">new alias <code>gdca</code></td>
+</tr>
+<tr>
+<td align="left">gdt</td>
+<td align="left"><code>git difftool</code></td>
+<td align="left">no replacement</td>
+</tr>
+<tr>
+<td align="left">ggpull</td>
+<td align="left"><code>git pull origin $(current_branch)</code></td>
+<td align="left">new alias <code>ggl</code> (<code>ggpull</code> still exists for now though)</td>
+</tr>
+<tr>
+<td align="left">ggpur</td>
+<td align="left"><code>git pull --rebase origin $(current_branch)</code></td>
+<td align="left">new alias <code>ggu</code> (<code>ggpur</code> still exists for now though)</td>
+</tr>
+<tr>
+<td align="left">ggpush</td>
+<td align="left"><code>git push origin $(current_branch)</code></td>
+<td align="left">new alias <code>ggp</code> (<code>ggpush</code> still exists for now though)</td>
+</tr>
+<tr>
+<td align="left">gk</td>
+<td align="left"><code>gitk --all --branches</code></td>
+<td align="left">now aliased to <code>gitk --all --branches</code></td>
+</tr>
+<tr>
+<td align="left">glg</td>
+<td align="left"><code>git log --stat --max-count = 10</code></td>
+<td align="left">now aliased to <code>git log --stat --color</code></td>
+</tr>
+<tr>
+<td align="left">glgg</td>
+<td align="left"><code>git log --graph --max-count = 10</code></td>
+<td align="left">now aliased to <code>git log --graph --color</code></td>
+</tr>
+<tr>
+<td align="left">gwc</td>
+<td align="left"><code>git whatchanged -p --abbrev-commit --pretty = medium</code></td>
+<td align="left">new alias <code>gwch</code></td>
+</tr>
+</tbody></table>
+<h3 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h3><h3 id="Current"><a href="#Current" class="headerlink" title="Current"></a>Current</h3><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>grename &lt;old&gt; &lt;new&gt;</code></td>
+<td align="left">Rename <code>old</code> branch to <code>new</code>, including in origin remote</td>
+</tr>
+<tr>
+<td align="left">current_branch</td>
+<td align="left">Return the name of the current branch</td>
+</tr>
+<tr>
+<td align="left">git_current_user_name</td>
+<td align="left">Returns the <code>user.name</code> config value</td>
+</tr>
+<tr>
+<td align="left">git_current_user_email</td>
+<td align="left">Returns the <code>user.email</code> config value</td>
+</tr>
+<tr>
+<td align="left">git_main_branch</td>
+<td align="left">Returns the name of the main branch: <code>main</code> if it exists, <code>master</code> otherwise</td>
+</tr>
+<tr>
+<td align="left">git_develop_branch</td>
+<td align="left">Returns the name of the develop branch: <code>dev</code>, <code>devel</code>, <code>development</code> if they exist, <code>develop</code> otherwise</td>
+</tr>
+</tbody></table>
+<h3 id="Work-in-Progress-WIP"><a href="#Work-in-Progress-WIP" class="headerlink" title="Work in Progress (WIP)"></a>Work in Progress (WIP)</h3><p>These features allow to pause a branch development and switch to another one (<em>“Work in Progress”</em>,  or wip). When you want to go back to work, just unwip it.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">work_in_progress</td>
+<td align="left">Echoes a warning if the current branch is a wip</td>
+</tr>
+<tr>
+<td align="left">gwip</td>
+<td align="left">Commit wip branch</td>
+</tr>
+<tr>
+<td align="left">gunwip</td>
+<td align="left">Uncommit wip branch</td>
+</tr>
+</tbody></table>
+<h3 id="Deprecated-functions"><a href="#Deprecated-functions" class="headerlink" title="Deprecated functions"></a>Deprecated functions</h3><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Description</th>
+<th align="left">Reason</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">current_repository</td>
+<td align="left">Return the names of the current remotes</td>
+<td align="left">Didn’t work properly. Use <code>git remote -v</code> instead (<code>grv</code> alias)</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Leo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://boundless1024.com/2021/02/28/git%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/">http://boundless1024.com/2021/02/28/git%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://boundless1024.com" target="_blank">Hello</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/git/">git</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/03/01/wIKEd4QWJ2iuUSf.jpg" data-sites="wechat,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/"><img class="prev-cover" src="https://i.loli.net/2021/03/06/vzGDImF9L8d7XfS.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">okhttp请求记录</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/23/frida_test/"><img class="next-cover" src="https://i.loli.net/2021/02/24/F4NRyT35qfb7vHc.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">frida测试-修改vip</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/27/git-log备注/" title="git-log备注"><img class="cover" src="https://i.loli.net/2021/04/30/qF1LiEs8Rk5YOmo.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-27</div><div class="title">git-log备注</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E5%88%86%E6%94%AF%E8%BF%BD%E8%B8%AA"><span class="toc-number">1.</span> <span class="toc-text">git分支追踪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">git忽略文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E6%9A%82%E5%AD%98%E4%BF%AE%E6%94%B9"><span class="toc-number">3.</span> <span class="toc-text">git 暂存修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git%E6%8B%89%E5%8F%96%E5%A4%B1%E8%B4%A5"><span class="toc-number">4.</span> <span class="toc-text">git拉取失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="toc-number">5.</span> <span class="toc-text">git 删除分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E9%87%8D%E7%BD%AE%E7%9B%B8%E5%85%B3"><span class="toc-number">6.</span> <span class="toc-text">git 重置相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E7%AE%80%E5%86%99%E7%9B%B8%E5%85%B3"><span class="toc-number">7.</span> <span class="toc-text">git 简写相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-plugin"><span class="toc-number">8.</span> <span class="toc-text">git plugin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Aliases"><span class="toc-number">9.</span> <span class="toc-text">Aliases</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Main-branch-preference"><span class="toc-number">10.</span> <span class="toc-text">Main branch preference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deprecated-aliases"><span class="toc-number">11.</span> <span class="toc-text">Deprecated aliases</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Functions"><span class="toc-number">12.</span> <span class="toc-text">Functions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Current"><span class="toc-number">13.</span> <span class="toc-text">Current</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Work-in-Progress-WIP"><span class="toc-number">14.</span> <span class="toc-text">Work in Progress (WIP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deprecated-functions"><span class="toc-number">15.</span> <span class="toc-text">Deprecated functions</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Leo</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my <a href="http://boundless1024.com">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     loader: {
       source: {
