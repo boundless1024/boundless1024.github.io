@@ -303,6 +303,205 @@
       </tags>
   </entry>
   <entry>
+    <title>apk代码混淆备注学习</title>
+    <url>/2021/04/04/apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h4 id="Apk代码混淆"><a href="#Apk代码混淆" class="headerlink" title="Apk代码混淆"></a>Apk代码混淆</h4><ul>
+<li><p>增加反编译后代码阅读成本</p>
+</li>
+<li><p>代码压缩</p>
+</li>
+<li><p>代码优化</p>
+<p><code>依赖 -&gt; main -&gt; 渠道 -&gt; 构建类型</code>  - 合并资源时顺序</p>
+</li>
+</ul>
+<h4 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h4><p>在module项目中的<code>build.gradle</code>文件中配置<code>minifyEnabled</code>为<code>true</code>，<br>混淆规则内容一般写在<code>proguard-rules.pro</code><br>一般<code>proguard-rules.pro</code>文件和<code>build.gradle</code>文件在同一目录</p>
+<p><img src="https://i.loli.net/2021/04/07/2Ulb7yq41I9NmE5.png" alt="iShot2021-04-07上午11.44.39.png"></p>
+<h4 id="开启混淆生成文件"><a href="#开启混淆生成文件" class="headerlink" title="开启混淆生成文件"></a>开启混淆生成文件</h4><p>生成的混淆文件信息  <code>app\build\outputs\mapping</code>  目录下,根据 <code>usage.txt</code> 文件查看是否有被误移除的代码。</p>
+<p><img src="https://i.loli.net/2021/04/09/5Zbel2OpHLhERGS.png" alt="iShot2021-04-09上午10.22.24.png"></p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>configuration.txt</td>
+<td>混淆信息</td>
+</tr>
+<tr>
+<td>mapping.txt</td>
+<td>混淆前后类、方法、类成员等的对照表</td>
+</tr>
+<tr>
+<td>seeds.txt</td>
+<td>没有被混淆的类和成员</td>
+</tr>
+<tr>
+<td>usage.txt</td>
+<td>被移除的代码</td>
+</tr>
+</tbody></table>
+<h4 id="混淆参数说明"><a href="#混淆参数说明" class="headerlink" title="混淆参数说明"></a>混淆参数说明</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-optimizationpasses</td>
+<td>代码混淆的压缩比例</td>
+</tr>
+<tr>
+<td>-dontusemixedcaseclassnames</td>
+<td>混淆后类型都为小写</td>
+</tr>
+<tr>
+<td>-dontskipnonpubliclibraryclasses</td>
+<td>不去忽略非公共的库类</td>
+</tr>
+<tr>
+<td>-dontoptimize</td>
+<td>不优化输入的类文件</td>
+</tr>
+<tr>
+<td>-dontpreverify</td>
+<td>不做预校验的操作</td>
+</tr>
+<tr>
+<td>-ignorewarnings</td>
+<td>忽略警告</td>
+</tr>
+<tr>
+<td>-verbose</td>
+<td>混淆时是否记录日志</td>
+</tr>
+<tr>
+<td>-dontnote</td>
+<td>指定不打印有关配置中可能的错误或遗漏的注释</td>
+</tr>
+<tr>
+<td>-dontwarn</td>
+<td>指定不警告有关未解决的引用和其他重要问题</td>
+</tr>
+<tr>
+<td>-keepattributes <em>Annotation</em></td>
+<td>保护注解</td>
+</tr>
+<tr>
+<td>-printmapping proguardMapping.txt</td>
+<td>生成原类名和混淆后的类名的映射文件</td>
+</tr>
+<tr>
+<td>-optimizations !code/simplification/cast,!field/,!class/merging/</td>
+<td>指定混淆是采用的算法</td>
+</tr>
+<tr>
+<td>-keepparameternames</td>
+<td>指定保留所保存方法的参数名称和类型</td>
+</tr>
+<tr>
+<td>-keeppackagenames</td>
+<td>指定不混淆给定的软件包名称</td>
+</tr>
+<tr>
+<td>-flattenpackagehierarchy</td>
+<td>将所有重命名的软件包重新打包</td>
+</tr>
+<tr>
+<td>-repackageclasses</td>
+<td>将所有重命名的类文件重新打包</td>
+</tr>
+<tr>
+<td>-obfuscationdictionary</td>
+<td>指定外部模糊字典</td>
+</tr>
+<tr>
+<td>-classobfuscationdictionary</td>
+<td>指定class模糊字典</td>
+</tr>
+<tr>
+<td>-packageobfuscationdictionary</td>
+<td>指定package模糊字典</td>
+</tr>
+</tbody></table>
+<h4 id="keep说明"><a href="#keep说明" class="headerlink" title="keep说明"></a>keep说明</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-keep</td>
+<td>防止类和成员被移除或者被重命名</td>
+</tr>
+<tr>
+<td>-keepnames</td>
+<td>防止类和成员被重命名</td>
+</tr>
+<tr>
+<td>-keepclassmembers</td>
+<td>防止成员被移除或者被重命名</td>
+</tr>
+<tr>
+<td>-keepclassmembernames</td>
+<td>防止成员被重命名</td>
+</tr>
+<tr>
+<td>-keepclasseswithmembers</td>
+<td>防止拥有该成员的类和成员被移除或者被重命名</td>
+</tr>
+<tr>
+<td>-keepclasseswithmembernames</td>
+<td>防止拥有该成员的类和成员被重命名</td>
+</tr>
+</tbody></table>
+<p>keep 类修饰符 class 类名称 限定符 类{ }   例如  <code>-keep public class * extends   androidx.**</code> </p>
+<ul>
+<li>类修饰符：<code>public</code>、<code>protected</code>、<code>private</code></li>
+<li><code>*</code> 匹配任意长度字符，但不含包名分隔符(.) </li>
+<li><code>**</code> 匹配任意长度字符，并且包含包名分隔符(.) </li>
+<li><code>extends</code> 可以指定类的基类 </li>
+<li><code>implement</code> 匹配实现了某接口的类 </li>
+<li><code>$</code> 内部类</li>
+</ul>
+<h4 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h4><p><code>-keep class com.xx.xx.**</code> 、<code>-keep class com.xx.xx.*</code></p>
+<ul>
+<li><code>**</code> 表示本包和所含子包下的类名都保持</li>
+<li><code>*</code> 表示只是保持该包下的类名</li>
+</ul>
+<p><code>-keep class com.example.bean.** &#123; *; &#125;</code></p>
+<ul>
+<li>表示本包和所含子包下的类名都保持，方法名和变量名也都保持</li>
+</ul>
+<p><code>-keep public class com.xx.Test &#123; *; &#125;</code> 不混淆com.xx.Test类<br><code>-keep class com.xx.** &#123;*;&#125;</code> 不混淆com.xx包下所有类<br><code>-keep public class * extends com.xx.Test &#123; *; &#125;</code>  不混淆某个类的子类<br><code>-keep public class **.*model*.** &#123; *; &#125; </code> 不混淆所有类名中包含了“model”的类及其成员</p>
+<p><code>-kepp class * implements com.xx.TestInterface &#123; *; &#125;</code> 不混淆TestInterface接口的实现</p>
+<p><code>-keepclassmembers class com.xx.Test &#123; public (); &#125;</code>  不混淆Test的构造方法<br><code>-keepclassmembers class com.xx.Test &#123; public void test( java.lang.String )&#125;</code>  不混淆Test的特定的test方法</p>
+<p><code>-keep class com.xx.Test$* &#123; *; &#125;</code> 不混淆Test类的内部类</p>
+<h4 id="资源保持规则"><a href="#资源保持规则" class="headerlink" title="资源保持规则"></a>资源保持规则</h4><p><code>shrinkResources true</code> 未被使用的资源默认被移除</p>
+<p>在 <code>res/raw/</code> 路径下创建一个 xml 文件，例如 <code>keep.xml</code></p>
+<ul>
+<li><code>tools:keep</code> 定义哪些资源需要被保留（资源之间用“,”隔开） </li>
+<li><code>tools:discard</code> 定义哪些资源需要被移除（资源之间用“,”隔开） </li>
+<li><code>tools:shrinkMode</code> 开启严格模式</li>
+</ul>
+<h4 id="模板代码"><a href="#模板代码" class="headerlink" title="模板代码"></a>模板代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#############################################</span><br><span class="line">#</span><br><span class="line"># 对于一些基本指令的添加</span><br><span class="line">#</span><br><span class="line">#############################################</span><br><span class="line"># 代码混淆压缩比，在0~7之间，默认为5，一般不做修改</span><br><span class="line">-optimizationpasses <span class="number">5</span></span><br><span class="line"></span><br><span class="line"># 混合时不使用大小写混合，混合后的类名为小写</span><br><span class="line">-dontusemixedcaseclassnames</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类</span><br><span class="line">-dontskipnonpubliclibraryclasses</span><br><span class="line"></span><br><span class="line"># 这句话能够使我们的项目混淆后产生映射文件</span><br><span class="line"># 包含有类名-&gt;混淆后类名的映射关系</span><br><span class="line">-verbose</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类成员</span><br><span class="line">-dontskipnonpubliclibraryclassmembers</span><br><span class="line"></span><br><span class="line"># 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。</span><br><span class="line">-dontpreverify</span><br><span class="line"></span><br><span class="line"># 保留Annotation不混淆</span><br><span class="line">-keepattributes *Annotation*,InnerClasses</span><br><span class="line"></span><br><span class="line"># 避免混淆泛型</span><br><span class="line">-keepattributes Signature</span><br><span class="line"></span><br><span class="line"># 抛出异常时保留代码行号</span><br><span class="line">-keepattributes SourceFile,LineNumberTable</span><br><span class="line"></span><br><span class="line"># 指定混淆是采用的算法，后面的参数是一个过滤器</span><br><span class="line"># 这个过滤器是谷歌推荐的算法，一般不做更改</span><br><span class="line">-optimizations !code/simplification/cast,!field<span class="comment">/*,!class/merging/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Android开发中一些需要保留的公共部分</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们使用的四大组件，自定义的Application等等这些类不被混淆</span></span><br><span class="line"><span class="comment"># 因为这些子类都有可能被外部调用</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Activity</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Appliction</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Service</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.BroadcastReceiver</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.ContentProvider</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.backup.BackupAgentHelper</span></span><br><span class="line"><span class="comment">-keep public class * extends android.preference.Preference</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View</span></span><br><span class="line"><span class="comment">-keep public class com.android.vending.licensing.ILicensingService</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留support下的所有类及其内部类</span></span><br><span class="line"><span class="comment">-keep class android.support.** &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留继承的</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v4.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v7.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.annotation.**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留R下面的资源</span></span><br><span class="line"><span class="comment">-keep class **.R$* &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留本地native方法不被混淆</span></span><br><span class="line"><span class="comment">-keepclasseswithmembernames class * &#123;</span></span><br><span class="line"><span class="comment">    native &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留在Activity中的方法参数是view的方法，</span></span><br><span class="line"><span class="comment"># 这样以来我们在layout中写的onClick就不会被影响</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.app.Activity&#123;</span></span><br><span class="line"><span class="comment">    public void *(android.view.View);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留枚举类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers enum * &#123;</span></span><br><span class="line"><span class="comment">    public static **[] values();</span></span><br><span class="line"><span class="comment">    public static ** valueOf(java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们自定义控件（继承自View）不被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View&#123;</span></span><br><span class="line"><span class="comment">    *** get*();</span></span><br><span class="line"><span class="comment">    void set*(***);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Parcelable序列化类不被混淆</span></span><br><span class="line"><span class="comment">-keep class * implements android.os.Parcelable &#123;</span></span><br><span class="line"><span class="comment">    public static final android.os.Parcelable$Creator *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Serializable序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * implements java.io.Serializable &#123;</span></span><br><span class="line"><span class="comment">    static final long serialVersionUID;</span></span><br><span class="line"><span class="comment">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span></span><br><span class="line"><span class="comment">    !static !transient &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">    private void writeObject(java.io.ObjectOutputStream);</span></span><br><span class="line"><span class="comment">    private void readObject(java.io.ObjectInputStream);</span></span><br><span class="line"><span class="comment">    java.lang.Object writeReplace();</span></span><br><span class="line"><span class="comment">    java.lang.Object readResolve();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于带有回调函数的onXXEvent、**On*Listener的，不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * &#123;</span></span><br><span class="line"><span class="comment">    void *(**On*Event);</span></span><br><span class="line"><span class="comment">    void *(**On*Listener);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># webView处理，项目中没有使用到webView忽略即可</span></span><br><span class="line"><span class="comment">-keepclassmembers class fqcn.of.javascript.interface.for.webview &#123;</span></span><br><span class="line"><span class="comment">    public *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);</span></span><br><span class="line"><span class="comment">    public boolean *(android.webkit.WebView, java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.webView, jav.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://www.guardsquare.com/en/products/proguard">proguard官网</a></p>
+<p><a href="https://www.huaweicloud.com/articles/ae151e2f60923097cefc473bd131addf.html">参考1</a></p>
+<p><a href="https://blog.si-yee.com/2019/04/12/Android%E6%B7%B7%E6%B7%86-Proguard-%E8%AF%A6%E8%A7%A3/">参考2</a></p>
+<p><a href="https://github.com/WrBug/FrenziedProguard">参考3-生成汉字混淆文件</a></p>
+<p><a href="http://blog.skymxc.com/2018/06/03/Proguard/">参考4</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android跳转到Setting界面Action</title>
     <url>/2021/03/14/android-%E8%B7%B3%E8%BD%AC-settings%E7%95%8C%E9%9D%A2-intent/</url>
     <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">跳转到Android系统界面的action收集。</span><br></pre></td></tr></table></figure>
@@ -513,203 +712,33 @@
       </tags>
   </entry>
   <entry>
-    <title>apk代码混淆备注学习</title>
-    <url>/2021/04/04/apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h4 id="Apk代码混淆"><a href="#Apk代码混淆" class="headerlink" title="Apk代码混淆"></a>Apk代码混淆</h4><ul>
-<li><p>增加反编译后代码阅读成本</p>
-</li>
-<li><p>代码压缩</p>
-</li>
-<li><p>代码优化</p>
-<p><code>依赖 -&gt; main -&gt; 渠道 -&gt; 构建类型</code>  - 合并资源时顺序</p>
-</li>
-</ul>
-<h4 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h4><p>在module项目中的<code>build.gradle</code>文件中配置<code>minifyEnabled</code>为<code>true</code>，<br>混淆规则内容一般写在<code>proguard-rules.pro</code><br>一般<code>proguard-rules.pro</code>文件和<code>build.gradle</code>文件在同一目录</p>
-<p><img src="https://i.loli.net/2021/04/07/2Ulb7yq41I9NmE5.png" alt="iShot2021-04-07上午11.44.39.png"></p>
-<h4 id="开启混淆生成文件"><a href="#开启混淆生成文件" class="headerlink" title="开启混淆生成文件"></a>开启混淆生成文件</h4><p>生成的混淆文件信息  <code>app\build\outputs\mapping</code>  目录下,根据 <code>usage.txt</code> 文件查看是否有被误移除的代码。</p>
-<p><img src="https://i.loli.net/2021/04/09/5Zbel2OpHLhERGS.png" alt="iShot2021-04-09上午10.22.24.png"></p>
-<table>
-<thead>
-<tr>
-<th>文件</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>configuration.txt</td>
-<td>混淆信息</td>
-</tr>
-<tr>
-<td>mapping.txt</td>
-<td>混淆前后类、方法、类成员等的对照表</td>
-</tr>
-<tr>
-<td>seeds.txt</td>
-<td>没有被混淆的类和成员</td>
-</tr>
-<tr>
-<td>usage.txt</td>
-<td>被移除的代码</td>
-</tr>
-</tbody></table>
-<h4 id="混淆参数说明"><a href="#混淆参数说明" class="headerlink" title="混淆参数说明"></a>混淆参数说明</h4><table>
-<thead>
-<tr>
-<th>参数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>-optimizationpasses</td>
-<td>代码混淆的压缩比例</td>
-</tr>
-<tr>
-<td>-dontusemixedcaseclassnames</td>
-<td>混淆后类型都为小写</td>
-</tr>
-<tr>
-<td>-dontskipnonpubliclibraryclasses</td>
-<td>不去忽略非公共的库类</td>
-</tr>
-<tr>
-<td>-dontoptimize</td>
-<td>不优化输入的类文件</td>
-</tr>
-<tr>
-<td>-dontpreverify</td>
-<td>不做预校验的操作</td>
-</tr>
-<tr>
-<td>-ignorewarnings</td>
-<td>忽略警告</td>
-</tr>
-<tr>
-<td>-verbose</td>
-<td>混淆时是否记录日志</td>
-</tr>
-<tr>
-<td>-dontnote</td>
-<td>指定不打印有关配置中可能的错误或遗漏的注释</td>
-</tr>
-<tr>
-<td>-dontwarn</td>
-<td>指定不警告有关未解决的引用和其他重要问题</td>
-</tr>
-<tr>
-<td>-keepattributes <em>Annotation</em></td>
-<td>保护注解</td>
-</tr>
-<tr>
-<td>-printmapping proguardMapping.txt</td>
-<td>生成原类名和混淆后的类名的映射文件</td>
-</tr>
-<tr>
-<td>-optimizations !code/simplification/cast,!field/,!class/merging/</td>
-<td>指定混淆是采用的算法</td>
-</tr>
-<tr>
-<td>-keepparameternames</td>
-<td>指定保留所保存方法的参数名称和类型</td>
-</tr>
-<tr>
-<td>-keeppackagenames</td>
-<td>指定不混淆给定的软件包名称</td>
-</tr>
-<tr>
-<td>-flattenpackagehierarchy</td>
-<td>将所有重命名的软件包重新打包</td>
-</tr>
-<tr>
-<td>-repackageclasses</td>
-<td>将所有重命名的类文件重新打包</td>
-</tr>
-<tr>
-<td>-obfuscationdictionary</td>
-<td>指定外部模糊字典</td>
-</tr>
-<tr>
-<td>-classobfuscationdictionary</td>
-<td>指定class模糊字典</td>
-</tr>
-<tr>
-<td>-packageobfuscationdictionary</td>
-<td>指定package模糊字典</td>
-</tr>
-</tbody></table>
-<h4 id="keep说明"><a href="#keep说明" class="headerlink" title="keep说明"></a>keep说明</h4><table>
-<thead>
-<tr>
-<th>参数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>-keep</td>
-<td>防止类和成员被移除或者被重命名</td>
-</tr>
-<tr>
-<td>-keepnames</td>
-<td>防止类和成员被重命名</td>
-</tr>
-<tr>
-<td>-keepclassmembers</td>
-<td>防止成员被移除或者被重命名</td>
-</tr>
-<tr>
-<td>-keepclassmembernames</td>
-<td>防止成员被重命名</td>
-</tr>
-<tr>
-<td>-keepclasseswithmembers</td>
-<td>防止拥有该成员的类和成员被移除或者被重命名</td>
-</tr>
-<tr>
-<td>-keepclasseswithmembernames</td>
-<td>防止拥有该成员的类和成员被重命名</td>
-</tr>
-</tbody></table>
-<p>keep 类修饰符 class 类名称 限定符 类{ }   例如  <code>-keep public class * extends   androidx.**</code> </p>
-<ul>
-<li>类修饰符：<code>public</code>、<code>protected</code>、<code>private</code></li>
-<li><code>*</code> 匹配任意长度字符，但不含包名分隔符(.) </li>
-<li><code>**</code> 匹配任意长度字符，并且包含包名分隔符(.) </li>
-<li><code>extends</code> 可以指定类的基类 </li>
-<li><code>implement</code> 匹配实现了某接口的类 </li>
-<li><code>$</code> 内部类</li>
-</ul>
-<h4 id="基本规则"><a href="#基本规则" class="headerlink" title="基本规则"></a>基本规则</h4><p><code>-keep class com.xx.xx.**</code> 、<code>-keep class com.xx.xx.*</code></p>
-<ul>
-<li><code>**</code> 表示本包和所含子包下的类名都保持</li>
-<li><code>*</code> 表示只是保持该包下的类名</li>
-</ul>
-<p><code>-keep class com.example.bean.** &#123; *; &#125;</code></p>
-<ul>
-<li>表示本包和所含子包下的类名都保持，方法名和变量名也都保持</li>
-</ul>
-<p><code>-keep public class com.xx.Test &#123; *; &#125;</code> 不混淆com.xx.Test类<br><code>-keep class com.xx.** &#123;*;&#125;</code> 不混淆com.xx包下所有类<br><code>-keep public class * extends com.xx.Test &#123; *; &#125;</code>  不混淆某个类的子类<br><code>-keep public class **.*model*.** &#123; *; &#125; </code> 不混淆所有类名中包含了“model”的类及其成员</p>
-<p><code>-kepp class * implements com.xx.TestInterface &#123; *; &#125;</code> 不混淆TestInterface接口的实现</p>
-<p><code>-keepclassmembers class com.xx.Test &#123; public (); &#125;</code>  不混淆Test的构造方法<br><code>-keepclassmembers class com.xx.Test &#123; public void test( java.lang.String )&#125;</code>  不混淆Test的特定的test方法</p>
-<p><code>-keep class com.xx.Test$* &#123; *; &#125;</code> 不混淆Test类的内部类</p>
-<h4 id="资源保持规则"><a href="#资源保持规则" class="headerlink" title="资源保持规则"></a>资源保持规则</h4><p><code>shrinkResources true</code> 未被使用的资源默认被移除</p>
-<p>在 <code>res/raw/</code> 路径下创建一个 xml 文件，例如 <code>keep.xml</code></p>
-<ul>
-<li><code>tools:keep</code> 定义哪些资源需要被保留（资源之间用“,”隔开） </li>
-<li><code>tools:discard</code> 定义哪些资源需要被移除（资源之间用“,”隔开） </li>
-<li><code>tools:shrinkMode</code> 开启严格模式</li>
-</ul>
-<h4 id="模板代码"><a href="#模板代码" class="headerlink" title="模板代码"></a>模板代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">#############################################</span><br><span class="line">#</span><br><span class="line"># 对于一些基本指令的添加</span><br><span class="line">#</span><br><span class="line">#############################################</span><br><span class="line"># 代码混淆压缩比，在0~7之间，默认为5，一般不做修改</span><br><span class="line">-optimizationpasses <span class="number">5</span></span><br><span class="line"></span><br><span class="line"># 混合时不使用大小写混合，混合后的类名为小写</span><br><span class="line">-dontusemixedcaseclassnames</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类</span><br><span class="line">-dontskipnonpubliclibraryclasses</span><br><span class="line"></span><br><span class="line"># 这句话能够使我们的项目混淆后产生映射文件</span><br><span class="line"># 包含有类名-&gt;混淆后类名的映射关系</span><br><span class="line">-verbose</span><br><span class="line"></span><br><span class="line"># 指定不去忽略非公共库的类成员</span><br><span class="line">-dontskipnonpubliclibraryclassmembers</span><br><span class="line"></span><br><span class="line"># 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。</span><br><span class="line">-dontpreverify</span><br><span class="line"></span><br><span class="line"># 保留Annotation不混淆</span><br><span class="line">-keepattributes *Annotation*,InnerClasses</span><br><span class="line"></span><br><span class="line"># 避免混淆泛型</span><br><span class="line">-keepattributes Signature</span><br><span class="line"></span><br><span class="line"># 抛出异常时保留代码行号</span><br><span class="line">-keepattributes SourceFile,LineNumberTable</span><br><span class="line"></span><br><span class="line"># 指定混淆是采用的算法，后面的参数是一个过滤器</span><br><span class="line"># 这个过滤器是谷歌推荐的算法，一般不做更改</span><br><span class="line">-optimizations !code/simplification/cast,!field<span class="comment">/*,!class/merging/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Android开发中一些需要保留的公共部分</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#############################################</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们使用的四大组件，自定义的Application等等这些类不被混淆</span></span><br><span class="line"><span class="comment"># 因为这些子类都有可能被外部调用</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Activity</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Appliction</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.Service</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.BroadcastReceiver</span></span><br><span class="line"><span class="comment">-keep public class * extends android.content.ContentProvider</span></span><br><span class="line"><span class="comment">-keep public class * extends android.app.backup.BackupAgentHelper</span></span><br><span class="line"><span class="comment">-keep public class * extends android.preference.Preference</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View</span></span><br><span class="line"><span class="comment">-keep public class com.android.vending.licensing.ILicensingService</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留support下的所有类及其内部类</span></span><br><span class="line"><span class="comment">-keep class android.support.** &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留继承的</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v4.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.v7.**</span></span><br><span class="line"><span class="comment">-keep public class * extends android.support.annotation.**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留R下面的资源</span></span><br><span class="line"><span class="comment">-keep class **.R$* &#123;*;&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留本地native方法不被混淆</span></span><br><span class="line"><span class="comment">-keepclasseswithmembernames class * &#123;</span></span><br><span class="line"><span class="comment">    native &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留在Activity中的方法参数是view的方法，</span></span><br><span class="line"><span class="comment"># 这样以来我们在layout中写的onClick就不会被影响</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.app.Activity&#123;</span></span><br><span class="line"><span class="comment">    public void *(android.view.View);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留枚举类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers enum * &#123;</span></span><br><span class="line"><span class="comment">    public static **[] values();</span></span><br><span class="line"><span class="comment">    public static ** valueOf(java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留我们自定义控件（继承自View）不被混淆</span></span><br><span class="line"><span class="comment">-keep public class * extends android.view.View&#123;</span></span><br><span class="line"><span class="comment">    *** get*();</span></span><br><span class="line"><span class="comment">    void set*(***);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet);</span></span><br><span class="line"><span class="comment">    public &lt;init&gt;(android.content.Context, android.util.AttributeSet, int);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Parcelable序列化类不被混淆</span></span><br><span class="line"><span class="comment">-keep class * implements android.os.Parcelable &#123;</span></span><br><span class="line"><span class="comment">    public static final android.os.Parcelable$Creator *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 保留Serializable序列化的类不被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * implements java.io.Serializable &#123;</span></span><br><span class="line"><span class="comment">    static final long serialVersionUID;</span></span><br><span class="line"><span class="comment">    private static final java.io.ObjectStreamField[] serialPersistentFields;</span></span><br><span class="line"><span class="comment">    !static !transient &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;fields&gt;;</span></span><br><span class="line"><span class="comment">    !private &lt;methods&gt;;</span></span><br><span class="line"><span class="comment">    private void writeObject(java.io.ObjectOutputStream);</span></span><br><span class="line"><span class="comment">    private void readObject(java.io.ObjectInputStream);</span></span><br><span class="line"><span class="comment">    java.lang.Object writeReplace();</span></span><br><span class="line"><span class="comment">    java.lang.Object readResolve();</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 对于带有回调函数的onXXEvent、**On*Listener的，不能被混淆</span></span><br><span class="line"><span class="comment">-keepclassmembers class * &#123;</span></span><br><span class="line"><span class="comment">    void *(**On*Event);</span></span><br><span class="line"><span class="comment">    void *(**On*Listener);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># webView处理，项目中没有使用到webView忽略即可</span></span><br><span class="line"><span class="comment">-keepclassmembers class fqcn.of.javascript.interface.for.webview &#123;</span></span><br><span class="line"><span class="comment">    public *;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);</span></span><br><span class="line"><span class="comment">    public boolean *(android.webkit.WebView, java.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">-keepclassmembers class * extends android.webkit.webViewClient &#123;</span></span><br><span class="line"><span class="comment">    public void *(android.webkit.webView, jav.lang.String);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure>
-<p><a href="https://www.guardsquare.com/en/products/proguard">proguard官网</a></p>
-<p><a href="https://www.huaweicloud.com/articles/ae151e2f60923097cefc473bd131addf.html">参考1</a></p>
-<p><a href="https://blog.si-yee.com/2019/04/12/Android%E6%B7%B7%E6%B7%86-Proguard-%E8%AF%A6%E8%A7%A3/">参考2</a></p>
-<p><a href="https://github.com/WrBug/FrenziedProguard">参考3-生成汉字混淆文件</a></p>
-<p><a href="http://blog.skymxc.com/2018/06/03/Proguard/">参考4</a></p>
+    <title></title>
+    <url>/2021/12/29/aws-cicd-permission/</url>
+    <content><![CDATA[<h3 id="CodeBuild"><a href="#CodeBuild" class="headerlink" title="CodeBuild"></a>CodeBuild</h3><h4 id="创建构建项目"><a href="#创建构建项目" class="headerlink" title="创建构建项目"></a>创建构建项目</h4><img src="/Users/libo/typora_image_workspace/image-20211229153413539.png" alt="image-20211229153413539" style="zoom:67%;" />
+
+
+
+
+
+<img src="/Users/libo/typora_image_workspace/image-20211229154509074.png" alt="image-20211229154509074" style="zoom: 67%;" />
+
+<img src="/Users/libo/typora_image_workspace/image-20211229154653659.png" alt="image-20211229154653659" style="zoom:67%;" />
+![image-20211229154732137](/Users/libo/typora_image_workspace/image-20211229154732137.png)
+![image-20211229154937026](/Users/libo/typora_image_workspace/image-20211229154937026.png)
+![image-20211229155048138](/Users/libo/typora_image_workspace/image-20211229155048138.png)
+![image-20211229155213561](/Users/libo/typora_image_workspace/image-20211229155213561.png)
+![image-20211229155304445](/Users/libo/typora_image_workspace/image-20211229155304445.png)
+![image-20211229155534047](/Users/libo/typora_image_workspace/image-20211229155534047.png)
+
+<h4 id="创建通知规则"><a href="#创建通知规则" class="headerlink" title="创建通知规则"></a>创建通知规则</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229155844496.png" alt="image-20211229155844496"><br> <img src="/Users/libo/typora_image_workspace/image-20211229160432525.png" alt="image-20211229160432525"><br><img src="/Users/libo/typora_image_workspace/image-20211229160037955.png" alt="image-20211229160037955"><br><img src="/Users/libo/typora_image_workspace/image-20211229160520661.png" alt="image-20211229160520661"><br><img src="/Users/libo/typora_image_workspace/image-20211229160701133.png" alt="image-20211229160701133"><br><img src="/Users/libo/typora_image_workspace/image-20211229160722839.png" alt="image-20211229160722839"><br><img src="/Users/libo/typora_image_workspace/image-20211229160957976.png" alt="image-20211229160957976"><br><img src="/Users/libo/typora_image_workspace/image-20211229160948709.png" alt="image-20211229160948709"><br><img src="/Users/libo/typora_image_workspace/image-20211229161519847.png" alt="image-20211229161519847"></p>
+<h4 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229161719813.png" alt="image-20211229161719813"><br><img src="/Users/libo/typora_image_workspace/image-20211229161900563.png" alt="image-20211229161900563"><br><img src="/Users/libo/typora_image_workspace/image-20211229161925793.png" alt="image-20211229161925793"></p>
+<h3 id="CodePipeline"><a href="#CodePipeline" class="headerlink" title="CodePipeline"></a>CodePipeline</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229162211486.png" alt="image-20211229162211486"><br><img src="/Users/libo/typora_image_workspace/image-20211229162311617.png" alt="image-20211229162311617"><br><img src="/Users/libo/typora_image_workspace/image-20211229162414702.png" alt="image-20211229162414702"><br><img src="/Users/libo/typora_image_workspace/image-20211229162510118.png" alt="image-20211229162510118"><br><img src="/Users/libo/typora_image_workspace/image-20211229162633103.png" alt="image-20211229162633103"><br><img src="/Users/libo/typora_image_workspace/image-20211229162751997.png" alt="image-20211229162751997"><br><img src="/Users/libo/typora_image_workspace/image-20211229162807971.png" alt="image-20211229162807971"><br><img src="/Users/libo/typora_image_workspace/image-20211229163014897.png" alt="image-20211229163014897"><br><img src="/Users/libo/typora_image_workspace/image-20211229163110827.png" alt="image-20211229163110827"><br><img src="/Users/libo/typora_image_workspace/image-20211229163210642.png" alt="image-20211229163210642"><br><img src="/Users/libo/typora_image_workspace/image-20211229163546214.png" alt="image-20211229163546214"><br><img src="/Users/libo/typora_image_workspace/image-20211229163645923.png" alt="image-20211229163645923"><br><img src="/Users/libo/typora_image_workspace/image-20211229165228204.png" alt="image-20211229165228204"><br><img src="/Users/libo/typora_image_workspace/image-20211229165158975.png" alt="image-20211229165158975"><br><img src="/Users/libo/typora_image_workspace/image-20211229165314764.png" alt="image-20211229165314764"><br><img src="/Users/libo/typora_image_workspace/image-20211229165454220.png" alt="image-20211229165454220"><br><img src="/Users/libo/typora_image_workspace/image-20211229170037684.png" alt="image-20211229170037684"></p>
+<h2 id="权限汇总"><a href="#权限汇总" class="headerlink" title="权限汇总"></a>权限汇总</h2><p><img src="/Users/libo/typora_image_workspace/image-20211229171107269.png" alt="image-20211229171107269"></p>
+<p><img src="/Users/libo/typora_image_workspace/image-20211229171212820.png" alt="image-20211229171212820"></p>
+<p><img src="/Users/libo/typora_image_workspace/image-20211229171237219.png" alt="image-20211229171237219"></p>
+<p><img src="/Users/libo/typora_image_workspace/image-20211229171258974.png" alt="image-20211229171258974"></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229172353825.png" alt="image-20211229172353825"></p>
 ]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-      </tags>
   </entry>
   <entry>
     <title>asm-gradle备注</title>
@@ -770,35 +799,6 @@
         <tag>asm</tag>
         <tag>gradle</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/12/29/aws-cicd-permission/</url>
-    <content><![CDATA[<h3 id="CodeBuild"><a href="#CodeBuild" class="headerlink" title="CodeBuild"></a>CodeBuild</h3><h4 id="创建构建项目"><a href="#创建构建项目" class="headerlink" title="创建构建项目"></a>创建构建项目</h4><img src="/Users/libo/typora_image_workspace/image-20211229153413539.png" alt="image-20211229153413539" style="zoom:67%;" />
-
-
-
-
-
-<img src="/Users/libo/typora_image_workspace/image-20211229154509074.png" alt="image-20211229154509074" style="zoom: 67%;" />
-
-<img src="/Users/libo/typora_image_workspace/image-20211229154653659.png" alt="image-20211229154653659" style="zoom:67%;" />
-![image-20211229154732137](/Users/libo/typora_image_workspace/image-20211229154732137.png)
-![image-20211229154937026](/Users/libo/typora_image_workspace/image-20211229154937026.png)
-![image-20211229155048138](/Users/libo/typora_image_workspace/image-20211229155048138.png)
-![image-20211229155213561](/Users/libo/typora_image_workspace/image-20211229155213561.png)
-![image-20211229155304445](/Users/libo/typora_image_workspace/image-20211229155304445.png)
-![image-20211229155534047](/Users/libo/typora_image_workspace/image-20211229155534047.png)
-
-<h4 id="创建通知规则"><a href="#创建通知规则" class="headerlink" title="创建通知规则"></a>创建通知规则</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229155844496.png" alt="image-20211229155844496"><br> <img src="/Users/libo/typora_image_workspace/image-20211229160432525.png" alt="image-20211229160432525"><br><img src="/Users/libo/typora_image_workspace/image-20211229160037955.png" alt="image-20211229160037955"><br><img src="/Users/libo/typora_image_workspace/image-20211229160520661.png" alt="image-20211229160520661"><br><img src="/Users/libo/typora_image_workspace/image-20211229160701133.png" alt="image-20211229160701133"><br><img src="/Users/libo/typora_image_workspace/image-20211229160722839.png" alt="image-20211229160722839"><br><img src="/Users/libo/typora_image_workspace/image-20211229160957976.png" alt="image-20211229160957976"><br><img src="/Users/libo/typora_image_workspace/image-20211229160948709.png" alt="image-20211229160948709"><br><img src="/Users/libo/typora_image_workspace/image-20211229161519847.png" alt="image-20211229161519847"></p>
-<h4 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229161719813.png" alt="image-20211229161719813"><br><img src="/Users/libo/typora_image_workspace/image-20211229161900563.png" alt="image-20211229161900563"><br><img src="/Users/libo/typora_image_workspace/image-20211229161925793.png" alt="image-20211229161925793"></p>
-<h3 id="CodePipeline"><a href="#CodePipeline" class="headerlink" title="CodePipeline"></a>CodePipeline</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229162211486.png" alt="image-20211229162211486"><br><img src="/Users/libo/typora_image_workspace/image-20211229162311617.png" alt="image-20211229162311617"><br><img src="/Users/libo/typora_image_workspace/image-20211229162414702.png" alt="image-20211229162414702"><br><img src="/Users/libo/typora_image_workspace/image-20211229162510118.png" alt="image-20211229162510118"><br><img src="/Users/libo/typora_image_workspace/image-20211229162633103.png" alt="image-20211229162633103"><br><img src="/Users/libo/typora_image_workspace/image-20211229162751997.png" alt="image-20211229162751997"><br><img src="/Users/libo/typora_image_workspace/image-20211229162807971.png" alt="image-20211229162807971"><br><img src="/Users/libo/typora_image_workspace/image-20211229163014897.png" alt="image-20211229163014897"><br><img src="/Users/libo/typora_image_workspace/image-20211229163110827.png" alt="image-20211229163110827"><br><img src="/Users/libo/typora_image_workspace/image-20211229163210642.png" alt="image-20211229163210642"><br><img src="/Users/libo/typora_image_workspace/image-20211229163546214.png" alt="image-20211229163546214"><br><img src="/Users/libo/typora_image_workspace/image-20211229163645923.png" alt="image-20211229163645923"><br><img src="/Users/libo/typora_image_workspace/image-20211229165228204.png" alt="image-20211229165228204"><br><img src="/Users/libo/typora_image_workspace/image-20211229165158975.png" alt="image-20211229165158975"><br><img src="/Users/libo/typora_image_workspace/image-20211229165314764.png" alt="image-20211229165314764"><br><img src="/Users/libo/typora_image_workspace/image-20211229165454220.png" alt="image-20211229165454220"><br><img src="/Users/libo/typora_image_workspace/image-20211229170037684.png" alt="image-20211229170037684"></p>
-<h2 id="权限汇总"><a href="#权限汇总" class="headerlink" title="权限汇总"></a>权限汇总</h2><p><img src="/Users/libo/typora_image_workspace/image-20211229171107269.png" alt="image-20211229171107269"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171212820.png" alt="image-20211229171212820"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171237219.png" alt="image-20211229171237219"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171258974.png" alt="image-20211229171258974"></p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229172353825.png" alt="image-20211229172353825"></p>
-]]></content>
   </entry>
   <entry>
     <title></title>
@@ -974,35 +974,6 @@
       </tags>
   </entry>
   <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>es</title>
     <url>/2018/08/27/elasticsearch%E5%A4%87%E6%B3%A8/</url>
     <content><![CDATA[<h4 id="ES介绍"><a href="#ES介绍" class="headerlink" title="ES介绍"></a>ES介绍</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Elasticsearch 是一个分布式的免费开源搜索和分析引擎，适用于包括文本、数字、地理空间、结构化和非结构化数据等在内的所有类型的数据。Elasticsearch 在 Apache Lucene 的基础上开发而成，由 Elasticsearch N.V.（即现在的 Elastic）于 <span class="number">2010</span> 年首次发布，Elasticsearch 以其简单的 REST 风格 API、分布式特性、速度和可扩展性而闻名，可用于多种用例</span><br><span class="line">  - 应用程序搜索、网站搜索、企业搜索</span><br><span class="line">  - 日志处理和分析、安全分析、业务分析</span><br><span class="line">  - 基础设施指标和容器监测、应用程序性能监测</span><br></pre></td></tr></table></figure>
@@ -1108,6 +1079,35 @@
       <tags>
         <tag>java</tag>
         <tag>es</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>frida</tag>
       </tags>
   </entry>
   <entry>
@@ -1227,6 +1227,32 @@
       </tags>
   </entry>
   <entry>
+    <title>github无法访问</title>
+    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
+<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
+<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
+<li>Linux 系统：<code>/etc/hosts</code></li>
+<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
+<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
+<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
+</ul>
+<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
+<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
+<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
+<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
+]]></content>
+      <categories>
+        <category>github</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello Hexo</title>
     <url>/2020/12/12/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -1247,48 +1273,6 @@
       <tags>
         <tag>other</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/10/29/hello/</url>
-    <content><![CDATA[<h4 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
-<h4 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use mysql</span><br><span class="line">update user set authentication_string&#x3D;&#39;&#39; where user&#x3D;&#39;root&#39; -- 值为空</span><br><span class="line">ALTER user &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;</span><br><span class="line">ALTER user &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;123456&#39; --远程</span><br><span class="line">-- https:&#x2F;&#x2F;www.cnblogs.com&#x2F;tmdsleep&#x2F;p&#x2F;10967432.html</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/12/22/k8s/</url>
-    <content><![CDATA[<h3 id="k8s-是什么"><a href="#k8s-是什么" class="headerlink" title="k8s 是什么"></a>k8s 是什么</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 是一个可移植的、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。 Kubernetes 拥有一个庞大且快速增长的生态系统。Kubernetes 的服务、支持和工具广泛可用。</span><br><span class="line">k8s 这个缩写是因为 k 和 s 之间有八个字符的关系。</span><br></pre></td></tr></table></figure>
-<h4 id="应用部署"><a href="#应用部署" class="headerlink" title="应用部署"></a>应用部署</h4><ul>
-<li><p>传统部署</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">早期，各个服务都在物理服务器上运行。无法为物理服务器中的应用程序定义资源边界，这会导致资源分配问题。</span><br><span class="line">例如，在一台物理服务器上运行多个程序，有可能因为一个程序占用大部分资源而导致其他应用程序的性能下降。</span><br><span class="line">或者在不同的物理服务器上运行每个应用程序，可能出现资源利用不足，并且维护的成本很高。</span><br></pre></td></tr></table></figure></li>
-<li><p>虚拟化部署</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">虚拟化技术允许你在单个物理服务器的 CPU 上运行多个虚拟机（VM）。 虚拟化允许应用程序在 VM 之间隔离，</span><br><span class="line">并提供一定程度的安全，因为一个应用程序的信息 不能被另一应用程序随意访问。</span><br><span class="line">虚拟化技术能够更好地利用物理服务器上的资源，并且因为可轻松地添加或更新应用程序 而可以实现更好的可伸缩性，</span><br><span class="line">降低硬件成本等等。每个 VM 是一台完整的计算机，在虚拟化硬件之上运行所有组件，包括其自己的操作系统。</span><br></pre></td></tr></table></figure></li>
-<li><p>容器部署</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">容器类似于 VM，但是它们具有被放宽的隔离属性，可以在应用程序之间共享操作系统（OS）。 因此，容器被认为是</span><br><span class="line">轻量级的。容器与 VM 类似，具有自己的文件系统、CPU、内存、进程空间等。 由于它们与基础架构分离，因此可</span><br><span class="line">以跨云和 OS 发行版本进行移植。</span><br><span class="line">- 敏捷应用程序的创建和部署</span><br><span class="line">- 持续开发、集成和部署</span><br><span class="line">- 关注开发与运维的分离</span><br><span class="line">- 松散耦合、分布式、弹性、解放的微服务</span><br><span class="line">- 可观察性</span><br><span class="line">- 跨开发、测试和生产的环境一致性</span><br><span class="line">- 跨云和操作系统发行版本的可移植性</span><br><span class="line">- 以应用程序为中心的管理</span><br><span class="line">- 资源隔离、资源利用</span><br></pre></td></tr></table></figure>
-<h3 id="k8s-能做什么"><a href="#k8s-能做什么" class="headerlink" title="k8s 能做什么"></a>k8s 能做什么</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">容器是打包和运行应用程序的好方式。在生产环境中，你需要管理运行应用程序的容器，并确保不会停机。</span><br><span class="line">例如，如果一个容器发生故障，则需要启动另一个容器。如果系统处理此行为，会不会更容易？</span><br><span class="line">Kubernetes 为你提供了一个可弹性运行分布式系统的框架。 Kubernetes 会满足你的扩展要求、故障转移、</span><br><span class="line">部署模式等,Kubernetes 为你提供:</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>服务发现和负载均衡</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 可以使用 DNS 名称或自己的 IP 地址公开容器，如果进入容器的流量很大， Kubernetes 可以负载均衡并分配网络流量，从而使部署稳定。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>存储编排</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 允许你自动挂载你选择的存储系统，例如本地存储、公共云提供商等。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>自动部署和回滚</p>
-</li>
-<li><p>自动完成装箱计算</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 允许你指定每个容器所需 CPU 和内存（RAM）。 当容器指定了资源请求时，Kubernetes 可以做出更好的决策来管理容器的资源。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>自我修复</p>
-</li>
-<li><p>密钥与配置管理</p>
-</li>
-</ul>
-</li>
-</ul>
-]]></content>
   </entry>
   <entry>
     <title>java 23中设计模式</title>
@@ -1674,6 +1658,48 @@
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/12/22/k8s/</url>
+    <content><![CDATA[<h3 id="k8s-是什么"><a href="#k8s-是什么" class="headerlink" title="k8s 是什么"></a>k8s 是什么</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 是一个可移植的、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。 Kubernetes 拥有一个庞大且快速增长的生态系统。Kubernetes 的服务、支持和工具广泛可用。</span><br><span class="line">k8s 这个缩写是因为 k 和 s 之间有八个字符的关系。</span><br></pre></td></tr></table></figure>
+<h4 id="应用部署"><a href="#应用部署" class="headerlink" title="应用部署"></a>应用部署</h4><ul>
+<li><p>传统部署</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">早期，各个服务都在物理服务器上运行。无法为物理服务器中的应用程序定义资源边界，这会导致资源分配问题。</span><br><span class="line">例如，在一台物理服务器上运行多个程序，有可能因为一个程序占用大部分资源而导致其他应用程序的性能下降。</span><br><span class="line">或者在不同的物理服务器上运行每个应用程序，可能出现资源利用不足，并且维护的成本很高。</span><br></pre></td></tr></table></figure></li>
+<li><p>虚拟化部署</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">虚拟化技术允许你在单个物理服务器的 CPU 上运行多个虚拟机（VM）。 虚拟化允许应用程序在 VM 之间隔离，</span><br><span class="line">并提供一定程度的安全，因为一个应用程序的信息 不能被另一应用程序随意访问。</span><br><span class="line">虚拟化技术能够更好地利用物理服务器上的资源，并且因为可轻松地添加或更新应用程序 而可以实现更好的可伸缩性，</span><br><span class="line">降低硬件成本等等。每个 VM 是一台完整的计算机，在虚拟化硬件之上运行所有组件，包括其自己的操作系统。</span><br></pre></td></tr></table></figure></li>
+<li><p>容器部署</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">容器类似于 VM，但是它们具有被放宽的隔离属性，可以在应用程序之间共享操作系统（OS）。 因此，容器被认为是</span><br><span class="line">轻量级的。容器与 VM 类似，具有自己的文件系统、CPU、内存、进程空间等。 由于它们与基础架构分离，因此可</span><br><span class="line">以跨云和 OS 发行版本进行移植。</span><br><span class="line">- 敏捷应用程序的创建和部署</span><br><span class="line">- 持续开发、集成和部署</span><br><span class="line">- 关注开发与运维的分离</span><br><span class="line">- 松散耦合、分布式、弹性、解放的微服务</span><br><span class="line">- 可观察性</span><br><span class="line">- 跨开发、测试和生产的环境一致性</span><br><span class="line">- 跨云和操作系统发行版本的可移植性</span><br><span class="line">- 以应用程序为中心的管理</span><br><span class="line">- 资源隔离、资源利用</span><br></pre></td></tr></table></figure>
+<h3 id="k8s-能做什么"><a href="#k8s-能做什么" class="headerlink" title="k8s 能做什么"></a>k8s 能做什么</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">容器是打包和运行应用程序的好方式。在生产环境中，你需要管理运行应用程序的容器，并确保不会停机。</span><br><span class="line">例如，如果一个容器发生故障，则需要启动另一个容器。如果系统处理此行为，会不会更容易？</span><br><span class="line">Kubernetes 为你提供了一个可弹性运行分布式系统的框架。 Kubernetes 会满足你的扩展要求、故障转移、</span><br><span class="line">部署模式等,Kubernetes 为你提供:</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>服务发现和负载均衡</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 可以使用 DNS 名称或自己的 IP 地址公开容器，如果进入容器的流量很大， Kubernetes 可以负载均衡并分配网络流量，从而使部署稳定。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>存储编排</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 允许你自动挂载你选择的存储系统，例如本地存储、公共云提供商等。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自动部署和回滚</p>
+</li>
+<li><p>自动完成装箱计算</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 允许你指定每个容器所需 CPU 和内存（RAM）。 当容器指定了资源请求时，Kubernetes 可以做出更好的决策来管理容器的资源。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自我修复</p>
+</li>
+<li><p>密钥与配置管理</p>
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/10/29/hello/</url>
+    <content><![CDATA[<h4 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
+<h4 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use mysql</span><br><span class="line">update user set authentication_string&#x3D;&#39;&#39; where user&#x3D;&#39;root&#39; -- 值为空</span><br><span class="line">ALTER user &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;</span><br><span class="line">ALTER user &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;123456&#39; --远程</span><br><span class="line">-- https:&#x2F;&#x2F;www.cnblogs.com&#x2F;tmdsleep&#x2F;p&#x2F;10967432.html</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+  </entry>
+  <entry>
     <title>let、run、with、also、apply</title>
     <url>/2021/06/14/kotlin-ext-fun%E5%A4%87%E6%B3%A8/</url>
     <content><![CDATA[<h4 id="let"><a href="#let" class="headerlink" title="let"></a>let</h4><ol>
@@ -2009,7 +2035,7 @@
 </ol>
 </li>
 </ul>
-<p><img src="https://s2.loli.net/2022/03/07/ozn2igMwhAZQYmL.png" alt="image-20220307164155402"></p>
+<p><img src="https://s2.loli.net/2022/03/07/mNelT2PoGjwqHZa.png" alt="image-20220307171334362"></p>
 <h5 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h5><ol>
 <li>declare 变量名 类型  declare a int;</li>
 </ol>
@@ -2087,14 +2113,19 @@
       </tags>
   </entry>
   <entry>
-    <title>xxxx记录</title>
-    <url>/2022/02/21/template/</url>
-    <content><![CDATA[]]></content>
+    <title>RecyclerView嵌套滑动</title>
+    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
+<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
+<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
+]]></content>
       <categories>
-        <category>xxx</category>
+        <category>android</category>
       </categories>
       <tags>
-        <tag>xxxxx</tag>
+        <tag>android</tag>
+        <tag>recyclerview</tag>
       </tags>
   </entry>
   <entry>
@@ -2267,19 +2298,14 @@
       </tags>
   </entry>
   <entry>
-    <title>RecyclerView嵌套滑动</title>
-    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
-<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
-<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
-]]></content>
+    <title>xxxx记录</title>
+    <url>/2022/02/21/template/</url>
+    <content><![CDATA[]]></content>
       <categories>
-        <category>android</category>
+        <category>xxx</category>
       </categories>
       <tags>
-        <tag>android</tag>
-        <tag>recyclerview</tag>
+        <tag>xxxxx</tag>
       </tags>
   </entry>
   <entry>
@@ -2630,32 +2656,6 @@
       <tags>
         <tag>android</tag>
         <tag>adb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>github无法访问</title>
-    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
-<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
-<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
-<li>Linux 系统：<code>/etc/hosts</code></li>
-<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
-<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
-<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
-</ul>
-<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
-<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
-<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
-<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
-]]></content>
-      <categories>
-        <category>github</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
       </tags>
   </entry>
   <entry>
