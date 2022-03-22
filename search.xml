@@ -849,14 +849,9 @@
 <p><img src="https://s2.loli.net/2022/03/22/g4fOaxo9ruAqBYR.png" alt="image-20211224182630509"></p>
 <p><img src="https://s2.loli.net/2022/03/22/YGHPmKdrbo2TxX5.png" alt="image-20211224182557803"></p>
 <h4 id="aws-codebuild"><a href="#aws-codebuild" class="headerlink" title="aws-codebuild"></a>aws-codebuild</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeBuild 是一项完全托管的构建服务，无需管理和扩展自己的构建服务器，从 CodeCommit 拉取输入、融入 CodePipeline 工作流、将构件输出到 S3 等。备注 你需要指定 CodeBuild 的角色，并赋予相应的访问权限。</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>输入源</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">可以选择从 CodeCommit 代码仓库、S3 存储桶上的 zip 压缩包、GitHub 代码仓库之一作为输入源。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>环境变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">环境变量，生效顺序如下：</span><br><span class="line">1. 发起构建操作时提供的变量值</span><br><span class="line">2. 构建项目定义的变量值</span><br><span class="line">3. buildspec.yml 文件中定义的变量值</span><br><span class="line">不要以 CODEBUILD_ 开头命名环境变量，这个由 AWS 内部保留使用。</span><br></pre></td></tr></table></figure></li>
-<li><p>构建阶段</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一次 CodeBuild 构建的生命周期分为多个阶段,其中 * 标识的可自定义，! 标识的可以配置。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入源-可以选择从 CodeCommit 代码仓库、S3 存储桶上的 zip 压缩包、GitHub 代码仓库之一作为输入源。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">环境变量，生效顺序如下：</span><br><span class="line">1. 发起构建操作时提供的变量值</span><br><span class="line">2. 构建项目定义的变量值</span><br><span class="line">3. buildspec.yml 文件中定义的变量值</span><br><span class="line">不要以 CODEBUILD_ 开头命名环境变量，这个由 AWS 内部保留使用。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">构建阶段 一次 CodeBuild 构建的生命周期分为多个阶段,其中 * 标识的可自定义，! 标识的可以配置。</span><br></pre></td></tr></table></figure>
 <table>
 <thead>
 <tr>
@@ -905,19 +900,13 @@
 <td>已完成</td>
 </tr>
 </tbody></table>
-<p><img src="https://s2.loli.net/2021/12/24/27hXaLFyiW1ozZU.png" alt="image-20211224181837734"></p>
-</li>
-<li><p>buildspec 文件</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment_variables:</span></span><br><span class="line">  <span class="attr">plaintext:</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span>     </span><br><span class="line"><span class="attr">phases:</span></span><br><span class="line">  <span class="attr">install:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">pre_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">post_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line"><span class="attr">artifacts:</span></span><br><span class="line">  <span class="attr">files:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">file</span> <span class="comment"># 当前目录（输入的根目录）下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/file</span> <span class="comment"># 子目录下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/*</span> <span class="comment"># 子目录下的所有文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">recursive-dir/**/*</span> <span class="comment"># 子目录下的所有文件夹和文件</span></span><br><span class="line">  <span class="attr">discard-paths:</span> <span class="literal">no</span></span><br></pre></td></tr></table></figure>
+<img src="https://s2.loli.net/2021/12/24/27hXaLFyiW1ozZU.png" alt="image-20211224181837734" style="zoom:128%;" />
 
-</li>
-<li><p>构件</p>
+<p><code>buildspec 文件</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment_variables:</span></span><br><span class="line">  <span class="attr">plaintext:</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span>     </span><br><span class="line"><span class="attr">phases:</span></span><br><span class="line">  <span class="attr">install:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">pre_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">post_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line"><span class="attr">artifacts:</span></span><br><span class="line">  <span class="attr">files:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">file</span> <span class="comment"># 当前目录（输入的根目录）下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/file</span> <span class="comment"># 子目录下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/*</span> <span class="comment"># 子目录下的所有文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">recursive-dir/**/*</span> <span class="comment"># 子目录下的所有文件夹和文件</span></span><br><span class="line">  <span class="attr">discard-paths:</span> <span class="literal">no</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">会将构件用 zip 打包后上传到 S3 存储桶。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其他</p>
-</li>
-</ul>
-<p><img src="https://s2.loli.net/2021/12/23/LIWiYRCcK317HMB.png" alt="image-20211223171634918"></p>
+<img src="https://s2.loli.net/2021/12/23/LIWiYRCcK317HMB.png" alt="image-20211223171634918" style="zoom:128%;" />
+
 <p><img src="https://s2.loli.net/2021/12/23/YRwbWDc1tkMUPpv.png" alt="image-20211223171602467"></p>
 <h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/17f8b6582c8a">参考1</a></p>
 <p><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html">aws-s3命令</a></p>
@@ -1012,35 +1001,6 @@
         <tag>android</tag>
         <tag>flutter</tag>
         <tag>dcloud</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>frida</tag>
       </tags>
   </entry>
   <entry>
@@ -1152,6 +1112,35 @@
       </tags>
   </entry>
   <entry>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>frida测试-修改vip</title>
     <url>/2021/02/23/frida_test/</url>
     <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
@@ -1166,6 +1155,32 @@
       <tags>
         <tag>android</tag>
         <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>github无法访问</title>
+    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
+<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
+<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
+<li>Linux 系统：<code>/etc/hosts</code></li>
+<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
+<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
+<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
+</ul>
+<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
+<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
+<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
+<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
+]]></content>
+      <categories>
+        <category>github</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -1265,32 +1280,6 @@
       <tags>
         <tag>gradle</tag>
         <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>github无法访问</title>
-    <url>/2021/03/14/github%E8%AE%BF%E9%97%AE%E6%85%A2or%E6%97%A0%E6%B3%95%E8%AE%BF%E9%97%AE%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每到两会期间，github总是莫名其妙的访问慢，有时候直接无法访问，方法是参考github520大神的，</span><br><span class="line">在此只是做一个备注，以备不时之需。</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><h4 id="复制下面的内容"><a href="#复制下面的内容" class="headerlink" title="复制下面的内容"></a>复制下面的内容</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># GitHub520 Host Start</span></span><br><span class="line">185.199.108.154               github.githubassets.com</span><br><span class="line">140.82.113.22                 central.github.com</span><br><span class="line">185.199.108.133               desktop.githubusercontent.com</span><br><span class="line">185.199.108.153               assets-cdn.github.com</span><br><span class="line">185.199.108.133               camo.githubusercontent.com</span><br><span class="line">185.199.108.133               github.map.fastly.net</span><br><span class="line">199.232.69.194                github.global.ssl.fastly.net</span><br><span class="line">140.82.114.3                  gist.github.com</span><br><span class="line">185.199.108.153               github.io</span><br><span class="line">140.82.112.3                  github.com</span><br><span class="line">140.82.113.6                  api.github.com</span><br><span class="line">185.199.108.133               raw.githubusercontent.com</span><br><span class="line">185.199.108.133               user-images.githubusercontent.com</span><br><span class="line">185.199.108.133               favicons.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars5.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars4.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars3.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars2.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars1.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars0.githubusercontent.com</span><br><span class="line">185.199.108.133               avatars.githubusercontent.com</span><br><span class="line">140.82.113.9                  codeload.github.com</span><br><span class="line">52.217.87.140                 github-cloud.s3.amazonaws.com</span><br><span class="line">52.216.238.99                 github-com.s3.amazonaws.com</span><br><span class="line">52.216.138.163                github-production-release-asset-2e65be.s3.amazonaws.com</span><br><span class="line">52.217.101.68                 github-production-user-asset-6210df.s3.amazonaws.com</span><br><span class="line">52.217.48.84                  github-production-repository-file-5c1aeb.s3.amazonaws.com</span><br><span class="line">185.199.108.153               githubstatus.com</span><br><span class="line">64.71.168.201                 github.community</span><br><span class="line">185.199.108.133               media.githubusercontent.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Update time: 2021-03-17T16:23:14+08:00</span></span><br><span class="line"><span class="comment"># Star me GitHub url: https://github.com/521xueweihan/GitHub520</span></span><br><span class="line"><span class="comment"># GitHub520 Host End</span></span><br></pre></td></tr></table></figure>
-<h4 id="手动修改host文件"><a href="#手动修改host文件" class="headerlink" title="手动修改host文件"></a>手动修改host文件</h4><ul>
-<li>Windows 系统：<code>C:\Windows\System32\drivers\etc\hosts</code></li>
-<li>Linux 系统：<code>/etc/hosts</code></li>
-<li>Mac（苹果电脑）系统：<code>/etc/hosts</code></li>
-<li>Android（安卓）系统：<code>/system/etc/hosts</code></li>
-<li>iPhone（iOS）系统：<code>/etc/hosts</code></li>
-</ul>
-<h4 id="自动模式"><a href="#自动模式" class="headerlink" title="自动模式"></a>自动模式</h4><p>推荐 <a href="https://github.com/oldj/SwitchHosts">SwitchHosts</a> 工具管理 hosts</p>
-<p><img src="https://i.loli.net/2021/03/17/S3VDhs4RgIrbMAE.png" alt="iShot2021-03-17下午06.10.01.png"></p>
-<p><a href="https://github.com/521xueweihan/GitHub520/blob/main/README.md">参考</a></p>
-<p><a href="http://k61.org/cc80e540.html">参考2</a></p>
-]]></content>
-      <categories>
-        <category>github</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -2007,46 +1996,6 @@
       </tags>
   </entry>
   <entry>
-    <title>mysql关于变量记录</title>
-    <url>/2022/02/21/mysql-%E5%8F%98%E9%87%8F%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><h5 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">全局变量	</span><br><span class="line">	服务器每次启动都会为所有的全局变量赋初始值，跨链接有效，但是不能跨重启</span><br><span class="line">会话变量	</span><br><span class="line">	仅仅本次会话有效</span><br></pre></td></tr></table></figure>
-<p><code>变量由系统提供的，不是用户自己定义的，属于服务器层面</code></p>
-<ul>
-<li><p>查看变量 </p>
-<ol>
-<li><code>show variables</code>  默认 <code>session</code></li>
-</ol>
-<p><img src="https://s2.loli.net/2022/03/07/O15Hcx6yCkrAFqt.png" alt="image-20220307163006571"></p>
-<ol start="2">
-<li><code>SHOW GLOBAL VARIABLES</code> 查看全局</li>
-<li><code>SHOW SESSION VARIABLES</code> 查看回话 ，同 1. </li>
-</ol>
-</li>
-</ul>
-<h5 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">用户变量</span><br><span class="line">	针对当前会有有效</span><br><span class="line">局部变量</span><br><span class="line">	仅仅在定义它的begin end中有效</span><br></pre></td></tr></table></figure>
-<ul>
-<li>变量声明、赋值<ol>
-<li><code>SET @userId = &#39;123&#39;</code></li>
-<li><code>SET @userId := &#39;123&#39;</code></li>
-<li><code>SELECT @userId := &#39;123&#39;</code></li>
-<li><code>select 字段 into @变量名 from 表</code></li>
-</ol>
-</li>
-</ul>
-<p><img src="https://s2.loli.net/2022/03/07/mNelT2PoGjwqHZa.png" alt="image-20220307171334362"></p>
-<h5 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h5><ol>
-<li>declare 变量名 类型  declare a int;</li>
-</ol>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/qq_44105778/article/details/86632858?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&utm_relevant_index=1">参考1</a></p>
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>maven-gradle插件备注记录</title>
     <url>/2021/04/21/maven-gradle%E6%8F%92%E4%BB%B6/</url>
     <content><![CDATA[<h5 id="电脑安装maven"><a href="#电脑安装maven" class="headerlink" title="电脑安装maven"></a>电脑安装maven</h5><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">从 Maven 官方地址：http://maven.apache.org/download.cgi 下载最新版的zip包，解压缩后配置环境变量</span><br></pre></td></tr></table></figure>
@@ -2090,6 +2039,109 @@
       </tags>
   </entry>
   <entry>
+    <title>mysql关于变量记录</title>
+    <url>/2022/02/21/mysql-%E5%8F%98%E9%87%8F%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><h5 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">全局变量	</span><br><span class="line">	服务器每次启动都会为所有的全局变量赋初始值，跨链接有效，但是不能跨重启</span><br><span class="line">会话变量	</span><br><span class="line">	仅仅本次会话有效</span><br></pre></td></tr></table></figure>
+<p><code>变量由系统提供的，不是用户自己定义的，属于服务器层面</code></p>
+<ul>
+<li><p>查看变量 </p>
+<ol>
+<li><code>show variables</code>  默认 <code>session</code></li>
+</ol>
+<p><img src="https://s2.loli.net/2022/03/07/O15Hcx6yCkrAFqt.png" alt="image-20220307163006571"></p>
+<ol start="2">
+<li><code>SHOW GLOBAL VARIABLES</code> 查看全局</li>
+<li><code>SHOW SESSION VARIABLES</code> 查看回话 ，同 1. </li>
+</ol>
+</li>
+</ul>
+<h5 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">用户变量</span><br><span class="line">	针对当前会有有效</span><br><span class="line">局部变量</span><br><span class="line">	仅仅在定义它的begin end中有效</span><br></pre></td></tr></table></figure>
+<ul>
+<li>变量声明、赋值<ol>
+<li><code>SET @userId = &#39;123&#39;</code></li>
+<li><code>SET @userId := &#39;123&#39;</code></li>
+<li><code>SELECT @userId := &#39;123&#39;</code></li>
+<li><code>select 字段 into @变量名 from 表</code></li>
+</ol>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/07/mNelT2PoGjwqHZa.png" alt="image-20220307171334362"></p>
+<h5 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h5><ol>
+<li>declare 变量名 类型  declare a int;</li>
+</ol>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/qq_44105778/article/details/86632858?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&utm_relevant_index=1">参考1</a></p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>3大特性5大原则</title>
+    <url>/2021/05/21/object-feature-principle/</url>
+    <content><![CDATA[<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><p><code>封装</code> 隐藏对象的属性和实现细节，仅对外提供公共访问方式，将变化隔离，便于使用，提高复用性和安全性</p>
+<p><code>继承</code> 提高代码复用性；继承是多态的前提</p>
+<p><code>多态</code> 父类或接口定义的引用变量可以指向子类或具体实现类的实例对象。提高了程序的拓展性</p>
+<h5 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h5><p><code>单一职责原则</code> 类的功能要单一，不能包罗万象，跟杂货铺似的</p>
+<p><code>开放封闭原则</code> 一个模块对于拓展是开放的，对于修改是封闭的</p>
+<p><code>里式替换原则</code> 子类可以替换父类出现在父类能够出现的任何地方</p>
+<p><code>依赖倒置原则</code> 高层次的模块不应该依赖于低层次的模块，他们都应该依赖于抽象。抽象不应该依赖于具体实现，具体实现应该依赖于抽象</p>
+<p><code>接口分离原则</code> 设计时采用多个与特定客户类有关的接口比采用一个通用的接口要好</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ul>
+<li>抽象会使复杂的问题更加简单化</li>
+<li>从以前面向过程的执行者，变成了张张嘴的指挥者</li>
+<li>面向对象更符合人类的思维，面向过程则是机器的思想</li>
+</ul>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://segmentfault.com/a/1190000021898422">参考</a></p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python-vscode调试备注</title>
+    <url>/2022/03/21/python-vscode%E8%B0%83%E8%AF%95%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vscode中python代码调试</span><br></pre></td></tr></table></figure>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><h5 id="创建-launch-json文件"><a href="#创建-launch-json文件" class="headerlink" title="创建 launch.json文件"></a>创建 launch.json文件</h5><p><img src="https://s2.loli.net/2022/03/22/pD2T8ynHsXjG9Lw.png" alt="image-20220322103709331"></p>
+<h5 id="调试第三方代码"><a href="#调试第三方代码" class="headerlink" title="调试第三方代码"></a>调试第三方代码</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from great_expectations.data_context.types.base import DataContextConfig</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/03/22/6IVzSQBmW1xojfK.png" alt="image-20220322104246546"></p>
+<p><img src="https://s2.loli.net/2022/03/22/GFHpANsmY3z5h6c.png" alt="image-20220322104154244"></p>
+<p><img src="https://s2.loli.net/2022/03/22/tbDO7zMd3gX1jKU.png" alt="image-20220322104358013"></p>
+<h5 id="launch-json文件"><a href="#launch-json文件" class="headerlink" title="launch.json文件"></a>launch.json文件</h5><p><img src="https://s2.loli.net/2022/03/22/aWgkSzZDcwP9Irv.png" alt="image-20220322104436479"></p>
+<h5 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h5><p><img src="https://s2.loli.net/2022/03/22/Uda7IQ9Vscg3GwN.png" alt="image-20220322104528337"></p>
+<p><img src="https://s2.loli.net/2022/03/22/liy3KnVh7mfNTax.png" alt="image-20220322104631026"></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://zhuanlan.zhihu.com/p/440413830">VsCode justMyCode: false无效</a></p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>vscode</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RecyclerView嵌套滑动</title>
+    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
+<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
+<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>recyclerview</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>okhttp请求记录</title>
     <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<ul>
@@ -2126,69 +2178,6 @@
       <tags>
         <tag>android</tag>
         <tag>okhttp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>3大特性5大原则</title>
-    <url>/2021/05/21/object-feature-principle/</url>
-    <content><![CDATA[<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><p><code>封装</code> 隐藏对象的属性和实现细节，仅对外提供公共访问方式，将变化隔离，便于使用，提高复用性和安全性</p>
-<p><code>继承</code> 提高代码复用性；继承是多态的前提</p>
-<p><code>多态</code> 父类或接口定义的引用变量可以指向子类或具体实现类的实例对象。提高了程序的拓展性</p>
-<h5 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h5><p><code>单一职责原则</code> 类的功能要单一，不能包罗万象，跟杂货铺似的</p>
-<p><code>开放封闭原则</code> 一个模块对于拓展是开放的，对于修改是封闭的</p>
-<p><code>里式替换原则</code> 子类可以替换父类出现在父类能够出现的任何地方</p>
-<p><code>依赖倒置原则</code> 高层次的模块不应该依赖于低层次的模块，他们都应该依赖于抽象。抽象不应该依赖于具体实现，具体实现应该依赖于抽象</p>
-<p><code>接口分离原则</code> 设计时采用多个与特定客户类有关的接口比采用一个通用的接口要好</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ul>
-<li>抽象会使复杂的问题更加简单化</li>
-<li>从以前面向过程的执行者，变成了张张嘴的指挥者</li>
-<li>面向对象更符合人类的思维，面向过程则是机器的思想</li>
-</ul>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://segmentfault.com/a/1190000021898422">参考</a></p>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RecyclerView嵌套滑动</title>
-    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
-<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
-<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>recyclerview</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python-vscode调试备注</title>
-    <url>/2022/03/21/python-vscode%E8%B0%83%E8%AF%95%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vscode中python代码调试</span><br></pre></td></tr></table></figure>
-<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><h5 id="创建-launch-json文件"><a href="#创建-launch-json文件" class="headerlink" title="创建 launch.json文件"></a>创建 launch.json文件</h5><p><img src="https://s2.loli.net/2022/03/22/pD2T8ynHsXjG9Lw.png" alt="image-20220322103709331"></p>
-<h5 id="调试第三方代码"><a href="#调试第三方代码" class="headerlink" title="调试第三方代码"></a>调试第三方代码</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from great_expectations.data_context.types.base import DataContextConfig</span><br></pre></td></tr></table></figure>
-<p><img src="https://s2.loli.net/2022/03/22/6IVzSQBmW1xojfK.png" alt="image-20220322104246546"></p>
-<p><img src="https://s2.loli.net/2022/03/22/GFHpANsmY3z5h6c.png" alt="image-20220322104154244"></p>
-<p><img src="https://s2.loli.net/2022/03/22/tbDO7zMd3gX1jKU.png" alt="image-20220322104358013"></p>
-<h5 id="launch-json文件"><a href="#launch-json文件" class="headerlink" title="launch.json文件"></a>launch.json文件</h5><p><img src="https://s2.loli.net/2022/03/22/aWgkSzZDcwP9Irv.png" alt="image-20220322104436479"></p>
-<h5 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h5><p><img src="https://s2.loli.net/2022/03/22/Uda7IQ9Vscg3GwN.png" alt="image-20220322104528337"></p>
-<p><img src="https://s2.loli.net/2022/03/22/liy3KnVh7mfNTax.png" alt="image-20220322104631026"></p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://zhuanlan.zhihu.com/p/440413830">VsCode justMyCode: false无效</a></p>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>vscode</tag>
-        <tag>python</tag>
       </tags>
   </entry>
   <entry>
