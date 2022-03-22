@@ -1004,6 +1004,52 @@
       </tags>
   </entry>
   <entry>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>es</title>
     <url>/2018/08/27/elasticsearch%E5%A4%87%E6%B3%A8/</url>
     <content><![CDATA[<h4 id="ES介绍"><a href="#ES介绍" class="headerlink" title="ES介绍"></a>ES介绍</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Elasticsearch 是一个分布式的免费开源搜索和分析引擎，适用于包括文本、数字、地理空间、结构化和非结构化数据等在内的所有类型的数据。Elasticsearch 在 Apache Lucene 的基础上开发而成，由 Elasticsearch N.V.（即现在的 Elastic）于 <span class="number">2010</span> 年首次发布，Elasticsearch 以其简单的 REST 风格 API、分布式特性、速度和可扩展性而闻名，可用于多种用例</span><br><span class="line">  - 应用程序搜索、网站搜索、企业搜索</span><br><span class="line">  - 日志处理和分析、安全分析、业务分析</span><br><span class="line">  - 基础设施指标和容器监测、应用程序性能监测</span><br></pre></td></tr></table></figure>
@@ -1109,52 +1155,6 @@
       <tags>
         <tag>java</tag>
         <tag>es</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>frida</tag>
       </tags>
   </entry>
   <entry>
@@ -2161,6 +2161,43 @@
       </categories>
       <tags>
         <tag>vscode</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python备注记录</title>
+    <url>/2022/03/29/python%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h4 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h4><h5 id="函数中【-】和【-】区别"><a href="#函数中【-】和【-】区别" class="headerlink" title="函数中【*】和【**】区别"></a>函数中【*】和【**】区别</h5><p><code>*</code>: 表示接收的参数作为<code>元组</code>来处理</p>
+<p><code>**</code>: 表示接收的参数作为<code>字典</code>来处理</p>
+<p>如果 <code>*</code>和<code>**</code>同时在一个函数参数中使用时，<code>*</code>必须在<code>**</code>之前，否则出错</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># This Python file uses the following encoding: utf-8</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo_args</span>(<span class="params">*args</span>):</span></span><br><span class="line">    print(<span class="string">&quot;args=&quot;</span>, args,<span class="built_in">type</span>(args))</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo_kwargs</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    print(<span class="string">&quot;kwargs=&quot;</span>,kwargs,<span class="built_in">type</span>(kwargs))</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo_args_kwargs</span>(<span class="params">*args,**kwargs</span>):</span></span><br><span class="line">    print(<span class="string">&quot;args=&quot;</span>, args,<span class="built_in">type</span>(args))</span><br><span class="line">    print(<span class="string">&quot;kwargs=&quot;</span>,kwargs,<span class="built_in">type</span>(kwargs))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kw_dict</span>(<span class="params">**kwargs</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;参数创建字典</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: 字典类型</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> kwargs</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    foo_args(<span class="string">&quot;zhangsan&quot;</span>, <span class="number">1</span>, <span class="string">&quot;lisi&quot;</span>)</span><br><span class="line">    print(<span class="string">&quot;=================================================&quot;</span>)</span><br><span class="line">    foo_kwargs(name=<span class="string">&quot;zhangsan&quot;</span>,age=<span class="number">22</span>)</span><br><span class="line">    print(<span class="string">&quot;=================================================&quot;</span>)</span><br><span class="line">    foo_args_kwargs(<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,aa=<span class="string">&quot;1&quot;</span>,bb=<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    print(<span class="string">&quot;=================================================&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    print(kw_dict(province=<span class="string">&quot;jiangsu&quot;</span>,city=<span class="string">&quot;suzhou&quot;</span>,county=<span class="string">&quot;kunshan&quot;</span>))</span><br><span class="line">main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p> <img src="https://s2.loli.net/2022/03/22/z75tTLuC9NfWQVD.png" alt="image-20220322185808091"></p>
+<h5 id="的作用"><a href="#的作用" class="headerlink" title="_的作用"></a>_的作用</h5><p><code>-</code>有4种使用场景</p>
+<ol>
+<li>交互式解释器中保存最后一个表达式的值</li>
+<li>指向被忽略的值</li>
+<li>字面上分割数字</li>
+<li>赋予属性和方法特性含义</li>
+</ol>
+<h6 id="场景1"><a href="#场景1" class="headerlink" title="场景1"></a>场景1</h6><p><img src="https://s2.loli.net/2022/03/22/KAcS4qGVs6zYaIF.png" alt="image-20220322191119337"></p>
+<h6 id="场景2"><a href="#场景2" class="headerlink" title="场景2"></a>场景2</h6><p><img src="https://s2.loli.net/2022/03/22/6RksBAhFH8pTeIv.png" alt="image-20220322192552397"></p>
+<h6 id="场景3"><a href="#场景3" class="headerlink" title="场景3"></a>场景3</h6><p><img src="https://s2.loli.net/2022/03/22/kTBq8CWYp5MyLxN.png" alt="image-20220322192834928"></p>
+<h6 id="场景4"><a href="#场景4" class="headerlink" title="场景4"></a>场景4</h6><ul>
+<li>定义私有的变量，函数，方法，类，在import * 这种引入模式中就不会被引入。</li>
+</ul>
+<h5 id="特殊xx"><a href="#特殊xx" class="headerlink" title="特殊xx"></a>特殊<strong>xx</strong></h5><p><code>__name__</code>:  当前模块名</p>
+<p><code>__name__ == __main__</code>: 表示在当前文件中,此判断可以避免测试代码在模块被导入后执行</p>
+<p><img src="https://s2.loli.net/2022/03/22/x7Qjp3ewU2aMrX8.png" alt="image-20220322193900666"></p>
+<p><code>__file__</code>: 表示当前python脚本的目录地址<br><code>__init__</code>: 表示对象被创建以后，用于初始化<br><code>__new__</code>:   表示对象被创建</p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/vivian_wanjin/article/details/81545878">*和**区别</a></p>
+<p><a href="http://www.coolpython.net/python_senior/senior_feature/underline_effect.html">_和__</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/344951719">魔法函数</a></p>
+<p><a href="https://github.com/jackfrued/Python-100-Days/blob/master/Day01-15/06.%E5%87%BD%E6%95%B0%E5%92%8C%E6%A8%A1%E5%9D%97%E7%9A%84%E4%BD%BF%E7%94%A8.md">变量作用域</a></p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
         <tag>python</tag>
       </tags>
   </entry>
