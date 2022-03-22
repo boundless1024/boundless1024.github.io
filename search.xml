@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>GE-操作备注</title>
+    <url>/2022/03/21/GE%20%E6%93%8D%E4%BD%9C%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h4 id="GE操作备注"><a href="#GE操作备注" class="headerlink" title="GE操作备注"></a>GE操作备注</h4><h5 id="GE介绍"><a href="#GE介绍" class="headerlink" title="GE介绍"></a>GE介绍</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">是专门用于测试数据系统以及创建测试文件的专用工具。Great  Expectations 也可以用于数据分析。Great-Expectations是高度可热插入和可扩展的，并且完全开源。但是，它并不是一个管道执行框架或数据可视化工具</span><br></pre></td></tr></table></figure>
+<h5 id="先决条件"><a href="#先决条件" class="headerlink" title="先决条件"></a>先决条件</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. python环境</span><br><span class="line">2. git相关</span><br></pre></td></tr></table></figure>
+<h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. pip install great_expectations --安装great_expectations</span><br><span class="line">2. great_expectations init  --cli  初始化</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/03/09/ZvSpN4UAtfYQnrL.png" alt="image-20220309163021658"></p>
+<p><img src="https://s2.loli.net/2022/03/09/OmeXtQ1zdZ79E6M.png" alt="image-20220309163116138"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">3. great_expectations datasource new --初始化数据源</span><br><span class="line">选择数据源的连接类型 【文件系统、关系型数据库】</span><br><span class="line">- 文件系统</span><br><span class="line">	1. 选择文件处理方式 【pandas、PySpark】</span><br><span class="line">	2. 文件路径</span><br><span class="line">- 关系型数据库</span><br><span class="line">	1. 数据库类型 【 MySQL、Postgres、Redshift、Snowflake、BigQuery、其他】</span><br><span class="line">	2. 通过提供的web界面配置数据库信息</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/03/09/5pO7h2kAZYl4f6M.png" alt="image-20220309163733471"></p>
+<p><img src="https://s2.loli.net/2022/03/09/dz97I3HivfywCcu.png" alt="image-20220309164013809"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">4. great_expectations suite new  --创建suite ,校验规则</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/03/09/fzrxAFEiGlZgeJC.png" alt="image-20220309164640014"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">5. great_expectations checkpoint new xxxx  -- 校验数据</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/03/09/rc7CW8ybVjZ6Yzs.png" alt="image-20220309193855860"></p>
+<p><img src="https://s2.loli.net/2022/03/09/owvPxlQ21hDRjpd.png" alt="image-20220309194821351"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">6. great_expectations checkpoint run xxx</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/03/09/sWrFiNY36zUEq1a.png" alt="image-20220309195007401"></p>
+<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><ul>
+<li><p>数据源</p>
+<p><img src="https://s2.loli.net/2022/03/10/KTX4fcmSIQJqtCU.png" alt="image-20220310095753247"></p>
+<p><img src="https://s2.loli.net/2022/03/10/EBIieR24n7CGkWS.png" alt="image-20220310095825317"></p>
+</li>
+<li><p>GE </p>
+<p><img src="https://s2.loli.net/2022/03/22/BWQTIEZoUe64ciL.png" alt="image-20220322111028407"></p>
+</li>
+<li><p>校验</p>
+<p><img src="https://s2.loli.net/2022/03/22/vD2h5cbsn4iuAIa.png" alt="image-20220322111206145"></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">核心 data context </span><br></pre></td></tr></table></figure>
+
+
+<h4 id="python-代码"><a href="#python-代码" class="headerlink" title="python 代码"></a>python 代码</h4><ol>
+<li><p>创建 data source </p>
+<p><img src="https://s2.loli.net/2022/03/22/1DGvOICuKxwqQB6.png" alt="image-20220322111506521"></p>
+</li>
+<li><p>创建 data context</p>
+<p><img src="https://s2.loli.net/2022/03/22/IhlS364wia1GFmZ.png" alt="image-20220322111644687"></p>
+</li>
+<li><p>创建 great expectation suite</p>
+<p><img src="https://s2.loli.net/2022/03/22/rPyDpXtq1SsNbWM.png" alt="image-20220322111818400"></p>
+</li>
+<li><p>执行 checkpoint</p>
+<p><img src="https://s2.loli.net/2022/03/22/VI6uaDldyEzYfW1.png" alt="image-20220322112353126"></p>
+</li>
+<li><p>生成报告</p>
+<p><img src="https://s2.loli.net/2022/03/22/alK5VW9h3ITCLEq.png" alt="image-20220322112029750"></p>
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> chain</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Optional</span><br><span class="line"><span class="keyword">from</span> great_expectations.data_context <span class="keyword">import</span> BaseDataContext</span><br><span class="line"><span class="keyword">from</span> great_expectations.core.expectation_configuration <span class="keyword">import</span> ExpectationConfiguration</span><br><span class="line"><span class="keyword">from</span> great_expectations.core.batch <span class="keyword">import</span> RuntimeBatchRequest</span><br><span class="line"><span class="keyword">from</span> great_expectations.data_context.types.base <span class="keyword">import</span> DataContextConfig, DatasourceConfig, S3StoreBackendDefaults</span><br><span class="line"><span class="keyword">from</span> great_expectations.exceptions <span class="keyword">import</span> CheckpointNotFoundError</span><br><span class="line"><span class="keyword">from</span> dq_pkg <span class="keyword">import</span> secret_manager</span><br><span class="line"><span class="comment"># 1.ge配置存储在s3中</span></span><br><span class="line"><span class="comment"># 2.数据源使用mysql</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ==============LOCAL=============</span></span><br><span class="line">DB_HOST = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">DB_PWD = <span class="string">&quot;123456&quot;</span></span><br><span class="line">DB_USER = <span class="string">&quot;root&quot;</span></span><br><span class="line"><span class="comment"># ==============LOCAL=============</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ==============S3===============</span></span><br><span class="line">BUCKET_NAME = <span class="string">&quot;bucket-name&quot;</span></span><br><span class="line">S3_DIR = <span class="string">&quot;ge/&quot;</span></span><br><span class="line">REPORT_BUCKET_NAME = <span class="string">&quot;bucket-name&quot;</span></span><br><span class="line">S3_REPORT_DIR = S3_DIR+<span class="string">&quot;&quot;</span></span><br><span class="line"><span class="comment"># ==============S3===============</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_cfg_datasource</span>(<span class="params">db_name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot; 指定数据源信息</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        db_name (str): _description_</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: _description_</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    con_str = <span class="string">&quot;mysql+pymysql://&quot;</span>+DB_USER+<span class="string">&quot;:&quot;</span>+DB_PWD+<span class="string">&quot;@&quot;</span>+DB_HOST+<span class="string">&quot;:3306/&quot;</span>+db_name</span><br><span class="line">    datasource_config = &#123;</span><br><span class="line">        db_name: DatasourceConfig(</span><br><span class="line">            class_name=<span class="string">&quot;Datasource&quot;</span>,</span><br><span class="line">            execution_engine=&#123;</span><br><span class="line">                <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;SqlAlchemyExecutionEngine&quot;</span>,</span><br><span class="line">                <span class="string">&quot;connection_string&quot;</span>: con_str,</span><br><span class="line">            &#125;,</span><br><span class="line">            data_connectors=&#123;</span><br><span class="line">                <span class="string">&quot;runtime_data_connector&quot;</span>: &#123;</span><br><span class="line">                    <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;RuntimeDataConnector&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;batch_identifiers&quot;</span>: [<span class="string">&quot;default_identifier_name&quot;</span>],</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="string">&quot;inferred_data_connector&quot;</span>: &#123;</span><br><span class="line">                    <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;InferredAssetSqlDataConnector&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;include_schema_name&quot;</span>: <span class="literal">True</span>,</span><br><span class="line">                &#125;,</span><br><span class="line">            &#125;,</span><br><span class="line">        )&#125;</span><br><span class="line">    <span class="keyword">return</span> datasource_config</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_cfg_stores</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;stores信息</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: _description_</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    s3_stores = &#123;</span><br><span class="line">        <span class="string">&quot;expectations_store&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;ExpectationsStore&quot;</span>,</span><br><span class="line">            <span class="string">&quot;store_backend&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;TupleS3StoreBackend&quot;</span>,</span><br><span class="line">                <span class="string">&quot;bucket&quot;</span>: BUCKET_NAME,</span><br><span class="line">                <span class="string">&quot;prefix&quot;</span>: S3_DIR+<span class="string">&quot;expectations&quot;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;validations_store&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;ValidationsStore&quot;</span>,</span><br><span class="line">            <span class="string">&quot;store_backend&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;TupleS3StoreBackend&quot;</span>,</span><br><span class="line">                <span class="string">&quot;bucket&quot;</span>: BUCKET_NAME,</span><br><span class="line">                <span class="string">&quot;prefix&quot;</span>: S3_DIR+<span class="string">&quot;validations&quot;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;checkpoint_store&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;CheckpointStore&quot;</span>,</span><br><span class="line">            <span class="string">&quot;store_backend&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;TupleS3StoreBackend&quot;</span>,</span><br><span class="line">                <span class="string">&quot;bucket&quot;</span>: BUCKET_NAME,</span><br><span class="line">                <span class="string">&quot;prefix&quot;</span>: S3_DIR+<span class="string">&quot;checkpoints&quot;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;evaluation_parameter_store&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;EvaluationParameterStore&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> s3_stores</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_cfg_data_doc</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;生成文档存储信息</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: _description_</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    s3_data_docs_sites = &#123;</span><br><span class="line">        <span class="string">&quot;s3_site&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;SiteBuilder&quot;</span>,</span><br><span class="line">            <span class="string">&quot;store_backend&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;TupleS3StoreBackend&quot;</span>,</span><br><span class="line">                <span class="string">&quot;bucket&quot;</span>:  REPORT_BUCKET_NAME,</span><br><span class="line">                <span class="string">&quot;prefix&quot;</span>:  S3_REPORT_DIR,</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;site_index_builder&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;DefaultSiteIndexBuilder&quot;</span>,</span><br><span class="line">                <span class="string">&quot;show_cta_footer&quot;</span>: <span class="literal">True</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> s3_data_docs_sites</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_cfg_validation_operators</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;validation后的操作</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: _description_</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    validation_operators = &#123;</span><br><span class="line">        <span class="string">&quot;action_list_operator&quot;</span>: &#123;</span><br><span class="line">            <span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;ActionListValidationOperator&quot;</span>,</span><br><span class="line">            <span class="string">&quot;action_list&quot;</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;store_validation_result&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;action&quot;</span>: &#123;<span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;StoreValidationResultAction&quot;</span>&#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;store_evaluation_params&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;action&quot;</span>: &#123;<span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;StoreEvaluationParametersAction&quot;</span>&#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;update_data_docs&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;action&quot;</span>: &#123;<span class="string">&quot;class_name&quot;</span>: <span class="string">&quot;UpdateDataDocsAction&quot;</span>&#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">            ],</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> validation_operators</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_cfg_store_backend</span>():</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;目录存储地方</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: _description_</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    s3_store_backend = S3StoreBackendDefaults(default_bucket_name=BUCKET_NAME)</span><br><span class="line">    <span class="keyword">return</span> s3_store_backend</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_cfg_data_context</span>(<span class="params">db_name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;配置 data_context</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        db_name (str): dbname </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: data_context</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    data_context_config = DataContextConfig(</span><br><span class="line">        config_version=<span class="number">2</span>,</span><br><span class="line">        plugins_directory=<span class="literal">None</span>,</span><br><span class="line">        config_variables_file_path=<span class="literal">None</span>,</span><br><span class="line">        stores=_cfg_stores(),</span><br><span class="line">        expectations_store_name=<span class="string">&quot;expectations_store&quot;</span>,</span><br><span class="line">        validations_store_name=<span class="string">&quot;validations_store&quot;</span>,</span><br><span class="line">        checkpoint_store_name=<span class="string">&quot;checkpoint_store&quot;</span>,</span><br><span class="line">        evaluation_parameter_store_name=<span class="string">&quot;evaluation_parameter_store&quot;</span>,</span><br><span class="line">        data_docs_sites=_cfg_data_doc(),</span><br><span class="line">        datasources=_cfg_datasource(db_name=db_name),</span><br><span class="line">        validation_operators=_cfg_validation_operators(),</span><br><span class="line">        store_backend_defaults=_cfg_store_backend(),</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> BaseDataContext(project_config=data_context_config)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_exec_run</span>(<span class="params">data_context: BaseDataContext, db_name: <span class="built_in">str</span>, cp_name: <span class="built_in">str</span>, suite_name: Optional[<span class="built_in">str</span>] = <span class="literal">None</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;执行 checkpoint</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        data_context (BaseDataContext): _description_</span></span><br><span class="line"><span class="string">        db_name (str): _description_</span></span><br><span class="line"><span class="string">        cp_name (str): _description_</span></span><br><span class="line"><span class="string">        suite_name (Optional[str], optional): _description_. Defaults to None.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: _description_</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        checkpoint = data_context.get_checkpoint(name=cp_name)</span><br><span class="line">        validations = checkpoint.validations</span><br><span class="line">        filter_validations = <span class="built_in">list</span>()</span><br><span class="line">        <span class="keyword">for</span> validator <span class="keyword">in</span> validations:</span><br><span class="line">            <span class="keyword">if</span> db_name == validator[<span class="string">&#x27;batch_request&#x27;</span>][<span class="string">&#x27;datasource_name&#x27;</span>]:</span><br><span class="line">                filter_validations.append(validator)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                checkpoint.validations.remove(validator)</span><br><span class="line">        result = checkpoint.run(expectation_suite_name=suite_name,</span><br><span class="line">                                run_name_template=<span class="string">&quot;%Y-%m-%d-%H-%M-%S-checkpoint&quot;</span>)</span><br><span class="line">        print(<span class="built_in">str</span>(result))</span><br><span class="line">        <span class="keyword">return</span> result.success</span><br><span class="line">    <span class="keyword">except</span> CheckpointNotFoundError:</span><br><span class="line">        print(<span class="string">&quot;给定的【&quot;</span> + cp_name + <span class="string">&quot;】没有找到&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_in_set</span>(<span class="params">db_name: <span class="built_in">str</span>, sql: <span class="built_in">str</span>, column: <span class="built_in">str</span>, cp_name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;check column need to be in set </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        db_name (str): db_name</span></span><br><span class="line"><span class="string">        sql (str): in set sql </span></span><br><span class="line"><span class="string">        column (str): column</span></span><br><span class="line"><span class="string">        cp_name (str): cp_name</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    context = _cfg_data_context(db_name=db_name)</span><br><span class="line">    suite_name = db_name+<span class="string">&quot;_&quot;</span>+column+<span class="string">&quot;_&quot;</span>+<span class="string">&quot;to_be_in_set_suite&quot;</span></span><br><span class="line">    suite = context.create_expectation_suite(</span><br><span class="line">        expectation_suite_name=suite_name, overwrite_existing=<span class="literal">True</span>)</span><br><span class="line">    validator = context.get_validator(</span><br><span class="line">        batch_request=RuntimeBatchRequest(</span><br><span class="line">            datasource_name=db_name,</span><br><span class="line">            data_connector_name=<span class="string">&quot;runtime_data_connector&quot;</span>,</span><br><span class="line">            data_asset_name=<span class="string">&quot;&quot;</span>+db_name+<span class="string">&quot;-&quot;</span>+sql+<span class="string">&quot;-&quot;</span>+column+<span class="string">&quot;-&quot;</span>+cp_name,</span><br><span class="line">            runtime_parameters=&#123;</span><br><span class="line">                <span class="string">&quot;query&quot;</span>: sql</span><br><span class="line">            &#125;,</span><br><span class="line">            batch_identifiers=&#123;</span><br><span class="line">                <span class="string">&quot;default_identifier_name&quot;</span>: <span class="string">&quot;default_identifier&quot;</span>&#125;,</span><br><span class="line">        ),</span><br><span class="line">        expectation_suite_name=suite.expectation_suite_name</span><br><span class="line">    )</span><br><span class="line">    data = validator.head(fetch_all=<span class="literal">True</span>).values.tolist()</span><br><span class="line">    data_list = <span class="built_in">list</span>(chain.from_iterable(data))</span><br><span class="line">    expectation_configuration_not_null = ExpectationConfiguration(</span><br><span class="line">        expectation_type=<span class="string">&quot;expect_column_values_to_be_in_set&quot;</span>,</span><br><span class="line">        kwargs=&#123;</span><br><span class="line">            <span class="string">&quot;column&quot;</span>: column,</span><br><span class="line">            <span class="string">&quot;mostly&quot;</span>: <span class="number">1.0</span>,</span><br><span class="line">            <span class="string">&quot;value_set&quot;</span>: data_list,</span><br><span class="line">        &#125;,</span><br><span class="line">        meta=&#123;<span class="string">&quot;notes&quot;</span>: <span class="string">&quot;期望&quot;</span> + column + <span class="string">&quot;字段数据在 &quot;</span>+<span class="built_in">str</span>(data_list) + <span class="string">&quot;中&quot;</span>&#125;</span><br><span class="line">    )</span><br><span class="line">    suite.add_expectation(</span><br><span class="line">        expectation_configuration=expectation_configuration_not_null)</span><br><span class="line">    context.save_expectation_suite(suite, overwrite_existing=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> _exec_run(data_context=context, db_name=db_name, cp_name=cp_name, suite_name=suite_name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_row_count_equal</span>(<span class="params">db_name: <span class="built_in">str</span>, sql: <span class="built_in">str</span>, cp_name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;expect_table_row_count_to_equal</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        db_name (str): _description_</span></span><br><span class="line"><span class="string">        sql (str): _description_</span></span><br><span class="line"><span class="string">        column (str): _description_</span></span><br><span class="line"><span class="string">        cp_name (str): _description_</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: _description_</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    context = _cfg_data_context(db_name=db_name)</span><br><span class="line">    suite_name = db_name+<span class="string">&quot;_&quot;</span>+<span class="string">&quot;row_count_to_equal_suite&quot;</span></span><br><span class="line">    suite = context.create_expectation_suite(</span><br><span class="line">        expectation_suite_name=suite_name, overwrite_existing=<span class="literal">True</span>)</span><br><span class="line">    validator = context.get_validator(</span><br><span class="line">        batch_request=RuntimeBatchRequest(</span><br><span class="line">            datasource_name=db_name,</span><br><span class="line">            data_connector_name=<span class="string">&quot;runtime_data_connector&quot;</span>,</span><br><span class="line">            data_asset_name=<span class="string">&quot;&quot;</span>+db_name+<span class="string">&quot;-&quot;</span>+sql+<span class="string">&quot;-&quot;</span>+cp_name,</span><br><span class="line">            runtime_parameters=&#123;</span><br><span class="line">                <span class="string">&quot;query&quot;</span>: sql</span><br><span class="line">            &#125;,</span><br><span class="line">            batch_identifiers=&#123;</span><br><span class="line">                <span class="string">&quot;default_identifier_name&quot;</span>: <span class="string">&quot;default_identifier&quot;</span>&#125;,</span><br><span class="line">        ),</span><br><span class="line">        expectation_suite_name=suite.expectation_suite_name</span><br><span class="line">    )</span><br><span class="line">    data = validator.head(fetch_all=<span class="literal">True</span>).values.tolist()</span><br><span class="line">    data_list = <span class="built_in">list</span>(chain.from_iterable(data))</span><br><span class="line">    expectation_configuration_not_null = ExpectationConfiguration(</span><br><span class="line">        expectation_type=<span class="string">&quot;expect_table_row_count_to_equal&quot;</span>,</span><br><span class="line">        kwargs=&#123;</span><br><span class="line">            <span class="string">&quot;value&quot;</span>: data_list[<span class="number">0</span>],</span><br><span class="line">        &#125;,</span><br><span class="line">        meta=&#123;<span class="string">&quot;notes&quot;</span>: <span class="string">&quot;期望表中的数据记录总数 = &quot;</span>+<span class="built_in">str</span>(data_list[<span class="number">0</span>])&#125;</span><br><span class="line">    )</span><br><span class="line">    suite.add_expectation(</span><br><span class="line">        expectation_configuration=expectation_configuration_not_null)</span><br><span class="line">    context.save_expectation_suite(suite, overwrite_existing=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">return</span> _exec_run(data_context=context, db_name=db_name, cp_name=cp_name, suite_name=suite_name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_checkpoint</span>(<span class="params">db_name: <span class="built_in">str</span>, cp_name: <span class="built_in">str</span>, suite_name: Optional[<span class="built_in">str</span>] = <span class="literal">None</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;执行一个checkpoint </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        db_name (str):  数据库名称</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: 返回成功[True]、失败[False]</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    context = _cfg_data_context(db_name=db_name)</span><br><span class="line">    <span class="keyword">return</span> _exec_run(data_context=context, db_name=db_name, cp_name=cp_name, suite_name=suite_name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_report_html</span>(<span class="params">db_name: <span class="built_in">str</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;生成html报告</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        _type_: html路径</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    context = _cfg_data_context(db_name=db_name)</span><br><span class="line">    <span class="keyword">if</span> context <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        data_doc = context.build_data_docs()</span><br><span class="line">        print(<span class="string">&quot;s3_html = &quot;</span> + data_doc[<span class="string">&#x27;s3_site&#x27;</span>])</span><br><span class="line">        <span class="keyword">return</span> data_doc[<span class="string">&#x27;s3_site&#x27;</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">&quot;执行【gen_report_html】方法之前，请先进行run_checkpoint操作&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="GE-cli-执行"><a href="#GE-cli-执行" class="headerlink" title="GE cli 执行"></a>GE cli 执行</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1. ge init </span><br><span class="line">2. ge datasource new </span><br><span class="line">3. ge suite new </span><br><span class="line">4. ge checkpoint new xxx</span><br><span class="line">5. ge checkpoint run xxx</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ol>
+<li><a href="https://www.infoq.cn/article/sarxmxaovhdfk5d7ylmo">25 个流行的数据工具以及他们的短板</a></li>
+<li><a href="https://legacy.docs.greatexpectations.io/en/latest/guides/tutorials/getting_started_v3_api/connect_to_data.html">文档参考</a></li>
+<li><a href="https://legacy.docs.greatexpectations.io/en/latest/guides/tutorials/getting_started_v3_api/customize_your_deployment.html">文档参考2</a></li>
+<li><a href="https://greatexpectations.io/expectations/">校验规则</a></li>
+<li><a href="https://www.51cto.com/article/694908.html">值得拥有的五大数据质量工具</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>ge</category>
+      </categories>
+      <tags>
+        <tag>ge</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>adb命令相关记录</title>
     <url>/2020/01/01/adb%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h5 id="设备相关"><a href="#设备相关" class="headerlink" title="设备相关"></a>设备相关</h5><ul>
@@ -96,29 +165,6 @@
       <tags>
         <tag>android</tag>
         <tag>adb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Binder</title>
-    <url>/2021/07/03/android-binder/</url>
-    <content><![CDATA[<h4 id="什么是Binder"><a href="#什么是Binder" class="headerlink" title="什么是Binder"></a>什么是Binder</h4><p><code>android.os.Binder</code> 一个实现了IBinder接口的类，Binder是Android中的一种跨进程通信方式，Binder是ServiceManager连接各种Manager和相应ManagerService的桥梁，Binder是客户端和服务端进行通信的媒介，当bindService的时候，服务端会返回一个Binder对象，通过这个Binder对象，客户端就可以获取服务端提供的服务或者数据</p>
-<h4 id="为什么使用Binder"><a href="#为什么使用Binder" class="headerlink" title="为什么使用Binder"></a>为什么使用Binder</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Linux中的IPC方式有管道、信号量、共享内存、消息队列、Socket，Android使用的Binder机制不属于Linux。</span><br><span class="line">Binder以C/S架构的通信方式,Linux的五种IPC机制中，只有Socket支持这种通信方式。</span><br><span class="line">  <span class="number">1.</span> 传输性能上说</span><br><span class="line">Socket作为一款通用接口，其传输效率低，开销大，主要用在跨网络的进程间通信和本机上进程间的低速通信；消息队列和管道采用存储-转发方式，即数据先从发送方拷贝到内存开辟的缓存区中，然后再从内核缓存区拷贝到接收方缓存区，至少有两次拷贝过程；共享内存虽然无需拷贝，但控制复杂，难以使用；Binder只需要拷贝一次；</span><br><span class="line">	<span class="number">2.</span> 安全性上说</span><br><span class="line">  Linux传统的IPC没有任何安全措施，完全依赖上层协议来确保，传统IPC的接收方无法获得对方可靠的UID/PID，无法鉴别对方身份，使用传统IPC时只能由用户在数据包里填入UID/PID，但这样不可靠，容易被恶意程序利用。传统IPC的访问接入点是开放的，无法建立私有通信，只要知道这些接入点的程序都可以和对端建立连接，这样无法阻止恶意程序通过猜测接收方的地址获得连接。</span><br><span class="line">  </span><br><span class="line">Binder是一种基于Client-Server通信模式的通信方式，传输过程只需要一次拷贝，可以为发送方添加UID/PID身份，支持实名Binder和匿名Binder，安全性高。</span><br></pre></td></tr></table></figure>
-<h4 id="Binder的组成"><a href="#Binder的组成" class="headerlink" title="Binder的组成"></a>Binder的组成</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Binder由四部分组成：Binder客户端、Binder服务端、Binder驱动、服务登记查询模块。</span><br><span class="line">客户端先通过Binder拿到一个服务端进程中的一个对象的引用，通过这个引用，直接调用对象的方法获取结果。在这个引用对象执行方法时，它是先将方法调用的请求传给Binder驱动；然后Binder驱动再将请求传给服务端进程；服务端进程收到请求后，调用服务端“真正”的对象来执行所调用的方法；得出结果后，将结果发给Binder驱动；Binder驱动再将结果发给我们的客户端；最终，我们在客户端进程的调用就有了返回值。Binder驱动，相当于一个中转者的角色。通过这个中转者的帮忙，我们就可以调用其它进程中的对象。</span><br><span class="line">Service Manager（服务登记查询模块）</span><br><span class="line">我们调用其它进程里面的对象时，首先要获取这个对象。这个对象其实代表了另外一个进程能给我们提供什么样的服务（再直接一点，就是：对象中有哪些方法可以让客户端进程调用）。首先服务端进程要在某个地方注册登记一下，告诉系统我有个对象可以公开给其它进程来提供服务。当客户端进程需要这个服务时，就去这个登记的地方通过查询来找到这个对象。</span><br></pre></td></tr></table></figure>
-<h4 id="Binder工作流程"><a href="#Binder工作流程" class="headerlink" title="Binder工作流程"></a>Binder工作流程</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">假设：客户端的程序Client运行在进程A中，服务端的程序Server运行在进程B中。</span><br><span class="line">由于进程的隔离性，Client不能读写Server中的内容，但内核可以，而Binder驱动就是运行在内核态，因此Binder驱动帮我们进行请求的中转。</span><br><span class="line">有了Binder驱动，Client和Server之间就可以打交道了，但是为了实现功能的单一性，我们为Client和Server分别设置一个代理：Client的代理Proxy和Server的代理Stub。这样，由进程A中的Proxy和进程B中的Stub通过Binder驱动进行数据交流，Server和Client直接调用Stub和Proxy的接口返回数据即可。</span><br><span class="line">此时，Client直接调用Proxy这个聚合了Binder的类，我们可以使用一系列的Manager来屏蔽掉Binder的实现细节，Client直接调用Manager中的方法获取数据，这样做的好处是Client不需要知道Binder具体怎么工作。</span><br><span class="line">最后还有一个问题，就是Client想要获得的服务多种多样，那么它是怎么获取Proxy或Manager的呢？答案是通过Service Manager进程来获取的。Service Manager总是第一个启动的服务，其他服务端进程启动后，可以在Service Manager中注册，这样Client就可以通过Service Manager来获取服务器的服务列表，进而选择具体调用的服务器进程方法。</span><br></pre></td></tr></table></figure>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.boundless1024.robot.binder</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Intent</span><br><span class="line"><span class="keyword">import</span> android.os.*</span><br><span class="line"><span class="keyword">import</span> androidx.lifecycle.LifecycleService</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 说明：//TODO</span></span><br><span class="line"><span class="comment"> * 文件名称：ProxyStub.kt</span></span><br><span class="line"><span class="comment"> * 创建者: hallo</span></span><br><span class="line"><span class="comment"> * 邮箱: hallo<span class="doctag">@xxx</span>.xx</span></span><br><span class="line"><span class="comment"> * 时间: 2021/7/6 4:55 下午</span></span><br><span class="line"><span class="comment"> * 版本：V1.0.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String?) :Parcelable &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(parcel: Parcel) : <span class="keyword">this</span>(parcel.readString()) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">writeToParcel</span><span class="params">(parcel: <span class="type">Parcel</span>, flags: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        parcel.writeString(name)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">describeContents</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> CREATOR : Parcelable.Creator&lt;Person&gt; &#123;</span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">createFromParcel</span><span class="params">(parcel: <span class="type">Parcel</span>)</span></span>: Person &#123;</span><br><span class="line">            <span class="keyword">return</span> Person(parcel)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">newArray</span><span class="params">(size: <span class="type">Int</span>)</span></span>: Array&lt;Person?&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> arrayOfNulls(size)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span>  <span class="string">&quot;【 name = <span class="variable">$name</span> 】&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">PersonManager</span> :<span class="type">IInterface &#123;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinderService</span> : <span class="type">LifecycleService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> stub = <span class="keyword">object</span> : Stub() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span> &#123;</span><br><span class="line">            println(<span class="string">&quot;BinderService printPerson person <span class="variable">$person</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBind</span><span class="params">(intent: <span class="type">Intent</span>)</span></span>: IBinder? &#123;</span><br><span class="line">        <span class="keyword">super</span>.onBind(intent)</span><br><span class="line">        stub.attachInterface(stub,Stub.DESCRIPTOR)</span><br><span class="line">        <span class="keyword">return</span> stub</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Proxy</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> binder: IBinder?) : PersonManager &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span> &#123;</span><br><span class="line">        println(<span class="string">&quot;Proxy printPerson person <span class="variable">$person</span> <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">val</span> <span class="keyword">data</span> = Parcel.obtain()</span><br><span class="line">        <span class="keyword">val</span> replay = Parcel.obtain()</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">data</span>.writeInterfaceToken(Stub.DESCRIPTOR)</span><br><span class="line">            <span class="keyword">if</span> (person != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">data</span>.writeInt(<span class="number">1</span>);</span><br><span class="line">                person.writeToParcel(<span class="keyword">data</span>, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">data</span>.writeInt(<span class="number">0</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            println(<span class="string">&quot;Proxy transact person <span class="variable">$person</span> <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">            binder?.transact(Stub.TRANSACTION_PRINT_PERSON, <span class="keyword">data</span>, replay, <span class="number">0</span>);</span><br><span class="line">            replay.readException()</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: RemoteException) &#123;</span><br><span class="line">            e.printStackTrace()</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            replay.recycle()</span><br><span class="line">            <span class="keyword">data</span>.recycle()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">asBinder</span><span class="params">()</span></span>: IBinder? = <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Stub</span> : <span class="type">Binder</span></span>(), PersonManager &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">val</span> DESCRIPTOR = <span class="string">&quot;com.boundless1024.robot.binder.Stub&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">val</span> TRANSACTION_PRINT_PERSON = IBinder.FIRST_CALL_TRANSACTION + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">asInterface</span><span class="params">(iBinder: <span class="type">IBinder</span>?)</span></span>: PersonManager &#123;</span><br><span class="line">            <span class="comment">//同一个进程，interfaceObj为StubBinder , 如果不是同一个进程  interfaceObj为null</span></span><br><span class="line">            <span class="keyword">val</span> interfaceObj: IInterface? = iBinder?.queryLocalInterface(DESCRIPTOR)</span><br><span class="line">            println(<span class="string">&quot;StubBinder asInterface interfaceObj <span class="variable">$interfaceObj</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">if</span> (<span class="literal">null</span> != interfaceObj &amp;&amp; interfaceObj <span class="keyword">is</span> PersonManager) &#123;</span><br><span class="line">                interfaceObj <span class="keyword">as</span> PersonManager</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Proxy(iBinder)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">asBinder</span><span class="params">()</span></span>: IBinder = <span class="keyword">this</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onTransact</span><span class="params">(code: <span class="type">Int</span>, <span class="keyword">data</span>: <span class="type">Parcel</span>, reply: <span class="type">Parcel</span>?, flags: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">when</span> (code) &#123;</span><br><span class="line">            INTERFACE_TRANSACTION -&gt; &#123;</span><br><span class="line">                reply?.writeString(<span class="string">&quot;&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">            TRANSACTION_PRINT_PERSON -&gt; &#123;</span><br><span class="line">                println(<span class="string">&quot;Stub onTransact data <span class="variable">$data</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">                <span class="keyword">data</span>.enforceInterface(DESCRIPTOR);</span><br><span class="line">                <span class="keyword">var</span> arg0: Person? = <span class="literal">null</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">data</span>.readInt() != <span class="number">0</span>) &#123;</span><br><span class="line">                    arg0 = Person.createFromParcel(<span class="keyword">data</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">this</span>.printPerson(arg0!!)</span><br><span class="line">                reply?.writeNoException()</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, <span class="keyword">data</span>, reply, flags)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: BinderService服务绑定连接成功 com.boundless1024.robot.binder.BinderService$stub$1@2364a5c  21185</span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: StubBinder asInterface interfaceObj com.boundless1024.robot.binder.BinderService$stub$1@2364a5c  21185</span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: BinderService printPerson person 【 name = LEO 】  21185</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">android:process=&quot;:push&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.110 21186-21186/com.boundless1024.robot I/System.out: BinderService服务绑定连接成功 android.os.BinderProxy<span class="doctag">@ab</span>63dde  21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.110 21186-21186/com.boundless1024.robot I/System.out: StubBinder asInterface interfaceObj null  21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.111 21186-21186/com.boundless1024.robot I/System.out: Proxy printPerson person 【 name = LEO 】 21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.111 21186-21186/com.boundless1024.robot I/System.out: Proxy transact person 【 name = LEO 】 21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.112 21187-22346/com.boundless1024.robot I/System.out: Stub onTransact data android.os.Parcel@6f5c501  21187</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.113 21187-22346/com.boundless1024.robot I/System.out: BinderService printPerson person 【 name = LEO 】  21187</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.huaweicloud.com/articles/bf23e373e2603558e1f5068b29fc44f2.html">参考1</a></p>
-<p><a href="https://juejin.cn/post/6844903764986462221#:~:text=Binder%E6%98%AF%E5%9F%BA%E4%BA%8EC%2FS,Server%E4%B8%AD%E6%8F%90%E4%BE%9B%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%8C">参考2</a></p>
-<p><a href="https://blog.csdn.net/carson_ho/article/details/73560642">参考3</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -300,6 +346,198 @@
       <tags>
         <tag>android</tag>
         <tag>library</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android跳转到Setting界面Action</title>
+    <url>/2021/03/14/android-%E8%B7%B3%E8%BD%AC-settings%E7%95%8C%E9%9D%A2-intent/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">跳转到Android系统界面的action收集。</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Action列表"><a href="#Action列表" class="headerlink" title="Action列表"></a>Action列表</h3><table>
+<thead>
+<tr>
+<th>action</th>
+<th>界面</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ACTION_SETTINGS</td>
+<td>系统设置界面</td>
+</tr>
+<tr>
+<td>ACTION_APN_SETTINGS</td>
+<td>APN设置界面</td>
+</tr>
+<tr>
+<td>ACTION_LOCATION_SOURCE_SETTINGS</td>
+<td>定位设置界面</td>
+</tr>
+<tr>
+<td>ACTION_AIRPLANE_MODE_SETTINGS</td>
+<td>更多连接方式设置界面</td>
+</tr>
+<tr>
+<td>ACTION_DATA_ROAMING_SETTINGS</td>
+<td>双卡和移动网络设置界面</td>
+</tr>
+<tr>
+<td>ACTION_ACCESSIBILITY_SETTINGS</td>
+<td>无障碍设置界面/辅助功能界面</td>
+</tr>
+<tr>
+<td>ACTION_SYNC_SETTINGS</td>
+<td>同步设置界面</td>
+</tr>
+<tr>
+<td>ACTION_ADD_ACCOUNT</td>
+<td>添加账户界面</td>
+</tr>
+<tr>
+<td>ACTION_NETWORK_OPERATOR_SETTINGS</td>
+<td>选取运营商的界面</td>
+</tr>
+<tr>
+<td>ACTION_SECURITY_SETTINGS</td>
+<td>安全设置界面</td>
+</tr>
+<tr>
+<td>ACTION_PRIVACY_SETTINGS</td>
+<td>备份重置设置界面</td>
+</tr>
+<tr>
+<td>ACTION_VPN_SETTINGS</td>
+<td>VPN设置界面,可能不存在</td>
+</tr>
+<tr>
+<td>ACTION_WIFI_SETTINGS</td>
+<td>无线网设置界面</td>
+</tr>
+<tr>
+<td>ACTION_WIFI_IP_SETTINGS</td>
+<td>WIFI的IP设置</td>
+</tr>
+<tr>
+<td>ACTION_BLUETOOTH_SETTINGS</td>
+<td>蓝牙设置</td>
+</tr>
+<tr>
+<td>ACTION_CAST_SETTINGS</td>
+<td>投射设置</td>
+</tr>
+<tr>
+<td>ACTION_DATE_SETTINGS</td>
+<td>日期时间设置</td>
+</tr>
+<tr>
+<td>ACTION_SOUND_SETTINGS</td>
+<td>声音设置</td>
+</tr>
+<tr>
+<td>ACTION_DISPLAY_SETTINGS</td>
+<td>显示设置</td>
+</tr>
+<tr>
+<td>ACTION_LOCALE_SETTINGS</td>
+<td>语言设置</td>
+</tr>
+<tr>
+<td>ACTION_VOICE_INPUT_SETTINGS</td>
+<td>辅助应用和语音输入设置</td>
+</tr>
+<tr>
+<td>ACTION_INPUT_METHOD_SETTINGS</td>
+<td>语言和输入法设置</td>
+</tr>
+<tr>
+<td>ACTION_USER_DICTIONARY_SETTINGS</td>
+<td>个人字典设置界面</td>
+</tr>
+<tr>
+<td>ACTION_INTERNAL_STORAGE_SETTINGS</td>
+<td>存储空间设置的界面</td>
+</tr>
+<tr>
+<td>ACTION_SEARCH_SETTINGS</td>
+<td>搜索设置界面</td>
+</tr>
+<tr>
+<td>ACTION_APPLICATION_DEVELOPMENT_SETTINGS</td>
+<td>开发者选项</td>
+</tr>
+<tr>
+<td>ACTION_DEVICE_INFO_SETTINGS</td>
+<td>手机状态信息的界面</td>
+</tr>
+<tr>
+<td>ACTION_DREAM_SETTINGS</td>
+<td>互动屏保设置的界面</td>
+</tr>
+<tr>
+<td>ACTION_NOTIFICATION_LISTENER_SETTINGS</td>
+<td>通知使用权设置的界面</td>
+</tr>
+<tr>
+<td>ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS</td>
+<td>勿扰权限设置的界面</td>
+</tr>
+<tr>
+<td>ACTION_CAPTIONING_SETTINGS</td>
+<td>字幕设置的界面</td>
+</tr>
+<tr>
+<td>ACTION_PRINT_SETTINGS</td>
+<td>打印设置界面</td>
+</tr>
+<tr>
+<td>ACTION_BATTERY_SAVER_SETTINGS</td>
+<td>节电助手界面</td>
+</tr>
+<tr>
+<td>ACTION_HOME_SETTINGS</td>
+<td>主屏幕设置界面</td>
+</tr>
+<tr>
+<td>ACTION_APPLICATION_DETAILS_SETTINGS</td>
+<td>根据包名跳转到系统自带的应用程序信息</td>
+</tr>
+<tr>
+<td>ACTION_APPLICATION_SETTINGS</td>
+<td>应用程序列表</td>
+</tr>
+<tr>
+<td>ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS</td>
+<td>应用程序界面【所有的】</td>
+</tr>
+<tr>
+<td>ACTION_MANAGE_APPLICATIONS_SETTINGS</td>
+<td>应用程序列表界面【已安装的】</td>
+</tr>
+<tr>
+<td>ACTION_INPUT_METHOD_SUBTYPE_SETTINGS</td>
+<td>【API 11及以上】语言选择界面 【多国语言选择】</td>
+</tr>
+<tr>
+<td>ACTION_NFCSHARING_SETTINGS</td>
+<td>显示NFC共享设置【API 14及以上】</td>
+</tr>
+<tr>
+<td>ACTION_NFC_SETTINGS</td>
+<td>显示NFC设置【API 16及以上】</td>
+</tr>
+<tr>
+<td>ACTION_QUICK_LAUNCH_SETTINGS</td>
+<td>快速启动设置界面</td>
+</tr>
+</tbody></table>
+<h3 id="样例代码"><a href="#样例代码" class="headerlink" title="样例代码"></a>样例代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);</span><br><span class="line">intent.setData(Uri.parse(requireActivity().getPackageName()));</span><br><span class="line">requireActivity().startActivity(intent);</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>intent</tag>
       </tags>
   </entry>
   <entry>
@@ -502,245 +740,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Android跳转到Setting界面Action</title>
-    <url>/2021/03/14/android-%E8%B7%B3%E8%BD%AC-settings%E7%95%8C%E9%9D%A2-intent/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">跳转到Android系统界面的action收集。</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="Action列表"><a href="#Action列表" class="headerlink" title="Action列表"></a>Action列表</h3><table>
-<thead>
-<tr>
-<th>action</th>
-<th>界面</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ACTION_SETTINGS</td>
-<td>系统设置界面</td>
-</tr>
-<tr>
-<td>ACTION_APN_SETTINGS</td>
-<td>APN设置界面</td>
-</tr>
-<tr>
-<td>ACTION_LOCATION_SOURCE_SETTINGS</td>
-<td>定位设置界面</td>
-</tr>
-<tr>
-<td>ACTION_AIRPLANE_MODE_SETTINGS</td>
-<td>更多连接方式设置界面</td>
-</tr>
-<tr>
-<td>ACTION_DATA_ROAMING_SETTINGS</td>
-<td>双卡和移动网络设置界面</td>
-</tr>
-<tr>
-<td>ACTION_ACCESSIBILITY_SETTINGS</td>
-<td>无障碍设置界面/辅助功能界面</td>
-</tr>
-<tr>
-<td>ACTION_SYNC_SETTINGS</td>
-<td>同步设置界面</td>
-</tr>
-<tr>
-<td>ACTION_ADD_ACCOUNT</td>
-<td>添加账户界面</td>
-</tr>
-<tr>
-<td>ACTION_NETWORK_OPERATOR_SETTINGS</td>
-<td>选取运营商的界面</td>
-</tr>
-<tr>
-<td>ACTION_SECURITY_SETTINGS</td>
-<td>安全设置界面</td>
-</tr>
-<tr>
-<td>ACTION_PRIVACY_SETTINGS</td>
-<td>备份重置设置界面</td>
-</tr>
-<tr>
-<td>ACTION_VPN_SETTINGS</td>
-<td>VPN设置界面,可能不存在</td>
-</tr>
-<tr>
-<td>ACTION_WIFI_SETTINGS</td>
-<td>无线网设置界面</td>
-</tr>
-<tr>
-<td>ACTION_WIFI_IP_SETTINGS</td>
-<td>WIFI的IP设置</td>
-</tr>
-<tr>
-<td>ACTION_BLUETOOTH_SETTINGS</td>
-<td>蓝牙设置</td>
-</tr>
-<tr>
-<td>ACTION_CAST_SETTINGS</td>
-<td>投射设置</td>
-</tr>
-<tr>
-<td>ACTION_DATE_SETTINGS</td>
-<td>日期时间设置</td>
-</tr>
-<tr>
-<td>ACTION_SOUND_SETTINGS</td>
-<td>声音设置</td>
-</tr>
-<tr>
-<td>ACTION_DISPLAY_SETTINGS</td>
-<td>显示设置</td>
-</tr>
-<tr>
-<td>ACTION_LOCALE_SETTINGS</td>
-<td>语言设置</td>
-</tr>
-<tr>
-<td>ACTION_VOICE_INPUT_SETTINGS</td>
-<td>辅助应用和语音输入设置</td>
-</tr>
-<tr>
-<td>ACTION_INPUT_METHOD_SETTINGS</td>
-<td>语言和输入法设置</td>
-</tr>
-<tr>
-<td>ACTION_USER_DICTIONARY_SETTINGS</td>
-<td>个人字典设置界面</td>
-</tr>
-<tr>
-<td>ACTION_INTERNAL_STORAGE_SETTINGS</td>
-<td>存储空间设置的界面</td>
-</tr>
-<tr>
-<td>ACTION_SEARCH_SETTINGS</td>
-<td>搜索设置界面</td>
-</tr>
-<tr>
-<td>ACTION_APPLICATION_DEVELOPMENT_SETTINGS</td>
-<td>开发者选项</td>
-</tr>
-<tr>
-<td>ACTION_DEVICE_INFO_SETTINGS</td>
-<td>手机状态信息的界面</td>
-</tr>
-<tr>
-<td>ACTION_DREAM_SETTINGS</td>
-<td>互动屏保设置的界面</td>
-</tr>
-<tr>
-<td>ACTION_NOTIFICATION_LISTENER_SETTINGS</td>
-<td>通知使用权设置的界面</td>
-</tr>
-<tr>
-<td>ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS</td>
-<td>勿扰权限设置的界面</td>
-</tr>
-<tr>
-<td>ACTION_CAPTIONING_SETTINGS</td>
-<td>字幕设置的界面</td>
-</tr>
-<tr>
-<td>ACTION_PRINT_SETTINGS</td>
-<td>打印设置界面</td>
-</tr>
-<tr>
-<td>ACTION_BATTERY_SAVER_SETTINGS</td>
-<td>节电助手界面</td>
-</tr>
-<tr>
-<td>ACTION_HOME_SETTINGS</td>
-<td>主屏幕设置界面</td>
-</tr>
-<tr>
-<td>ACTION_APPLICATION_DETAILS_SETTINGS</td>
-<td>根据包名跳转到系统自带的应用程序信息</td>
-</tr>
-<tr>
-<td>ACTION_APPLICATION_SETTINGS</td>
-<td>应用程序列表</td>
-</tr>
-<tr>
-<td>ACTION_MANAGE_ALL_APPLICATIONS_SETTINGS</td>
-<td>应用程序界面【所有的】</td>
-</tr>
-<tr>
-<td>ACTION_MANAGE_APPLICATIONS_SETTINGS</td>
-<td>应用程序列表界面【已安装的】</td>
-</tr>
-<tr>
-<td>ACTION_INPUT_METHOD_SUBTYPE_SETTINGS</td>
-<td>【API 11及以上】语言选择界面 【多国语言选择】</td>
-</tr>
-<tr>
-<td>ACTION_NFCSHARING_SETTINGS</td>
-<td>显示NFC共享设置【API 14及以上】</td>
-</tr>
-<tr>
-<td>ACTION_NFC_SETTINGS</td>
-<td>显示NFC设置【API 16及以上】</td>
-</tr>
-<tr>
-<td>ACTION_QUICK_LAUNCH_SETTINGS</td>
-<td>快速启动设置界面</td>
-</tr>
-</tbody></table>
-<h3 id="样例代码"><a href="#样例代码" class="headerlink" title="样例代码"></a>样例代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);</span><br><span class="line">intent.setData(Uri.parse(requireActivity().getPackageName()));</span><br><span class="line">requireActivity().startActivity(intent);</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>intent</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>android10创建文件失败</title>
-    <url>/2021/01/11/android10-create-file/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
-<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
-<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
-<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/12/29/aws-cicd-permission/</url>
-    <content><![CDATA[<h3 id="CodeBuild"><a href="#CodeBuild" class="headerlink" title="CodeBuild"></a>CodeBuild</h3><h4 id="创建构建项目"><a href="#创建构建项目" class="headerlink" title="创建构建项目"></a>创建构建项目</h4><img src="/Users/libo/typora_image_workspace/image-20211229153413539.png" alt="image-20211229153413539" style="zoom:67%;" />
-
-
-
-
-
-<img src="/Users/libo/typora_image_workspace/image-20211229154509074.png" alt="image-20211229154509074" style="zoom: 67%;" />
-
-<img src="/Users/libo/typora_image_workspace/image-20211229154653659.png" alt="image-20211229154653659" style="zoom:67%;" />
-![image-20211229154732137](/Users/libo/typora_image_workspace/image-20211229154732137.png)
-![image-20211229154937026](/Users/libo/typora_image_workspace/image-20211229154937026.png)
-![image-20211229155048138](/Users/libo/typora_image_workspace/image-20211229155048138.png)
-![image-20211229155213561](/Users/libo/typora_image_workspace/image-20211229155213561.png)
-![image-20211229155304445](/Users/libo/typora_image_workspace/image-20211229155304445.png)
-![image-20211229155534047](/Users/libo/typora_image_workspace/image-20211229155534047.png)
-
-<h4 id="创建通知规则"><a href="#创建通知规则" class="headerlink" title="创建通知规则"></a>创建通知规则</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229155844496.png" alt="image-20211229155844496"><br> <img src="/Users/libo/typora_image_workspace/image-20211229160432525.png" alt="image-20211229160432525"><br><img src="/Users/libo/typora_image_workspace/image-20211229160037955.png" alt="image-20211229160037955"><br><img src="/Users/libo/typora_image_workspace/image-20211229160520661.png" alt="image-20211229160520661"><br><img src="/Users/libo/typora_image_workspace/image-20211229160701133.png" alt="image-20211229160701133"><br><img src="/Users/libo/typora_image_workspace/image-20211229160722839.png" alt="image-20211229160722839"><br><img src="/Users/libo/typora_image_workspace/image-20211229160957976.png" alt="image-20211229160957976"><br><img src="/Users/libo/typora_image_workspace/image-20211229160948709.png" alt="image-20211229160948709"><br><img src="/Users/libo/typora_image_workspace/image-20211229161519847.png" alt="image-20211229161519847"></p>
-<h4 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229161719813.png" alt="image-20211229161719813"><br><img src="/Users/libo/typora_image_workspace/image-20211229161900563.png" alt="image-20211229161900563"><br><img src="/Users/libo/typora_image_workspace/image-20211229161925793.png" alt="image-20211229161925793"></p>
-<h3 id="CodePipeline"><a href="#CodePipeline" class="headerlink" title="CodePipeline"></a>CodePipeline</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229162211486.png" alt="image-20211229162211486"><br><img src="/Users/libo/typora_image_workspace/image-20211229162311617.png" alt="image-20211229162311617"><br><img src="/Users/libo/typora_image_workspace/image-20211229162414702.png" alt="image-20211229162414702"><br><img src="/Users/libo/typora_image_workspace/image-20211229162510118.png" alt="image-20211229162510118"><br><img src="/Users/libo/typora_image_workspace/image-20211229162633103.png" alt="image-20211229162633103"><br><img src="/Users/libo/typora_image_workspace/image-20211229162751997.png" alt="image-20211229162751997"><br><img src="/Users/libo/typora_image_workspace/image-20211229162807971.png" alt="image-20211229162807971"><br><img src="/Users/libo/typora_image_workspace/image-20211229163014897.png" alt="image-20211229163014897"><br><img src="/Users/libo/typora_image_workspace/image-20211229163110827.png" alt="image-20211229163110827"><br><img src="/Users/libo/typora_image_workspace/image-20211229163210642.png" alt="image-20211229163210642"><br><img src="/Users/libo/typora_image_workspace/image-20211229163546214.png" alt="image-20211229163546214"><br><img src="/Users/libo/typora_image_workspace/image-20211229163645923.png" alt="image-20211229163645923"><br><img src="/Users/libo/typora_image_workspace/image-20211229165228204.png" alt="image-20211229165228204"><br><img src="/Users/libo/typora_image_workspace/image-20211229165158975.png" alt="image-20211229165158975"><br><img src="/Users/libo/typora_image_workspace/image-20211229165314764.png" alt="image-20211229165314764"><br><img src="/Users/libo/typora_image_workspace/image-20211229165454220.png" alt="image-20211229165454220"><br><img src="/Users/libo/typora_image_workspace/image-20211229170037684.png" alt="image-20211229170037684"></p>
-<h2 id="权限汇总"><a href="#权限汇总" class="headerlink" title="权限汇总"></a>权限汇总</h2><p><img src="/Users/libo/typora_image_workspace/image-20211229171107269.png" alt="image-20211229171107269"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171212820.png" alt="image-20211229171212820"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171237219.png" alt="image-20211229171237219"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171258974.png" alt="image-20211229171258974"></p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229172353825.png" alt="image-20211229172353825"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>asm-gradle备注</title>
     <url>/2021/04/23/asm-%E5%AD%97%E8%8A%82%E7%A0%81/</url>
     <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ASM是一个通用的Java字节码操作和分析框架。 它可以直接以二进制形式用于修改现有类或动态生成类。 </span><br><span class="line">ASM提供了一些常见的字节码转换和分析算法，可以从中构建定制的复杂转换和代码分析工具。 </span><br><span class="line">ASM提供了与其他Java字节码框架类似的功能，但是侧重于性能。 因为它的设计和实现是尽可能的小和尽可能快，</span><br><span class="line">所以它非常适合在动态系统中使用（但当然也可以以静态方式使用，例如在编译器中使用）。</span><br></pre></td></tr></table></figure>
@@ -801,87 +800,22 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2021/12/23/aws-codebuild/</url>
-    <content><![CDATA[<h3 id="aws-codecommit"><a href="#aws-codecommit" class="headerlink" title="aws-codecommit"></a>aws-codecommit</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeCommit 是一种完全托管型源代码控制服务，使公司可以轻松地托管安全和高度可扩展的专用 Git 存储库。CodeCommit 使您无需运作自己的源控制系统或担心基础设施的扩展能力。</span><br></pre></td></tr></table></figure>
-<p><img src="/Users/libo/typora_image_workspace/image-20211224182630509.png" alt="image-20211224182630509"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211224182557803.png" alt="image-20211224182557803"></p>
-<h3 id="aws-codebuild"><a href="#aws-codebuild" class="headerlink" title="aws-codebuild"></a>aws-codebuild</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeBuild 是一项完全托管的构建服务，无需管理和扩展自己的构建服务器，从 CodeCommit 拉取输入、融入 CodePipeline 工作流、将构件输出到 S3 等。备注 你需要指定 CodeBuild 的角色，并赋予相应的访问权限。</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>输入源</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">可以选择从 CodeCommit 代码仓库、S3 存储桶上的 zip 压缩包、GitHub 代码仓库之一作为输入源。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>环境变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">环境变量，生效顺序如下：</span><br><span class="line">1. 发起构建操作时提供的变量值</span><br><span class="line">2. 构建项目定义的变量值</span><br><span class="line">3. buildspec.yml 文件中定义的变量值</span><br><span class="line">不要以 CODEBUILD_ 开头命名环境变量，这个由 AWS 内部保留使用。</span><br></pre></td></tr></table></figure></li>
-<li><p>构建阶段</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一次 CodeBuild 构建的生命周期分为多个阶段,其中 * 标识的可自定义，! 标识的可以配置。</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>—</th>
-<th>–</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SUBMITTED</td>
-<td>构建请求已提交</td>
-</tr>
-<tr>
-<td>! PROVISIONING</td>
-<td>准备构建环境</td>
-</tr>
-<tr>
-<td>DOWNLOAD_SOURCE</td>
-<td>下载输入源</td>
-</tr>
-<tr>
-<td>* INSTALL</td>
-<td>安装构建工具</td>
-</tr>
-<tr>
-<td>* PRE_BUILD</td>
-<td>构建前</td>
-</tr>
-<tr>
-<td>* BUILD</td>
-<td>构建</td>
-</tr>
-<tr>
-<td>* POST_BUILD</td>
-<td>构建后</td>
-</tr>
-<tr>
-<td>! UPLOAD_ARTIFACTS</td>
-<td>上传构件</td>
-</tr>
-<tr>
-<td>FINALIZING</td>
-<td>最终确定</td>
-</tr>
-<tr>
-<td>COMPLETED</td>
-<td>已完成</td>
-</tr>
-</tbody></table>
-<p><img src="https://s2.loli.net/2021/12/24/27hXaLFyiW1ozZU.png" alt="image-20211224181837734"></p>
-</li>
-<li><p>buildspec 文件</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment_variables:</span></span><br><span class="line">  <span class="attr">plaintext:</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span>     </span><br><span class="line"><span class="attr">phases:</span></span><br><span class="line">  <span class="attr">install:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">pre_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">post_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line"><span class="attr">artifacts:</span></span><br><span class="line">  <span class="attr">files:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">file</span> <span class="comment"># 当前目录（输入的根目录）下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/file</span> <span class="comment"># 子目录下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/*</span> <span class="comment"># 子目录下的所有文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">recursive-dir/**/*</span> <span class="comment"># 子目录下的所有文件夹和文件</span></span><br><span class="line">  <span class="attr">discard-paths:</span> <span class="literal">no</span></span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>构件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">会将构件用 zip 打包后上传到 S3 存储桶。</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>其他</p>
-</li>
-</ul>
-<p><img src="https://s2.loli.net/2021/12/23/LIWiYRCcK317HMB.png" alt="image-20211223171634918"></p>
-<p><img src="https://s2.loli.net/2021/12/23/YRwbWDc1tkMUPpv.png" alt="image-20211223171602467"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.jianshu.com/p/17f8b6582c8a">参考1</a></p>
-<p><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html">aws-s3命令</a></p>
-<p><a href="https://docs.aws.amazon.com/zh_cn/cli/index.html">aws-cli</a></p>
+    <title>android10创建文件失败</title>
+    <url>/2021/01/11/android10-create-file/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
+<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
+<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
+<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
 ]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
   </entry>
   <entry>
     <title>cross platform 个人认知</title>
@@ -1082,6 +1016,89 @@
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/12/23/aws-codebuild/</url>
+    <content><![CDATA[<h3 id="aws-codecommit"><a href="#aws-codecommit" class="headerlink" title="aws-codecommit"></a>aws-codecommit</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeCommit 是一种完全托管型源代码控制服务，使公司可以轻松地托管安全和高度可扩展的专用 Git 存储库。CodeCommit 使您无需运作自己的源控制系统或担心基础设施的扩展能力。</span><br></pre></td></tr></table></figure>
+<p><img src="/Users/libo/typora_image_workspace/image-20211224182630509.png" alt="image-20211224182630509"></p>
+<p><img src="/Users/libo/typora_image_workspace/image-20211224182557803.png" alt="image-20211224182557803"></p>
+<h3 id="aws-codebuild"><a href="#aws-codebuild" class="headerlink" title="aws-codebuild"></a>aws-codebuild</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeBuild 是一项完全托管的构建服务，无需管理和扩展自己的构建服务器，从 CodeCommit 拉取输入、融入 CodePipeline 工作流、将构件输出到 S3 等。备注 你需要指定 CodeBuild 的角色，并赋予相应的访问权限。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>输入源</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">可以选择从 CodeCommit 代码仓库、S3 存储桶上的 zip 压缩包、GitHub 代码仓库之一作为输入源。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">环境变量，生效顺序如下：</span><br><span class="line">1. 发起构建操作时提供的变量值</span><br><span class="line">2. 构建项目定义的变量值</span><br><span class="line">3. buildspec.yml 文件中定义的变量值</span><br><span class="line">不要以 CODEBUILD_ 开头命名环境变量，这个由 AWS 内部保留使用。</span><br></pre></td></tr></table></figure></li>
+<li><p>构建阶段</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一次 CodeBuild 构建的生命周期分为多个阶段,其中 * 标识的可自定义，! 标识的可以配置。</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>—</th>
+<th>–</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SUBMITTED</td>
+<td>构建请求已提交</td>
+</tr>
+<tr>
+<td>! PROVISIONING</td>
+<td>准备构建环境</td>
+</tr>
+<tr>
+<td>DOWNLOAD_SOURCE</td>
+<td>下载输入源</td>
+</tr>
+<tr>
+<td>* INSTALL</td>
+<td>安装构建工具</td>
+</tr>
+<tr>
+<td>* PRE_BUILD</td>
+<td>构建前</td>
+</tr>
+<tr>
+<td>* BUILD</td>
+<td>构建</td>
+</tr>
+<tr>
+<td>* POST_BUILD</td>
+<td>构建后</td>
+</tr>
+<tr>
+<td>! UPLOAD_ARTIFACTS</td>
+<td>上传构件</td>
+</tr>
+<tr>
+<td>FINALIZING</td>
+<td>最终确定</td>
+</tr>
+<tr>
+<td>COMPLETED</td>
+<td>已完成</td>
+</tr>
+</tbody></table>
+<p><img src="https://s2.loli.net/2021/12/24/27hXaLFyiW1ozZU.png" alt="image-20211224181837734"></p>
+</li>
+<li><p>buildspec 文件</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment_variables:</span></span><br><span class="line">  <span class="attr">plaintext:</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span>     </span><br><span class="line"><span class="attr">phases:</span></span><br><span class="line">  <span class="attr">install:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">pre_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">post_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line"><span class="attr">artifacts:</span></span><br><span class="line">  <span class="attr">files:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">file</span> <span class="comment"># 当前目录（输入的根目录）下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/file</span> <span class="comment"># 子目录下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/*</span> <span class="comment"># 子目录下的所有文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">recursive-dir/**/*</span> <span class="comment"># 子目录下的所有文件夹和文件</span></span><br><span class="line">  <span class="attr">discard-paths:</span> <span class="literal">no</span></span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>构件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">会将构件用 zip 打包后上传到 S3 存储桶。</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>其他</p>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2021/12/23/LIWiYRCcK317HMB.png" alt="image-20211223171634918"></p>
+<p><img src="https://s2.loli.net/2021/12/23/YRwbWDc1tkMUPpv.png" alt="image-20211223171602467"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.jianshu.com/p/17f8b6582c8a">参考1</a></p>
+<p><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html">aws-s3命令</a></p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/cli/index.html">aws-cli</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>frida安装</title>
     <url>/2021/01/02/frida-install/</url>
     <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
@@ -1107,23 +1124,6 @@
         <category>frida</category>
       </categories>
       <tags>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
         <tag>frida</tag>
       </tags>
   </entry>
@@ -1273,6 +1273,15 @@
       <tags>
         <tag>other</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/10/29/hello/</url>
+    <content><![CDATA[<h4 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
+<h4 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use mysql</span><br><span class="line">update user set authentication_string&#x3D;&#39;&#39; where user&#x3D;&#39;root&#39; -- 值为空</span><br><span class="line">ALTER user &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;</span><br><span class="line">ALTER user &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;123456&#39; --远程</span><br><span class="line">-- https:&#x2F;&#x2F;www.cnblogs.com&#x2F;tmdsleep&#x2F;p&#x2F;10967432.html</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
   </entry>
   <entry>
     <title>java 23中设计模式</title>
@@ -1658,6 +1667,23 @@
       </tags>
   </entry>
   <entry>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>frida</tag>
+      </tags>
+  </entry>
+  <entry>
     <title></title>
     <url>/2021/12/22/k8s/</url>
     <content><![CDATA[<h3 id="k8s-是什么"><a href="#k8s-是什么" class="headerlink" title="k8s 是什么"></a>k8s 是什么</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 是一个可移植的、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。 Kubernetes 拥有一个庞大且快速增长的生态系统。Kubernetes 的服务、支持和工具广泛可用。</span><br><span class="line">k8s 这个缩写是因为 k 和 s 之间有八个字符的关系。</span><br></pre></td></tr></table></figure>
@@ -1688,15 +1714,6 @@
 </ul>
 </li>
 </ul>
-]]></content>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/10/29/hello/</url>
-    <content><![CDATA[<h4 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span><br></pre></td></tr></table></figure>
-<h4 id="修改root密码"><a href="#修改root密码" class="headerlink" title="修改root密码"></a>修改root密码</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">use mysql</span><br><span class="line">update user set authentication_string&#x3D;&#39;&#39; where user&#x3D;&#39;root&#39; -- 值为空</span><br><span class="line">ALTER user &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;123456&#39;</span><br><span class="line">ALTER user &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;123456&#39; --远程</span><br><span class="line">-- https:&#x2F;&#x2F;www.cnblogs.com&#x2F;tmdsleep&#x2F;p&#x2F;10967432.html</span><br></pre></td></tr></table></figure>
-
-
 ]]></content>
   </entry>
   <entry>
@@ -1780,6 +1797,29 @@
       <tags>
         <tag>android</tag>
         <tag>kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Binder</title>
+    <url>/2021/07/03/android-binder/</url>
+    <content><![CDATA[<h4 id="什么是Binder"><a href="#什么是Binder" class="headerlink" title="什么是Binder"></a>什么是Binder</h4><p><code>android.os.Binder</code> 一个实现了IBinder接口的类，Binder是Android中的一种跨进程通信方式，Binder是ServiceManager连接各种Manager和相应ManagerService的桥梁，Binder是客户端和服务端进行通信的媒介，当bindService的时候，服务端会返回一个Binder对象，通过这个Binder对象，客户端就可以获取服务端提供的服务或者数据</p>
+<h4 id="为什么使用Binder"><a href="#为什么使用Binder" class="headerlink" title="为什么使用Binder"></a>为什么使用Binder</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Linux中的IPC方式有管道、信号量、共享内存、消息队列、Socket，Android使用的Binder机制不属于Linux。</span><br><span class="line">Binder以C/S架构的通信方式,Linux的五种IPC机制中，只有Socket支持这种通信方式。</span><br><span class="line">  <span class="number">1.</span> 传输性能上说</span><br><span class="line">Socket作为一款通用接口，其传输效率低，开销大，主要用在跨网络的进程间通信和本机上进程间的低速通信；消息队列和管道采用存储-转发方式，即数据先从发送方拷贝到内存开辟的缓存区中，然后再从内核缓存区拷贝到接收方缓存区，至少有两次拷贝过程；共享内存虽然无需拷贝，但控制复杂，难以使用；Binder只需要拷贝一次；</span><br><span class="line">	<span class="number">2.</span> 安全性上说</span><br><span class="line">  Linux传统的IPC没有任何安全措施，完全依赖上层协议来确保，传统IPC的接收方无法获得对方可靠的UID/PID，无法鉴别对方身份，使用传统IPC时只能由用户在数据包里填入UID/PID，但这样不可靠，容易被恶意程序利用。传统IPC的访问接入点是开放的，无法建立私有通信，只要知道这些接入点的程序都可以和对端建立连接，这样无法阻止恶意程序通过猜测接收方的地址获得连接。</span><br><span class="line">  </span><br><span class="line">Binder是一种基于Client-Server通信模式的通信方式，传输过程只需要一次拷贝，可以为发送方添加UID/PID身份，支持实名Binder和匿名Binder，安全性高。</span><br></pre></td></tr></table></figure>
+<h4 id="Binder的组成"><a href="#Binder的组成" class="headerlink" title="Binder的组成"></a>Binder的组成</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Binder由四部分组成：Binder客户端、Binder服务端、Binder驱动、服务登记查询模块。</span><br><span class="line">客户端先通过Binder拿到一个服务端进程中的一个对象的引用，通过这个引用，直接调用对象的方法获取结果。在这个引用对象执行方法时，它是先将方法调用的请求传给Binder驱动；然后Binder驱动再将请求传给服务端进程；服务端进程收到请求后，调用服务端“真正”的对象来执行所调用的方法；得出结果后，将结果发给Binder驱动；Binder驱动再将结果发给我们的客户端；最终，我们在客户端进程的调用就有了返回值。Binder驱动，相当于一个中转者的角色。通过这个中转者的帮忙，我们就可以调用其它进程中的对象。</span><br><span class="line">Service Manager（服务登记查询模块）</span><br><span class="line">我们调用其它进程里面的对象时，首先要获取这个对象。这个对象其实代表了另外一个进程能给我们提供什么样的服务（再直接一点，就是：对象中有哪些方法可以让客户端进程调用）。首先服务端进程要在某个地方注册登记一下，告诉系统我有个对象可以公开给其它进程来提供服务。当客户端进程需要这个服务时，就去这个登记的地方通过查询来找到这个对象。</span><br></pre></td></tr></table></figure>
+<h4 id="Binder工作流程"><a href="#Binder工作流程" class="headerlink" title="Binder工作流程"></a>Binder工作流程</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">假设：客户端的程序Client运行在进程A中，服务端的程序Server运行在进程B中。</span><br><span class="line">由于进程的隔离性，Client不能读写Server中的内容，但内核可以，而Binder驱动就是运行在内核态，因此Binder驱动帮我们进行请求的中转。</span><br><span class="line">有了Binder驱动，Client和Server之间就可以打交道了，但是为了实现功能的单一性，我们为Client和Server分别设置一个代理：Client的代理Proxy和Server的代理Stub。这样，由进程A中的Proxy和进程B中的Stub通过Binder驱动进行数据交流，Server和Client直接调用Stub和Proxy的接口返回数据即可。</span><br><span class="line">此时，Client直接调用Proxy这个聚合了Binder的类，我们可以使用一系列的Manager来屏蔽掉Binder的实现细节，Client直接调用Manager中的方法获取数据，这样做的好处是Client不需要知道Binder具体怎么工作。</span><br><span class="line">最后还有一个问题，就是Client想要获得的服务多种多样，那么它是怎么获取Proxy或Manager的呢？答案是通过Service Manager进程来获取的。Service Manager总是第一个启动的服务，其他服务端进程启动后，可以在Service Manager中注册，这样Client就可以通过Service Manager来获取服务器的服务列表，进而选择具体调用的服务器进程方法。</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.boundless1024.robot.binder</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Intent</span><br><span class="line"><span class="keyword">import</span> android.os.*</span><br><span class="line"><span class="keyword">import</span> androidx.lifecycle.LifecycleService</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 说明：//TODO</span></span><br><span class="line"><span class="comment"> * 文件名称：ProxyStub.kt</span></span><br><span class="line"><span class="comment"> * 创建者: hallo</span></span><br><span class="line"><span class="comment"> * 邮箱: hallo<span class="doctag">@xxx</span>.xx</span></span><br><span class="line"><span class="comment"> * 时间: 2021/7/6 4:55 下午</span></span><br><span class="line"><span class="comment"> * 版本：V1.0.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String?) :Parcelable &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(parcel: Parcel) : <span class="keyword">this</span>(parcel.readString()) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">writeToParcel</span><span class="params">(parcel: <span class="type">Parcel</span>, flags: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        parcel.writeString(name)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">describeContents</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> CREATOR : Parcelable.Creator&lt;Person&gt; &#123;</span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">createFromParcel</span><span class="params">(parcel: <span class="type">Parcel</span>)</span></span>: Person &#123;</span><br><span class="line">            <span class="keyword">return</span> Person(parcel)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">newArray</span><span class="params">(size: <span class="type">Int</span>)</span></span>: Array&lt;Person?&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> arrayOfNulls(size)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span>  <span class="string">&quot;【 name = <span class="variable">$name</span> 】&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">PersonManager</span> :<span class="type">IInterface &#123;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinderService</span> : <span class="type">LifecycleService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> stub = <span class="keyword">object</span> : Stub() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span> &#123;</span><br><span class="line">            println(<span class="string">&quot;BinderService printPerson person <span class="variable">$person</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBind</span><span class="params">(intent: <span class="type">Intent</span>)</span></span>: IBinder? &#123;</span><br><span class="line">        <span class="keyword">super</span>.onBind(intent)</span><br><span class="line">        stub.attachInterface(stub,Stub.DESCRIPTOR)</span><br><span class="line">        <span class="keyword">return</span> stub</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Proxy</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> binder: IBinder?) : PersonManager &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span> &#123;</span><br><span class="line">        println(<span class="string">&quot;Proxy printPerson person <span class="variable">$person</span> <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">val</span> <span class="keyword">data</span> = Parcel.obtain()</span><br><span class="line">        <span class="keyword">val</span> replay = Parcel.obtain()</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">data</span>.writeInterfaceToken(Stub.DESCRIPTOR)</span><br><span class="line">            <span class="keyword">if</span> (person != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">data</span>.writeInt(<span class="number">1</span>);</span><br><span class="line">                person.writeToParcel(<span class="keyword">data</span>, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">data</span>.writeInt(<span class="number">0</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            println(<span class="string">&quot;Proxy transact person <span class="variable">$person</span> <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">            binder?.transact(Stub.TRANSACTION_PRINT_PERSON, <span class="keyword">data</span>, replay, <span class="number">0</span>);</span><br><span class="line">            replay.readException()</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: RemoteException) &#123;</span><br><span class="line">            e.printStackTrace()</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            replay.recycle()</span><br><span class="line">            <span class="keyword">data</span>.recycle()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">asBinder</span><span class="params">()</span></span>: IBinder? = <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Stub</span> : <span class="type">Binder</span></span>(), PersonManager &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">val</span> DESCRIPTOR = <span class="string">&quot;com.boundless1024.robot.binder.Stub&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">val</span> TRANSACTION_PRINT_PERSON = IBinder.FIRST_CALL_TRANSACTION + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">asInterface</span><span class="params">(iBinder: <span class="type">IBinder</span>?)</span></span>: PersonManager &#123;</span><br><span class="line">            <span class="comment">//同一个进程，interfaceObj为StubBinder , 如果不是同一个进程  interfaceObj为null</span></span><br><span class="line">            <span class="keyword">val</span> interfaceObj: IInterface? = iBinder?.queryLocalInterface(DESCRIPTOR)</span><br><span class="line">            println(<span class="string">&quot;StubBinder asInterface interfaceObj <span class="variable">$interfaceObj</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">if</span> (<span class="literal">null</span> != interfaceObj &amp;&amp; interfaceObj <span class="keyword">is</span> PersonManager) &#123;</span><br><span class="line">                interfaceObj <span class="keyword">as</span> PersonManager</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Proxy(iBinder)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">asBinder</span><span class="params">()</span></span>: IBinder = <span class="keyword">this</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onTransact</span><span class="params">(code: <span class="type">Int</span>, <span class="keyword">data</span>: <span class="type">Parcel</span>, reply: <span class="type">Parcel</span>?, flags: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">when</span> (code) &#123;</span><br><span class="line">            INTERFACE_TRANSACTION -&gt; &#123;</span><br><span class="line">                reply?.writeString(<span class="string">&quot;&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">            TRANSACTION_PRINT_PERSON -&gt; &#123;</span><br><span class="line">                println(<span class="string">&quot;Stub onTransact data <span class="variable">$data</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">                <span class="keyword">data</span>.enforceInterface(DESCRIPTOR);</span><br><span class="line">                <span class="keyword">var</span> arg0: Person? = <span class="literal">null</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">data</span>.readInt() != <span class="number">0</span>) &#123;</span><br><span class="line">                    arg0 = Person.createFromParcel(<span class="keyword">data</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">this</span>.printPerson(arg0!!)</span><br><span class="line">                reply?.writeNoException()</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, <span class="keyword">data</span>, reply, flags)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: BinderService服务绑定连接成功 com.boundless1024.robot.binder.BinderService$stub$1@2364a5c  21185</span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: StubBinder asInterface interfaceObj com.boundless1024.robot.binder.BinderService$stub$1@2364a5c  21185</span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: BinderService printPerson person 【 name = LEO 】  21185</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">android:process=&quot;:push&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.110 21186-21186/com.boundless1024.robot I/System.out: BinderService服务绑定连接成功 android.os.BinderProxy<span class="doctag">@ab</span>63dde  21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.110 21186-21186/com.boundless1024.robot I/System.out: StubBinder asInterface interfaceObj null  21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.111 21186-21186/com.boundless1024.robot I/System.out: Proxy printPerson person 【 name = LEO 】 21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.111 21186-21186/com.boundless1024.robot I/System.out: Proxy transact person 【 name = LEO 】 21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.112 21187-22346/com.boundless1024.robot I/System.out: Stub onTransact data android.os.Parcel@6f5c501  21187</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.113 21187-22346/com.boundless1024.robot I/System.out: BinderService printPerson person 【 name = LEO 】  21187</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.huaweicloud.com/articles/bf23e373e2603558e1f5068b29fc44f2.html">参考1</a></p>
+<p><a href="https://juejin.cn/post/6844903764986462221#:~:text=Binder%E6%98%AF%E5%9F%BA%E4%BA%8EC%2FS,Server%E4%B8%AD%E6%8F%90%E4%BE%9B%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%8C">参考2</a></p>
+<p><a href="https://blog.csdn.net/carson_ho/article/details/73560642">参考3</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -2049,6 +2089,35 @@
       </tags>
   </entry>
   <entry>
+    <title></title>
+    <url>/2021/12/29/aws-cicd-permission/</url>
+    <content><![CDATA[<h3 id="CodeBuild"><a href="#CodeBuild" class="headerlink" title="CodeBuild"></a>CodeBuild</h3><h4 id="创建构建项目"><a href="#创建构建项目" class="headerlink" title="创建构建项目"></a>创建构建项目</h4><img src="/Users/libo/typora_image_workspace/image-20211229153413539.png" alt="image-20211229153413539" style="zoom:67%;" />
+
+
+
+
+
+<img src="/Users/libo/typora_image_workspace/image-20211229154509074.png" alt="image-20211229154509074" style="zoom: 67%;" />
+
+<img src="/Users/libo/typora_image_workspace/image-20211229154653659.png" alt="image-20211229154653659" style="zoom:67%;" />
+![image-20211229154732137](/Users/libo/typora_image_workspace/image-20211229154732137.png)
+![image-20211229154937026](/Users/libo/typora_image_workspace/image-20211229154937026.png)
+![image-20211229155048138](/Users/libo/typora_image_workspace/image-20211229155048138.png)
+![image-20211229155213561](/Users/libo/typora_image_workspace/image-20211229155213561.png)
+![image-20211229155304445](/Users/libo/typora_image_workspace/image-20211229155304445.png)
+![image-20211229155534047](/Users/libo/typora_image_workspace/image-20211229155534047.png)
+
+<h4 id="创建通知规则"><a href="#创建通知规则" class="headerlink" title="创建通知规则"></a>创建通知规则</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229155844496.png" alt="image-20211229155844496"><br> <img src="/Users/libo/typora_image_workspace/image-20211229160432525.png" alt="image-20211229160432525"><br><img src="/Users/libo/typora_image_workspace/image-20211229160037955.png" alt="image-20211229160037955"><br><img src="/Users/libo/typora_image_workspace/image-20211229160520661.png" alt="image-20211229160520661"><br><img src="/Users/libo/typora_image_workspace/image-20211229160701133.png" alt="image-20211229160701133"><br><img src="/Users/libo/typora_image_workspace/image-20211229160722839.png" alt="image-20211229160722839"><br><img src="/Users/libo/typora_image_workspace/image-20211229160957976.png" alt="image-20211229160957976"><br><img src="/Users/libo/typora_image_workspace/image-20211229160948709.png" alt="image-20211229160948709"><br><img src="/Users/libo/typora_image_workspace/image-20211229161519847.png" alt="image-20211229161519847"></p>
+<h4 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229161719813.png" alt="image-20211229161719813"><br><img src="/Users/libo/typora_image_workspace/image-20211229161900563.png" alt="image-20211229161900563"><br><img src="/Users/libo/typora_image_workspace/image-20211229161925793.png" alt="image-20211229161925793"></p>
+<h3 id="CodePipeline"><a href="#CodePipeline" class="headerlink" title="CodePipeline"></a>CodePipeline</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229162211486.png" alt="image-20211229162211486"><br><img src="/Users/libo/typora_image_workspace/image-20211229162311617.png" alt="image-20211229162311617"><br><img src="/Users/libo/typora_image_workspace/image-20211229162414702.png" alt="image-20211229162414702"><br><img src="/Users/libo/typora_image_workspace/image-20211229162510118.png" alt="image-20211229162510118"><br><img src="/Users/libo/typora_image_workspace/image-20211229162633103.png" alt="image-20211229162633103"><br><img src="/Users/libo/typora_image_workspace/image-20211229162751997.png" alt="image-20211229162751997"><br><img src="/Users/libo/typora_image_workspace/image-20211229162807971.png" alt="image-20211229162807971"><br><img src="/Users/libo/typora_image_workspace/image-20211229163014897.png" alt="image-20211229163014897"><br><img src="/Users/libo/typora_image_workspace/image-20211229163110827.png" alt="image-20211229163110827"><br><img src="/Users/libo/typora_image_workspace/image-20211229163210642.png" alt="image-20211229163210642"><br><img src="/Users/libo/typora_image_workspace/image-20211229163546214.png" alt="image-20211229163546214"><br><img src="/Users/libo/typora_image_workspace/image-20211229163645923.png" alt="image-20211229163645923"><br><img src="/Users/libo/typora_image_workspace/image-20211229165228204.png" alt="image-20211229165228204"><br><img src="/Users/libo/typora_image_workspace/image-20211229165158975.png" alt="image-20211229165158975"><br><img src="/Users/libo/typora_image_workspace/image-20211229165314764.png" alt="image-20211229165314764"><br><img src="/Users/libo/typora_image_workspace/image-20211229165454220.png" alt="image-20211229165454220"><br><img src="/Users/libo/typora_image_workspace/image-20211229170037684.png" alt="image-20211229170037684"></p>
+<h2 id="权限汇总"><a href="#权限汇总" class="headerlink" title="权限汇总"></a>权限汇总</h2><p><img src="/Users/libo/typora_image_workspace/image-20211229171107269.png" alt="image-20211229171107269"></p>
+<p><img src="/Users/libo/typora_image_workspace/image-20211229171212820.png" alt="image-20211229171212820"></p>
+<p><img src="/Users/libo/typora_image_workspace/image-20211229171237219.png" alt="image-20211229171237219"></p>
+<p><img src="/Users/libo/typora_image_workspace/image-20211229171258974.png" alt="image-20211229171258974"></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229172353825.png" alt="image-20211229172353825"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>3大特性5大原则</title>
     <url>/2021/05/21/object-feature-principle/</url>
     <content><![CDATA[<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><p><code>封装</code> 隐藏对象的属性和实现细节，仅对外提供公共访问方式，将变化隔离，便于使用，提高复用性和安全性</p>
@@ -2110,6 +2179,28 @@
       <tags>
         <tag>android</tag>
         <tag>okhttp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python-vscode调试备注</title>
+    <url>/2022/03/21/python-vscode%E8%B0%83%E8%AF%95%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vscode中python代码调试</span><br></pre></td></tr></table></figure>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><h5 id="创建-launch-json文件"><a href="#创建-launch-json文件" class="headerlink" title="创建 launch.json文件"></a>创建 launch.json文件</h5><p><img src="https://s2.loli.net/2022/03/22/pD2T8ynHsXjG9Lw.png" alt="image-20220322103709331"></p>
+<h5 id="调试第三方代码"><a href="#调试第三方代码" class="headerlink" title="调试第三方代码"></a>调试第三方代码</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from great_expectations.data_context.types.base import DataContextConfig</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/03/22/6IVzSQBmW1xojfK.png" alt="image-20220322104246546"></p>
+<p><img src="https://s2.loli.net/2022/03/22/GFHpANsmY3z5h6c.png" alt="image-20220322104154244"></p>
+<p><img src="https://s2.loli.net/2022/03/22/tbDO7zMd3gX1jKU.png" alt="image-20220322104358013"></p>
+<h5 id="launch-json文件"><a href="#launch-json文件" class="headerlink" title="launch.json文件"></a>launch.json文件</h5><p><img src="https://s2.loli.net/2022/03/22/aWgkSzZDcwP9Irv.png" alt="image-20220322104436479"></p>
+<h5 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h5><p><img src="https://s2.loli.net/2022/03/22/Uda7IQ9Vscg3GwN.png" alt="image-20220322104528337"></p>
+<p><img src="https://s2.loli.net/2022/03/22/liy3KnVh7mfNTax.png" alt="image-20220322104631026"></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://zhuanlan.zhihu.com/p/440413830">VsCode justMyCode: false无效</a></p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>vscode</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -2545,43 +2636,6 @@
       </tags>
   </entry>
   <entry>
-    <title>xposed模块 hello world编写</title>
-    <url>/2021/03/18/xposed%E6%A8%A1%E5%9D%97%E5%85%A5%E9%97%A8%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>Xposed的执行原理，可以参考<a href="https://www.bilibili.com/read/cv884141?from=category_17">这篇文章</a>的介绍。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xposed劫持了Zygote进程。原本是zygote调用【app_process】来运行程序，现在有了xposed后，zygote调用</span><br><span class="line">【被xposed替换后的app_process】来运行程序，使得程序在开启时，额外加载一个jar包，从而改变APP的运行结果。</span><br><span class="line">我们通过xposed框架编写hook代码，这些hook代码实际上是运行在宿主app进程内的，所以如果想要调试hook代码，</span><br><span class="line">需要以debug模式运行宿主app。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">手机最好有root权限，确保上安装magsik和EdXposed等相关框架（测试设备是一加8 android 10系统），</span><br><span class="line">xposed框架在android 8.0之后就不再维护更新，都转战到magisk和EdXposed上了，具体的安装方式自行百度。</span><br></pre></td></tr></table></figure>
-<h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过Android Studio 新建一个Android Application项目，模板自行选择。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/BtnzoJ3waXuvMbC.png" alt="iShot2021-03-18下午04.23.04.png"></p>
-<h3 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修改新建的Android项目中AndroidManifest.xml文件，在application标签下增加下面三句话，以让xposed框架识别</span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedmodule&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;true&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposeddescription&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;Hello Xposed&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedminversion&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;53&quot;</span> /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/BOSXHbMqo1rvLZj.png" alt="iShot2021-03-18下午04.29.17.png"></p>
-<h3 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">在app项目中增加xposed相应的jar包支持</span><br><span class="line">  </span><br><span class="line"> compileOnly<span class="string">&#x27;de.robv.android.xposed:api:82&#x27;</span></span><br><span class="line"> compileOnly <span class="string">&#x27;de.robv.android.xposed:api:82:sources&#x27;</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/IYfhPDkeb73wNGW.png" alt="iShot2021-03-18下午04.35.12.png"></p>
-<h3 id="步骤4"><a href="#步骤4" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">编写xposed模块的入口，新建一个java类实现xposed框架中的接口 `IXposedHookLoadPackage` </span><br><span class="line">  中的`handleLoadPackage`,在`handleLoadPackage`处理相关的逻辑</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IXposedHookLoadPackage</span> <span class="keyword">extends</span> <span class="title">IXposedMod</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * This method is called when an app is loaded. It&#x27;s called very early, even before</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> Application#onCreate&#125; is called.</span></span><br><span class="line"><span class="comment">	 * Modules can set up their app-specific hooks here.</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> lpparam Information about the app.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Throwable Everything the callback throws is caught and logged.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">	<span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Wrapper</span> <span class="keyword">extends</span> <span class="title">XC_LoadPackage</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">final</span> IXposedHookLoadPackage instance;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Wrapper</span><span class="params">(IXposedHookLoadPackage instance)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.instance = instance;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">			instance.handleLoadPackage(lpparam);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/g4crnvSKlA3ZoMC.png" alt="iShot2021-03-18下午04.42.16.png"></p>
-<h3 id="步骤4-1"><a href="#步骤4-1" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">告诉xposed框架入口class,在android项目中的资产目录(asset)中新建一个文件 &#96;xposed_init&#96; 没有扩展名，</span><br><span class="line">在 &#96;xposed_init&#96; 中写入上面实现 &#96;IXposedHookLoadPackage&#96; 接口类的全路径(包名+类名)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/HLAa9k7qjh1RpWG.png" alt="iShot2021-03-18下午04.49.42.png"></p>
-<h3 id="步骤5"><a href="#步骤5" class="headerlink" title="步骤5"></a>步骤5</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">运行安装到手机上， 在EdXposed中找到刚才编写的模块，打开模块开关，必要时可以重启一下手机</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/P2Fy8CY5dsEnwZV.png" alt="iShot2021-03-18下午04.52.25.png"></p>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过xposed框架，只有你愿意并研究，可以写成很多实用的东西，比如禁用广告，绕过vip才能使用的功能……，例如下面</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/cVEwdeY9CshTlOP.png" alt="iShot2021-03-18下午05.03.59.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.xda-developers.com/how-to-install-magisk/">how-to-install-magisk</a></p>
-<p><a href="https://github.com/topjohnwu/Magisk">Magisk</a></p>
-<p><a href="https://github.com/ElderDrivers/EdXposed">EdXposed</a></p>
-<p><a href="https://repo.xposed.info/module-overview">xposed仓库</a></p>
-<p><a href="http://blog.fuguicun.com/articles/2020/12/31/1609386370453.html">Xposed用于生产部署实践</a></p>
-<p><a href="https://github.com/NanoHttpd/nanohttpd">NanoHTTPD</a></p>
-<p><a href="http://91fans.com.cn/post/zysignfour/">参考</a></p>
-<p><a href="https://my.oschina.net/u/4579293/blog/4345442">参考2</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>xposed</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>查看so库的方法</title>
     <url>/2021/06/30/%E6%9F%A5%E7%9C%8Bso%E5%BA%93%E7%9A%84%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h4 id="查看so库的方法"><a href="#查看so库的方法" class="headerlink" title="查看so库的方法"></a>查看so库的方法</h4><ol>
@@ -2656,6 +2710,43 @@
       <tags>
         <tag>android</tag>
         <tag>adb</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>xposed模块 hello world编写</title>
+    <url>/2021/03/18/xposed%E6%A8%A1%E5%9D%97%E5%85%A5%E9%97%A8%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>Xposed的执行原理，可以参考<a href="https://www.bilibili.com/read/cv884141?from=category_17">这篇文章</a>的介绍。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xposed劫持了Zygote进程。原本是zygote调用【app_process】来运行程序，现在有了xposed后，zygote调用</span><br><span class="line">【被xposed替换后的app_process】来运行程序，使得程序在开启时，额外加载一个jar包，从而改变APP的运行结果。</span><br><span class="line">我们通过xposed框架编写hook代码，这些hook代码实际上是运行在宿主app进程内的，所以如果想要调试hook代码，</span><br><span class="line">需要以debug模式运行宿主app。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">手机最好有root权限，确保上安装magsik和EdXposed等相关框架（测试设备是一加8 android 10系统），</span><br><span class="line">xposed框架在android 8.0之后就不再维护更新，都转战到magisk和EdXposed上了，具体的安装方式自行百度。</span><br></pre></td></tr></table></figure>
+<h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过Android Studio 新建一个Android Application项目，模板自行选择。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/BtnzoJ3waXuvMbC.png" alt="iShot2021-03-18下午04.23.04.png"></p>
+<h3 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修改新建的Android项目中AndroidManifest.xml文件，在application标签下增加下面三句话，以让xposed框架识别</span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedmodule&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;true&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposeddescription&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;Hello Xposed&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedminversion&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;53&quot;</span> /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/BOSXHbMqo1rvLZj.png" alt="iShot2021-03-18下午04.29.17.png"></p>
+<h3 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">在app项目中增加xposed相应的jar包支持</span><br><span class="line">  </span><br><span class="line"> compileOnly<span class="string">&#x27;de.robv.android.xposed:api:82&#x27;</span></span><br><span class="line"> compileOnly <span class="string">&#x27;de.robv.android.xposed:api:82:sources&#x27;</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/IYfhPDkeb73wNGW.png" alt="iShot2021-03-18下午04.35.12.png"></p>
+<h3 id="步骤4"><a href="#步骤4" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">编写xposed模块的入口，新建一个java类实现xposed框架中的接口 `IXposedHookLoadPackage` </span><br><span class="line">  中的`handleLoadPackage`,在`handleLoadPackage`处理相关的逻辑</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IXposedHookLoadPackage</span> <span class="keyword">extends</span> <span class="title">IXposedMod</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * This method is called when an app is loaded. It&#x27;s called very early, even before</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> Application#onCreate&#125; is called.</span></span><br><span class="line"><span class="comment">	 * Modules can set up their app-specific hooks here.</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> lpparam Information about the app.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Throwable Everything the callback throws is caught and logged.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">	<span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Wrapper</span> <span class="keyword">extends</span> <span class="title">XC_LoadPackage</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">final</span> IXposedHookLoadPackage instance;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Wrapper</span><span class="params">(IXposedHookLoadPackage instance)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.instance = instance;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">			instance.handleLoadPackage(lpparam);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/g4crnvSKlA3ZoMC.png" alt="iShot2021-03-18下午04.42.16.png"></p>
+<h3 id="步骤4-1"><a href="#步骤4-1" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">告诉xposed框架入口class,在android项目中的资产目录(asset)中新建一个文件 &#96;xposed_init&#96; 没有扩展名，</span><br><span class="line">在 &#96;xposed_init&#96; 中写入上面实现 &#96;IXposedHookLoadPackage&#96; 接口类的全路径(包名+类名)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/HLAa9k7qjh1RpWG.png" alt="iShot2021-03-18下午04.49.42.png"></p>
+<h3 id="步骤5"><a href="#步骤5" class="headerlink" title="步骤5"></a>步骤5</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">运行安装到手机上， 在EdXposed中找到刚才编写的模块，打开模块开关，必要时可以重启一下手机</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/P2Fy8CY5dsEnwZV.png" alt="iShot2021-03-18下午04.52.25.png"></p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过xposed框架，只有你愿意并研究，可以写成很多实用的东西，比如禁用广告，绕过vip才能使用的功能……，例如下面</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/cVEwdeY9CshTlOP.png" alt="iShot2021-03-18下午05.03.59.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.xda-developers.com/how-to-install-magisk/">how-to-install-magisk</a></p>
+<p><a href="https://github.com/topjohnwu/Magisk">Magisk</a></p>
+<p><a href="https://github.com/ElderDrivers/EdXposed">EdXposed</a></p>
+<p><a href="https://repo.xposed.info/module-overview">xposed仓库</a></p>
+<p><a href="http://blog.fuguicun.com/articles/2020/12/31/1609386370453.html">Xposed用于生产部署实践</a></p>
+<p><a href="https://github.com/NanoHttpd/nanohttpd">NanoHTTPD</a></p>
+<p><a href="http://91fans.com.cn/post/zysignfour/">参考</a></p>
+<p><a href="https://my.oschina.net/u/4579293/blog/4345442">参考2</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>xposed</tag>
       </tags>
   </entry>
   <entry>
