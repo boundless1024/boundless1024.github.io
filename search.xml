@@ -168,6 +168,29 @@
       </tags>
   </entry>
   <entry>
+    <title>Binder</title>
+    <url>/2021/07/03/android-binder/</url>
+    <content><![CDATA[<h4 id="什么是Binder"><a href="#什么是Binder" class="headerlink" title="什么是Binder"></a>什么是Binder</h4><p><code>android.os.Binder</code> 一个实现了IBinder接口的类，Binder是Android中的一种跨进程通信方式，Binder是ServiceManager连接各种Manager和相应ManagerService的桥梁，Binder是客户端和服务端进行通信的媒介，当bindService的时候，服务端会返回一个Binder对象，通过这个Binder对象，客户端就可以获取服务端提供的服务或者数据</p>
+<h4 id="为什么使用Binder"><a href="#为什么使用Binder" class="headerlink" title="为什么使用Binder"></a>为什么使用Binder</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Linux中的IPC方式有管道、信号量、共享内存、消息队列、Socket，Android使用的Binder机制不属于Linux。</span><br><span class="line">Binder以C/S架构的通信方式,Linux的五种IPC机制中，只有Socket支持这种通信方式。</span><br><span class="line">  <span class="number">1.</span> 传输性能上说</span><br><span class="line">Socket作为一款通用接口，其传输效率低，开销大，主要用在跨网络的进程间通信和本机上进程间的低速通信；消息队列和管道采用存储-转发方式，即数据先从发送方拷贝到内存开辟的缓存区中，然后再从内核缓存区拷贝到接收方缓存区，至少有两次拷贝过程；共享内存虽然无需拷贝，但控制复杂，难以使用；Binder只需要拷贝一次；</span><br><span class="line">	<span class="number">2.</span> 安全性上说</span><br><span class="line">  Linux传统的IPC没有任何安全措施，完全依赖上层协议来确保，传统IPC的接收方无法获得对方可靠的UID/PID，无法鉴别对方身份，使用传统IPC时只能由用户在数据包里填入UID/PID，但这样不可靠，容易被恶意程序利用。传统IPC的访问接入点是开放的，无法建立私有通信，只要知道这些接入点的程序都可以和对端建立连接，这样无法阻止恶意程序通过猜测接收方的地址获得连接。</span><br><span class="line">  </span><br><span class="line">Binder是一种基于Client-Server通信模式的通信方式，传输过程只需要一次拷贝，可以为发送方添加UID/PID身份，支持实名Binder和匿名Binder，安全性高。</span><br></pre></td></tr></table></figure>
+<h4 id="Binder的组成"><a href="#Binder的组成" class="headerlink" title="Binder的组成"></a>Binder的组成</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Binder由四部分组成：Binder客户端、Binder服务端、Binder驱动、服务登记查询模块。</span><br><span class="line">客户端先通过Binder拿到一个服务端进程中的一个对象的引用，通过这个引用，直接调用对象的方法获取结果。在这个引用对象执行方法时，它是先将方法调用的请求传给Binder驱动；然后Binder驱动再将请求传给服务端进程；服务端进程收到请求后，调用服务端“真正”的对象来执行所调用的方法；得出结果后，将结果发给Binder驱动；Binder驱动再将结果发给我们的客户端；最终，我们在客户端进程的调用就有了返回值。Binder驱动，相当于一个中转者的角色。通过这个中转者的帮忙，我们就可以调用其它进程中的对象。</span><br><span class="line">Service Manager（服务登记查询模块）</span><br><span class="line">我们调用其它进程里面的对象时，首先要获取这个对象。这个对象其实代表了另外一个进程能给我们提供什么样的服务（再直接一点，就是：对象中有哪些方法可以让客户端进程调用）。首先服务端进程要在某个地方注册登记一下，告诉系统我有个对象可以公开给其它进程来提供服务。当客户端进程需要这个服务时，就去这个登记的地方通过查询来找到这个对象。</span><br></pre></td></tr></table></figure>
+<h4 id="Binder工作流程"><a href="#Binder工作流程" class="headerlink" title="Binder工作流程"></a>Binder工作流程</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">假设：客户端的程序Client运行在进程A中，服务端的程序Server运行在进程B中。</span><br><span class="line">由于进程的隔离性，Client不能读写Server中的内容，但内核可以，而Binder驱动就是运行在内核态，因此Binder驱动帮我们进行请求的中转。</span><br><span class="line">有了Binder驱动，Client和Server之间就可以打交道了，但是为了实现功能的单一性，我们为Client和Server分别设置一个代理：Client的代理Proxy和Server的代理Stub。这样，由进程A中的Proxy和进程B中的Stub通过Binder驱动进行数据交流，Server和Client直接调用Stub和Proxy的接口返回数据即可。</span><br><span class="line">此时，Client直接调用Proxy这个聚合了Binder的类，我们可以使用一系列的Manager来屏蔽掉Binder的实现细节，Client直接调用Manager中的方法获取数据，这样做的好处是Client不需要知道Binder具体怎么工作。</span><br><span class="line">最后还有一个问题，就是Client想要获得的服务多种多样，那么它是怎么获取Proxy或Manager的呢？答案是通过Service Manager进程来获取的。Service Manager总是第一个启动的服务，其他服务端进程启动后，可以在Service Manager中注册，这样Client就可以通过Service Manager来获取服务器的服务列表，进而选择具体调用的服务器进程方法。</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.boundless1024.robot.binder</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Intent</span><br><span class="line"><span class="keyword">import</span> android.os.*</span><br><span class="line"><span class="keyword">import</span> androidx.lifecycle.LifecycleService</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 说明：//TODO</span></span><br><span class="line"><span class="comment"> * 文件名称：ProxyStub.kt</span></span><br><span class="line"><span class="comment"> * 创建者: hallo</span></span><br><span class="line"><span class="comment"> * 邮箱: hallo<span class="doctag">@xxx</span>.xx</span></span><br><span class="line"><span class="comment"> * 时间: 2021/7/6 4:55 下午</span></span><br><span class="line"><span class="comment"> * 版本：V1.0.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String?) :Parcelable &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(parcel: Parcel) : <span class="keyword">this</span>(parcel.readString()) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">writeToParcel</span><span class="params">(parcel: <span class="type">Parcel</span>, flags: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        parcel.writeString(name)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">describeContents</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> CREATOR : Parcelable.Creator&lt;Person&gt; &#123;</span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">createFromParcel</span><span class="params">(parcel: <span class="type">Parcel</span>)</span></span>: Person &#123;</span><br><span class="line">            <span class="keyword">return</span> Person(parcel)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">newArray</span><span class="params">(size: <span class="type">Int</span>)</span></span>: Array&lt;Person?&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> arrayOfNulls(size)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span>  <span class="string">&quot;【 name = <span class="variable">$name</span> 】&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">PersonManager</span> :<span class="type">IInterface &#123;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinderService</span> : <span class="type">LifecycleService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> stub = <span class="keyword">object</span> : Stub() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span> &#123;</span><br><span class="line">            println(<span class="string">&quot;BinderService printPerson person <span class="variable">$person</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBind</span><span class="params">(intent: <span class="type">Intent</span>)</span></span>: IBinder? &#123;</span><br><span class="line">        <span class="keyword">super</span>.onBind(intent)</span><br><span class="line">        stub.attachInterface(stub,Stub.DESCRIPTOR)</span><br><span class="line">        <span class="keyword">return</span> stub</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Proxy</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> binder: IBinder?) : PersonManager &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span> &#123;</span><br><span class="line">        println(<span class="string">&quot;Proxy printPerson person <span class="variable">$person</span> <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">val</span> <span class="keyword">data</span> = Parcel.obtain()</span><br><span class="line">        <span class="keyword">val</span> replay = Parcel.obtain()</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">data</span>.writeInterfaceToken(Stub.DESCRIPTOR)</span><br><span class="line">            <span class="keyword">if</span> (person != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">data</span>.writeInt(<span class="number">1</span>);</span><br><span class="line">                person.writeToParcel(<span class="keyword">data</span>, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">data</span>.writeInt(<span class="number">0</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            println(<span class="string">&quot;Proxy transact person <span class="variable">$person</span> <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">            binder?.transact(Stub.TRANSACTION_PRINT_PERSON, <span class="keyword">data</span>, replay, <span class="number">0</span>);</span><br><span class="line">            replay.readException()</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: RemoteException) &#123;</span><br><span class="line">            e.printStackTrace()</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            replay.recycle()</span><br><span class="line">            <span class="keyword">data</span>.recycle()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">asBinder</span><span class="params">()</span></span>: IBinder? = <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Stub</span> : <span class="type">Binder</span></span>(), PersonManager &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">val</span> DESCRIPTOR = <span class="string">&quot;com.boundless1024.robot.binder.Stub&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">val</span> TRANSACTION_PRINT_PERSON = IBinder.FIRST_CALL_TRANSACTION + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">asInterface</span><span class="params">(iBinder: <span class="type">IBinder</span>?)</span></span>: PersonManager &#123;</span><br><span class="line">            <span class="comment">//同一个进程，interfaceObj为StubBinder , 如果不是同一个进程  interfaceObj为null</span></span><br><span class="line">            <span class="keyword">val</span> interfaceObj: IInterface? = iBinder?.queryLocalInterface(DESCRIPTOR)</span><br><span class="line">            println(<span class="string">&quot;StubBinder asInterface interfaceObj <span class="variable">$interfaceObj</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">if</span> (<span class="literal">null</span> != interfaceObj &amp;&amp; interfaceObj <span class="keyword">is</span> PersonManager) &#123;</span><br><span class="line">                interfaceObj <span class="keyword">as</span> PersonManager</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Proxy(iBinder)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">asBinder</span><span class="params">()</span></span>: IBinder = <span class="keyword">this</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onTransact</span><span class="params">(code: <span class="type">Int</span>, <span class="keyword">data</span>: <span class="type">Parcel</span>, reply: <span class="type">Parcel</span>?, flags: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">when</span> (code) &#123;</span><br><span class="line">            INTERFACE_TRANSACTION -&gt; &#123;</span><br><span class="line">                reply?.writeString(<span class="string">&quot;&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">            TRANSACTION_PRINT_PERSON -&gt; &#123;</span><br><span class="line">                println(<span class="string">&quot;Stub onTransact data <span class="variable">$data</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">                <span class="keyword">data</span>.enforceInterface(DESCRIPTOR);</span><br><span class="line">                <span class="keyword">var</span> arg0: Person? = <span class="literal">null</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">data</span>.readInt() != <span class="number">0</span>) &#123;</span><br><span class="line">                    arg0 = Person.createFromParcel(<span class="keyword">data</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">this</span>.printPerson(arg0!!)</span><br><span class="line">                reply?.writeNoException()</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, <span class="keyword">data</span>, reply, flags)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: BinderService服务绑定连接成功 com.boundless1024.robot.binder.BinderService$stub$1@2364a5c  21185</span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: StubBinder asInterface interfaceObj com.boundless1024.robot.binder.BinderService$stub$1@2364a5c  21185</span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: BinderService printPerson person 【 name = LEO 】  21185</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">android:process=&quot;:push&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.110 21186-21186/com.boundless1024.robot I/System.out: BinderService服务绑定连接成功 android.os.BinderProxy<span class="doctag">@ab</span>63dde  21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.110 21186-21186/com.boundless1024.robot I/System.out: StubBinder asInterface interfaceObj null  21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.111 21186-21186/com.boundless1024.robot I/System.out: Proxy printPerson person 【 name = LEO 】 21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.111 21186-21186/com.boundless1024.robot I/System.out: Proxy transact person 【 name = LEO 】 21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.112 21187-22346/com.boundless1024.robot I/System.out: Stub onTransact data android.os.Parcel@6f5c501  21187</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.113 21187-22346/com.boundless1024.robot I/System.out: BinderService printPerson person 【 name = LEO 】  21187</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.huaweicloud.com/articles/bf23e373e2603558e1f5068b29fc44f2.html">参考1</a></p>
+<p><a href="https://juejin.cn/post/6844903764986462221#:~:text=Binder%E6%98%AF%E5%9F%BA%E4%BA%8EC%2FS,Server%E4%B8%AD%E6%8F%90%E4%BE%9B%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%8C">参考2</a></p>
+<p><a href="https://blog.csdn.net/carson_ho/article/details/73560642">参考3</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Android icon 大小</title>
     <url>/2021/04/17/android-icon%E5%A4%87%E6%B3%A8/</url>
     <content><![CDATA[<h5 id="launcher图标"><a href="#launcher图标" class="headerlink" title="launcher图标"></a>launcher图标</h5><table>
@@ -541,6 +564,24 @@
       </tags>
   </entry>
   <entry>
+    <title>android10创建文件失败</title>
+    <url>/2021/01/11/android10-create-file/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
+<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
+<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
+<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>apk代码混淆备注学习</title>
     <url>/2021/04/04/apk%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h4 id="Apk代码混淆"><a href="#Apk代码混淆" class="headerlink" title="Apk代码混淆"></a>Apk代码混淆</h4><ul>
@@ -800,22 +841,88 @@
       </tags>
   </entry>
   <entry>
-    <title>android10创建文件失败</title>
-    <url>/2021/01/11/android10-create-file/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">今天在练习通过xposed来改变app是否展示广告，遇到了【open failed: EACCES (Permission denied)】</span><br><span class="line">，已经提前申请好存储权限了，怎么还会报这个错？？,通过查看和学习了解到只有10及以上的系统才会有问题，</span><br><span class="line">做备注记录。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/27/tQTKmborEf728gh.png" alt="iShot2021-02-27下午03.46.07.png"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h4><p>在<code>AndroidManifest.xml</code>中 添加<code>requestLegacyExternalStorage=&quot;true&quot;</code> ,此时 <code>targetSdkVersion</code>版本不受约束。<br><img src="https://i.loli.net/2021/02/27/VpTFQ7G6icobMhI.png" alt="iShot2021-02-27下午03.55.30.png"></p>
-<h4 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h4><p>在<code>build.gradle</code>中修改  <code>targetSdkVersion</code>在29以下<br><img src="https://i.loli.net/2021/02/27/kzdbB7rCFVK6YLX.png" alt="iShot2021-02-27下午03.59.08.png"></p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><code>Android 10 不允许应用随意创建文件夹</code><br><code>Android 11 中的存储机制更新</code> </p>
-<p><a href="https://blog.csdn.net/m0_37707561/article/details/105563569?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-3.nonecase">参考1</a><br><a href="https://www.jianshu.com/p/0f1b18497ca1">参考2</a><br><a href="https://developer.android.com/training/data-storage/use-cases#if_your_app_targets">android10-停用分区存储</a><br><a href="https://developer.android.com/about/versions/11/privacy/storage?hl=zh-cn">Android11-中的存储机制更新</a> </p>
-<p><img src="https://i.loli.net/2021/02/27/IHNS12T6jXblVzM.png" alt="iShot2021-02-27下午04.19.00.png"><br><img src="https://i.loli.net/2021/02/27/Dz3jJZ8OdQbsYwu.png" alt="iShot2021-02-27下午04.19.17.png"></p>
+    <title></title>
+    <url>/2021/12/23/aws-codebuild/</url>
+    <content><![CDATA[<p>title: aws-codebuild记录<br>date: 2022/02/21 12:12:13<br>tags:<br>    - aws<br>    categories:<br>    - aws<br>    keywords:<br>    - aws<br>    description:<br>    1. aws</br><br>    2. codebuild</br><br>    3. codepipeline </br></p>
+<p>cover: <a href="https://i.loli.net/2021/03/06/vzGDImF9L8d7XfS.jpg">https://i.loli.net/2021/03/06/vzGDImF9L8d7XfS.jpg</a></p>
+<h4 id="aws-codecommit"><a href="#aws-codecommit" class="headerlink" title="aws-codecommit"></a>aws-codecommit</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeCommit 是一种完全托管型源代码控制服务，使公司可以轻松地托管安全和高度可扩展的专用 Git 存储库。CodeCommit 使您无需运作自己的源控制系统或担心基础设施的扩展能力。</span><br></pre></td></tr></table></figure>
+<p><img src="https://s2.loli.net/2022/03/22/g4fOaxo9ruAqBYR.png" alt="image-20211224182630509"></p>
+<p><img src="https://s2.loli.net/2022/03/22/YGHPmKdrbo2TxX5.png" alt="image-20211224182557803"></p>
+<h4 id="aws-codebuild"><a href="#aws-codebuild" class="headerlink" title="aws-codebuild"></a>aws-codebuild</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeBuild 是一项完全托管的构建服务，无需管理和扩展自己的构建服务器，从 CodeCommit 拉取输入、融入 CodePipeline 工作流、将构件输出到 S3 等。备注 你需要指定 CodeBuild 的角色，并赋予相应的访问权限。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>输入源</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">可以选择从 CodeCommit 代码仓库、S3 存储桶上的 zip 压缩包、GitHub 代码仓库之一作为输入源。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>环境变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">环境变量，生效顺序如下：</span><br><span class="line">1. 发起构建操作时提供的变量值</span><br><span class="line">2. 构建项目定义的变量值</span><br><span class="line">3. buildspec.yml 文件中定义的变量值</span><br><span class="line">不要以 CODEBUILD_ 开头命名环境变量，这个由 AWS 内部保留使用。</span><br></pre></td></tr></table></figure></li>
+<li><p>构建阶段</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一次 CodeBuild 构建的生命周期分为多个阶段,其中 * 标识的可自定义，! 标识的可以配置。</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>—</th>
+<th>–</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SUBMITTED</td>
+<td>构建请求已提交</td>
+</tr>
+<tr>
+<td>! PROVISIONING</td>
+<td>准备构建环境</td>
+</tr>
+<tr>
+<td>DOWNLOAD_SOURCE</td>
+<td>下载输入源</td>
+</tr>
+<tr>
+<td>* INSTALL</td>
+<td>安装构建工具</td>
+</tr>
+<tr>
+<td>* PRE_BUILD</td>
+<td>构建前</td>
+</tr>
+<tr>
+<td>* BUILD</td>
+<td>构建</td>
+</tr>
+<tr>
+<td>* POST_BUILD</td>
+<td>构建后</td>
+</tr>
+<tr>
+<td>! UPLOAD_ARTIFACTS</td>
+<td>上传构件</td>
+</tr>
+<tr>
+<td>FINALIZING</td>
+<td>最终确定</td>
+</tr>
+<tr>
+<td>COMPLETED</td>
+<td>已完成</td>
+</tr>
+</tbody></table>
+<p><img src="https://s2.loli.net/2021/12/24/27hXaLFyiW1ozZU.png" alt="image-20211224181837734"></p>
+</li>
+<li><p>buildspec 文件</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment_variables:</span></span><br><span class="line">  <span class="attr">plaintext:</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span>     </span><br><span class="line"><span class="attr">phases:</span></span><br><span class="line">  <span class="attr">install:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">pre_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">post_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line"><span class="attr">artifacts:</span></span><br><span class="line">  <span class="attr">files:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">file</span> <span class="comment"># 当前目录（输入的根目录）下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/file</span> <span class="comment"># 子目录下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/*</span> <span class="comment"># 子目录下的所有文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">recursive-dir/**/*</span> <span class="comment"># 子目录下的所有文件夹和文件</span></span><br><span class="line">  <span class="attr">discard-paths:</span> <span class="literal">no</span></span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>构件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">会将构件用 zip 打包后上传到 S3 存储桶。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他</p>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2021/12/23/LIWiYRCcK317HMB.png" alt="image-20211223171634918"></p>
+<p><img src="https://s2.loli.net/2021/12/23/YRwbWDc1tkMUPpv.png" alt="image-20211223171602467"></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/17f8b6582c8a">参考1</a></p>
+<p><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html">aws-s3命令</a></p>
+<p><a href="https://docs.aws.amazon.com/zh_cn/cli/index.html">aws-cli</a></p>
 ]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-      </tags>
   </entry>
   <entry>
     <title>cross platform 个人认知</title>
@@ -905,6 +1012,35 @@
         <tag>android</tag>
         <tag>flutter</tag>
         <tag>dcloud</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>frida安装</title>
+    <url>/2021/01/02/frida-install/</url>
+    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.python.org/getit/">python官网</a></p>
+<p>下面的操作都在python3下操作</p>
+<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
+<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
+<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
+<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
+<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
+<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
+<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
+<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
+<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
+<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+]]></content>
+      <categories>
+        <category>frida</category>
+      </categories>
+      <tags>
+        <tag>frida</tag>
       </tags>
   </entry>
   <entry>
@@ -1016,114 +1152,19 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>/2021/12/23/aws-codebuild/</url>
-    <content><![CDATA[<h3 id="aws-codecommit"><a href="#aws-codecommit" class="headerlink" title="aws-codecommit"></a>aws-codecommit</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeCommit 是一种完全托管型源代码控制服务，使公司可以轻松地托管安全和高度可扩展的专用 Git 存储库。CodeCommit 使您无需运作自己的源控制系统或担心基础设施的扩展能力。</span><br></pre></td></tr></table></figure>
-<p><img src="/Users/libo/typora_image_workspace/image-20211224182630509.png" alt="image-20211224182630509"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211224182557803.png" alt="image-20211224182557803"></p>
-<h3 id="aws-codebuild"><a href="#aws-codebuild" class="headerlink" title="aws-codebuild"></a>aws-codebuild</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">AWS CodeBuild 是一项完全托管的构建服务，无需管理和扩展自己的构建服务器，从 CodeCommit 拉取输入、融入 CodePipeline 工作流、将构件输出到 S3 等。备注 你需要指定 CodeBuild 的角色，并赋予相应的访问权限。</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>输入源</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">可以选择从 CodeCommit 代码仓库、S3 存储桶上的 zip 压缩包、GitHub 代码仓库之一作为输入源。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>环境变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">环境变量，生效顺序如下：</span><br><span class="line">1. 发起构建操作时提供的变量值</span><br><span class="line">2. 构建项目定义的变量值</span><br><span class="line">3. buildspec.yml 文件中定义的变量值</span><br><span class="line">不要以 CODEBUILD_ 开头命名环境变量，这个由 AWS 内部保留使用。</span><br></pre></td></tr></table></figure></li>
-<li><p>构建阶段</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">一次 CodeBuild 构建的生命周期分为多个阶段,其中 * 标识的可自定义，! 标识的可以配置。</span><br></pre></td></tr></table></figure>
-<table>
-<thead>
-<tr>
-<th>—</th>
-<th>–</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SUBMITTED</td>
-<td>构建请求已提交</td>
-</tr>
-<tr>
-<td>! PROVISIONING</td>
-<td>准备构建环境</td>
-</tr>
-<tr>
-<td>DOWNLOAD_SOURCE</td>
-<td>下载输入源</td>
-</tr>
-<tr>
-<td>* INSTALL</td>
-<td>安装构建工具</td>
-</tr>
-<tr>
-<td>* PRE_BUILD</td>
-<td>构建前</td>
-</tr>
-<tr>
-<td>* BUILD</td>
-<td>构建</td>
-</tr>
-<tr>
-<td>* POST_BUILD</td>
-<td>构建后</td>
-</tr>
-<tr>
-<td>! UPLOAD_ARTIFACTS</td>
-<td>上传构件</td>
-</tr>
-<tr>
-<td>FINALIZING</td>
-<td>最终确定</td>
-</tr>
-<tr>
-<td>COMPLETED</td>
-<td>已完成</td>
-</tr>
-</tbody></table>
-<p><img src="https://s2.loli.net/2021/12/24/27hXaLFyiW1ozZU.png" alt="image-20211224181837734"></p>
-</li>
-<li><p>buildspec 文件</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="attr">environment_variables:</span></span><br><span class="line">  <span class="attr">plaintext:</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&quot;value&quot;</span>     </span><br><span class="line"><span class="attr">phases:</span></span><br><span class="line">  <span class="attr">install:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">pre_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">  <span class="attr">post_build:</span></span><br><span class="line">    <span class="attr">commands:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">command</span></span><br><span class="line"><span class="attr">artifacts:</span></span><br><span class="line">  <span class="attr">files:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">file</span> <span class="comment"># 当前目录（输入的根目录）下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/file</span> <span class="comment"># 子目录下的文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">dir/*</span> <span class="comment"># 子目录下的所有文件</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">recursive-dir/**/*</span> <span class="comment"># 子目录下的所有文件夹和文件</span></span><br><span class="line">  <span class="attr">discard-paths:</span> <span class="literal">no</span></span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>构件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">会将构件用 zip 打包后上传到 S3 存储桶。</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>其他</p>
-</li>
-</ul>
-<p><img src="https://s2.loli.net/2021/12/23/LIWiYRCcK317HMB.png" alt="image-20211223171634918"></p>
-<p><img src="https://s2.loli.net/2021/12/23/YRwbWDc1tkMUPpv.png" alt="image-20211223171602467"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.jianshu.com/p/17f8b6582c8a">参考1</a></p>
-<p><a href="https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html">aws-s3命令</a></p>
-<p><a href="https://docs.aws.amazon.com/zh_cn/cli/index.html">aws-cli</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>frida安装</title>
-    <url>/2021/01/02/frida-install/</url>
-    <content><![CDATA[<h5 id="安装python"><a href="#安装python" class="headerlink" title="安装python"></a>安装python</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mac系统自带python，但是版本比较低，可以自行安装新的版本。</span><br></pre></td></tr></table></figure>
-<p><a href="https://www.python.org/getit/">python官网</a></p>
-<p>下面的操作都在python3下操作</p>
-<h5 id="安装frida"><a href="#安装frida" class="headerlink" title="安装frida"></a>安装frida</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install frida</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/02/22/bOXJuYajNCIGzxt.png" alt="image-20200729105621345.png"><br><img src="https://i.loli.net/2021/02/22/c2PzduwxK4GFlfM.png" alt="image-20200729105702901.png"></p>
-<h5 id="安装frida-tools"><a href="#安装frida-tools" class="headerlink" title="安装frida-tools"></a>安装frida-tools</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip3 install frida-tools</span><br></pre></td></tr></table></figure>
-<h5 id="检测是否安装成功"><a href="#检测是否安装成功" class="headerlink" title="检测是否安装成功"></a>检测是否安装成功</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">frida-ps</span><br></pre></td></tr></table></figure>
-<h5 id="下载frida-server"><a href="#下载frida-server" class="headerlink" title="下载frida-server"></a>下载frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Frida-server的版本必须跟你宿主机的Frida版本一致。</span><br></pre></td></tr></table></figure>
-<p><a href="%5Bhttps://github.com/frida/frida/releases">下载地址</a></p>
-<h5 id="推送frida-server到root过的手机"><a href="#推送frida-server到root过的手机" class="headerlink" title="推送frida-server到root过的手机"></a>推送frida-server到root过的手机</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">下载后解压文件，并将文件重命名为: frida-server，然后推送到手机</span><br><span class="line">adb push frida-server &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br></pre></td></tr></table></figure>
-<h5 id="修改权限并运行frida-server"><a href="#修改权限并运行frida-server" class="headerlink" title="修改权限并运行frida-server"></a>修改权限并运行frida-server</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd &#x2F;data&#x2F;local&#x2F;tmp&#x2F;</span><br><span class="line">chmod 777 frida-server</span><br><span class="line">.&#x2F;frida-server</span><br></pre></td></tr></table></figure>
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.jianshu.com/p/15a4bf14d0a5">参考1</a></p>
-<p><a href="https://github.com/hluwa/FRIDA-DEXDump">参考2</a></p>
-<p><a href="https://www.jianshu.com/p/5aa3f08736c5">参考3</a></p>
-<p><a href="https://www.52pojie.cn/forum.php?mod=viewthread&tid=931872">frida hook java教程</a></p>
-<p><a href="https://frida.re/docs/installation/">frida官网安装</a></p>
+    <title>frida测试-修改vip</title>
+    <url>/2021/02/23/frida_test/</url>
+    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
+<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
 ]]></content>
       <categories>
         <category>frida</category>
       </categories>
       <tags>
+        <tag>android</tag>
         <tag>frida</tag>
       </tags>
   </entry>
@@ -1667,23 +1708,6 @@
       </tags>
   </entry>
   <entry>
-    <title>frida测试-修改vip</title>
-    <url>/2021/02/23/frida_test/</url>
-    <content><![CDATA[<p>项目开发的过程中，需要用户不同的身份状态展示相对应的UI界面时，比如VIP用户展示更多的功能……。此时，我们可以有多种方式来做开发测试，下面通过frida动态修改用户的身份状态来实现，仅做测试。</p>
-<h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><pre><code>frida -U -f com.dewu.sxttpjc -l vip.js
-</code></pre>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 修改用户的vip状态</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeVip</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    Java.perform(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> packageName = <span class="string">&quot;com.dewu.sxttpjc.util&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> className = <span class="string">&quot;UserUtils&quot;</span>;</span><br><span class="line">        <span class="keyword">var</span> UserUtils = Java.use(packageName+ <span class="string">&quot;.&quot;</span>+ className);</span><br><span class="line">        UserUtils.isVip.implementation = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">           <span class="keyword">var</span> originValue =  <span class="built_in">this</span>.isVip();</span><br><span class="line">           <span class="built_in">console</span>.warn(<span class="string">&quot;originValue = &quot;</span> + originValue);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(makeVip,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><p><img src="https://i.loli.net/2021/02/23/pBKbst26HNTkVX7.png" alt="2021-02-23-16-09.png"></p>
-]]></content>
-      <categories>
-        <category>frida</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>frida</tag>
-      </tags>
-  </entry>
-  <entry>
     <title></title>
     <url>/2021/12/22/k8s/</url>
     <content><![CDATA[<h3 id="k8s-是什么"><a href="#k8s-是什么" class="headerlink" title="k8s 是什么"></a>k8s 是什么</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Kubernetes 是一个可移植的、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。 Kubernetes 拥有一个庞大且快速增长的生态系统。Kubernetes 的服务、支持和工具广泛可用。</span><br><span class="line">k8s 这个缩写是因为 k 和 s 之间有八个字符的关系。</span><br></pre></td></tr></table></figure>
@@ -1797,29 +1821,6 @@
       <tags>
         <tag>android</tag>
         <tag>kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Binder</title>
-    <url>/2021/07/03/android-binder/</url>
-    <content><![CDATA[<h4 id="什么是Binder"><a href="#什么是Binder" class="headerlink" title="什么是Binder"></a>什么是Binder</h4><p><code>android.os.Binder</code> 一个实现了IBinder接口的类，Binder是Android中的一种跨进程通信方式，Binder是ServiceManager连接各种Manager和相应ManagerService的桥梁，Binder是客户端和服务端进行通信的媒介，当bindService的时候，服务端会返回一个Binder对象，通过这个Binder对象，客户端就可以获取服务端提供的服务或者数据</p>
-<h4 id="为什么使用Binder"><a href="#为什么使用Binder" class="headerlink" title="为什么使用Binder"></a>为什么使用Binder</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Linux中的IPC方式有管道、信号量、共享内存、消息队列、Socket，Android使用的Binder机制不属于Linux。</span><br><span class="line">Binder以C/S架构的通信方式,Linux的五种IPC机制中，只有Socket支持这种通信方式。</span><br><span class="line">  <span class="number">1.</span> 传输性能上说</span><br><span class="line">Socket作为一款通用接口，其传输效率低，开销大，主要用在跨网络的进程间通信和本机上进程间的低速通信；消息队列和管道采用存储-转发方式，即数据先从发送方拷贝到内存开辟的缓存区中，然后再从内核缓存区拷贝到接收方缓存区，至少有两次拷贝过程；共享内存虽然无需拷贝，但控制复杂，难以使用；Binder只需要拷贝一次；</span><br><span class="line">	<span class="number">2.</span> 安全性上说</span><br><span class="line">  Linux传统的IPC没有任何安全措施，完全依赖上层协议来确保，传统IPC的接收方无法获得对方可靠的UID/PID，无法鉴别对方身份，使用传统IPC时只能由用户在数据包里填入UID/PID，但这样不可靠，容易被恶意程序利用。传统IPC的访问接入点是开放的，无法建立私有通信，只要知道这些接入点的程序都可以和对端建立连接，这样无法阻止恶意程序通过猜测接收方的地址获得连接。</span><br><span class="line">  </span><br><span class="line">Binder是一种基于Client-Server通信模式的通信方式，传输过程只需要一次拷贝，可以为发送方添加UID/PID身份，支持实名Binder和匿名Binder，安全性高。</span><br></pre></td></tr></table></figure>
-<h4 id="Binder的组成"><a href="#Binder的组成" class="headerlink" title="Binder的组成"></a>Binder的组成</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Binder由四部分组成：Binder客户端、Binder服务端、Binder驱动、服务登记查询模块。</span><br><span class="line">客户端先通过Binder拿到一个服务端进程中的一个对象的引用，通过这个引用，直接调用对象的方法获取结果。在这个引用对象执行方法时，它是先将方法调用的请求传给Binder驱动；然后Binder驱动再将请求传给服务端进程；服务端进程收到请求后，调用服务端“真正”的对象来执行所调用的方法；得出结果后，将结果发给Binder驱动；Binder驱动再将结果发给我们的客户端；最终，我们在客户端进程的调用就有了返回值。Binder驱动，相当于一个中转者的角色。通过这个中转者的帮忙，我们就可以调用其它进程中的对象。</span><br><span class="line">Service Manager（服务登记查询模块）</span><br><span class="line">我们调用其它进程里面的对象时，首先要获取这个对象。这个对象其实代表了另外一个进程能给我们提供什么样的服务（再直接一点，就是：对象中有哪些方法可以让客户端进程调用）。首先服务端进程要在某个地方注册登记一下，告诉系统我有个对象可以公开给其它进程来提供服务。当客户端进程需要这个服务时，就去这个登记的地方通过查询来找到这个对象。</span><br></pre></td></tr></table></figure>
-<h4 id="Binder工作流程"><a href="#Binder工作流程" class="headerlink" title="Binder工作流程"></a>Binder工作流程</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">假设：客户端的程序Client运行在进程A中，服务端的程序Server运行在进程B中。</span><br><span class="line">由于进程的隔离性，Client不能读写Server中的内容，但内核可以，而Binder驱动就是运行在内核态，因此Binder驱动帮我们进行请求的中转。</span><br><span class="line">有了Binder驱动，Client和Server之间就可以打交道了，但是为了实现功能的单一性，我们为Client和Server分别设置一个代理：Client的代理Proxy和Server的代理Stub。这样，由进程A中的Proxy和进程B中的Stub通过Binder驱动进行数据交流，Server和Client直接调用Stub和Proxy的接口返回数据即可。</span><br><span class="line">此时，Client直接调用Proxy这个聚合了Binder的类，我们可以使用一系列的Manager来屏蔽掉Binder的实现细节，Client直接调用Manager中的方法获取数据，这样做的好处是Client不需要知道Binder具体怎么工作。</span><br><span class="line">最后还有一个问题，就是Client想要获得的服务多种多样，那么它是怎么获取Proxy或Manager的呢？答案是通过Service Manager进程来获取的。Service Manager总是第一个启动的服务，其他服务端进程启动后，可以在Service Manager中注册，这样Client就可以通过Service Manager来获取服务器的服务列表，进而选择具体调用的服务器进程方法。</span><br></pre></td></tr></table></figure>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.boundless1024.robot.binder</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Intent</span><br><span class="line"><span class="keyword">import</span> android.os.*</span><br><span class="line"><span class="keyword">import</span> androidx.lifecycle.LifecycleService</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 说明：//TODO</span></span><br><span class="line"><span class="comment"> * 文件名称：ProxyStub.kt</span></span><br><span class="line"><span class="comment"> * 创建者: hallo</span></span><br><span class="line"><span class="comment"> * 邮箱: hallo<span class="doctag">@xxx</span>.xx</span></span><br><span class="line"><span class="comment"> * 时间: 2021/7/6 4:55 下午</span></span><br><span class="line"><span class="comment"> * 版本：V1.0.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>(<span class="keyword">val</span> name: String?) :Parcelable &#123;</span><br><span class="line">    <span class="keyword">constructor</span>(parcel: Parcel) : <span class="keyword">this</span>(parcel.readString()) &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">writeToParcel</span><span class="params">(parcel: <span class="type">Parcel</span>, flags: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        parcel.writeString(name)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">describeContents</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> CREATOR : Parcelable.Creator&lt;Person&gt; &#123;</span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">createFromParcel</span><span class="params">(parcel: <span class="type">Parcel</span>)</span></span>: Person &#123;</span><br><span class="line">            <span class="keyword">return</span> Person(parcel)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">newArray</span><span class="params">(size: <span class="type">Int</span>)</span></span>: Array&lt;Person?&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> arrayOfNulls(size)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">toString</span><span class="params">()</span></span>: String &#123;</span><br><span class="line">        <span class="keyword">return</span>  <span class="string">&quot;【 name = <span class="variable">$name</span> 】&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">PersonManager</span> :<span class="type">IInterface &#123;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinderService</span> : <span class="type">LifecycleService</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> stub = <span class="keyword">object</span> : Stub() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span> &#123;</span><br><span class="line">            println(<span class="string">&quot;BinderService printPerson person <span class="variable">$person</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBind</span><span class="params">(intent: <span class="type">Intent</span>)</span></span>: IBinder? &#123;</span><br><span class="line">        <span class="keyword">super</span>.onBind(intent)</span><br><span class="line">        stub.attachInterface(stub,Stub.DESCRIPTOR)</span><br><span class="line">        <span class="keyword">return</span> stub</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Proxy</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> binder: IBinder?) : PersonManager &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(person: <span class="type">Person</span>)</span></span> &#123;</span><br><span class="line">        println(<span class="string">&quot;Proxy printPerson person <span class="variable">$person</span> <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">val</span> <span class="keyword">data</span> = Parcel.obtain()</span><br><span class="line">        <span class="keyword">val</span> replay = Parcel.obtain()</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">data</span>.writeInterfaceToken(Stub.DESCRIPTOR)</span><br><span class="line">            <span class="keyword">if</span> (person != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">data</span>.writeInt(<span class="number">1</span>);</span><br><span class="line">                person.writeToParcel(<span class="keyword">data</span>, <span class="number">0</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">data</span>.writeInt(<span class="number">0</span>)</span><br><span class="line">            &#125;</span><br><span class="line">            println(<span class="string">&quot;Proxy transact person <span class="variable">$person</span> <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">            binder?.transact(Stub.TRANSACTION_PRINT_PERSON, <span class="keyword">data</span>, replay, <span class="number">0</span>);</span><br><span class="line">            replay.readException()</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e: RemoteException) &#123;</span><br><span class="line">            e.printStackTrace()</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            replay.recycle()</span><br><span class="line">            <span class="keyword">data</span>.recycle()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">asBinder</span><span class="params">()</span></span>: IBinder? = <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Stub</span> : <span class="type">Binder</span></span>(), PersonManager &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">val</span> DESCRIPTOR = <span class="string">&quot;com.boundless1024.robot.binder.Stub&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">val</span> TRANSACTION_PRINT_PERSON = IBinder.FIRST_CALL_TRANSACTION + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">asInterface</span><span class="params">(iBinder: <span class="type">IBinder</span>?)</span></span>: PersonManager &#123;</span><br><span class="line">            <span class="comment">//同一个进程，interfaceObj为StubBinder , 如果不是同一个进程  interfaceObj为null</span></span><br><span class="line">            <span class="keyword">val</span> interfaceObj: IInterface? = iBinder?.queryLocalInterface(DESCRIPTOR)</span><br><span class="line">            println(<span class="string">&quot;StubBinder asInterface interfaceObj <span class="variable">$interfaceObj</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">if</span> (<span class="literal">null</span> != interfaceObj &amp;&amp; interfaceObj <span class="keyword">is</span> PersonManager) &#123;</span><br><span class="line">                interfaceObj <span class="keyword">as</span> PersonManager</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                Proxy(iBinder)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">asBinder</span><span class="params">()</span></span>: IBinder = <span class="keyword">this</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onTransact</span><span class="params">(code: <span class="type">Int</span>, <span class="keyword">data</span>: <span class="type">Parcel</span>, reply: <span class="type">Parcel</span>?, flags: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">when</span> (code) &#123;</span><br><span class="line">            INTERFACE_TRANSACTION -&gt; &#123;</span><br><span class="line">                reply?.writeString(<span class="string">&quot;&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">            TRANSACTION_PRINT_PERSON -&gt; &#123;</span><br><span class="line">                println(<span class="string">&quot;Stub onTransact data <span class="variable">$data</span>  <span class="subst">$&#123;Process.myPid()&#125;</span>&quot;</span>)</span><br><span class="line">                <span class="keyword">data</span>.enforceInterface(DESCRIPTOR);</span><br><span class="line">                <span class="keyword">var</span> arg0: Person? = <span class="literal">null</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">data</span>.readInt() != <span class="number">0</span>) &#123;</span><br><span class="line">                    arg0 = Person.createFromParcel(<span class="keyword">data</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">this</span>.printPerson(arg0!!)</span><br><span class="line">                reply?.writeNoException()</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onTransact(code, <span class="keyword">data</span>, reply, flags)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/***</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: BinderService服务绑定连接成功 com.boundless1024.robot.binder.BinderService$stub$1@2364a5c  21185</span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: StubBinder asInterface interfaceObj com.boundless1024.robot.binder.BinderService$stub$1@2364a5c  21185</span></span><br><span class="line"><span class="comment">2021-07-06 17:05:39.676 21185-21185/com.boundless1024.robot I/System.out: BinderService printPerson person 【 name = LEO 】  21185</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">android:process=&quot;:push&quot;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.110 21186-21186/com.boundless1024.robot I/System.out: BinderService服务绑定连接成功 android.os.BinderProxy<span class="doctag">@ab</span>63dde  21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.110 21186-21186/com.boundless1024.robot I/System.out: StubBinder asInterface interfaceObj null  21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.111 21186-21186/com.boundless1024.robot I/System.out: Proxy printPerson person 【 name = LEO 】 21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.111 21186-21186/com.boundless1024.robot I/System.out: Proxy transact person 【 name = LEO 】 21186</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.112 21187-22346/com.boundless1024.robot I/System.out: Stub onTransact data android.os.Parcel@6f5c501  21187</span></span><br><span class="line"><span class="comment">2021-07-06 17:06:23.113 21187-22346/com.boundless1024.robot I/System.out: BinderService printPerson person 【 name = LEO 】  21187</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://www.huaweicloud.com/articles/bf23e373e2603558e1f5068b29fc44f2.html">参考1</a></p>
-<p><a href="https://juejin.cn/post/6844903764986462221#:~:text=Binder%E6%98%AF%E5%9F%BA%E4%BA%8EC%2FS,Server%E4%B8%AD%E6%8F%90%E4%BE%9B%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%8C">参考2</a></p>
-<p><a href="https://blog.csdn.net/carson_ho/article/details/73560642">参考3</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -2006,6 +2007,46 @@
       </tags>
   </entry>
   <entry>
+    <title>mysql关于变量记录</title>
+    <url>/2022/02/21/mysql-%E5%8F%98%E9%87%8F%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><h5 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">全局变量	</span><br><span class="line">	服务器每次启动都会为所有的全局变量赋初始值，跨链接有效，但是不能跨重启</span><br><span class="line">会话变量	</span><br><span class="line">	仅仅本次会话有效</span><br></pre></td></tr></table></figure>
+<p><code>变量由系统提供的，不是用户自己定义的，属于服务器层面</code></p>
+<ul>
+<li><p>查看变量 </p>
+<ol>
+<li><code>show variables</code>  默认 <code>session</code></li>
+</ol>
+<p><img src="https://s2.loli.net/2022/03/07/O15Hcx6yCkrAFqt.png" alt="image-20220307163006571"></p>
+<ol start="2">
+<li><code>SHOW GLOBAL VARIABLES</code> 查看全局</li>
+<li><code>SHOW SESSION VARIABLES</code> 查看回话 ，同 1. </li>
+</ol>
+</li>
+</ul>
+<h5 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">用户变量</span><br><span class="line">	针对当前会有有效</span><br><span class="line">局部变量</span><br><span class="line">	仅仅在定义它的begin end中有效</span><br></pre></td></tr></table></figure>
+<ul>
+<li>变量声明、赋值<ol>
+<li><code>SET @userId = &#39;123&#39;</code></li>
+<li><code>SET @userId := &#39;123&#39;</code></li>
+<li><code>SELECT @userId := &#39;123&#39;</code></li>
+<li><code>select 字段 into @变量名 from 表</code></li>
+</ol>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/03/07/mNelT2PoGjwqHZa.png" alt="image-20220307171334362"></p>
+<h5 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h5><ol>
+<li>declare 变量名 类型  declare a int;</li>
+</ol>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/qq_44105778/article/details/86632858?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&utm_relevant_index=1">参考1</a></p>
+]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>maven-gradle插件备注记录</title>
     <url>/2021/04/21/maven-gradle%E6%8F%92%E4%BB%B6/</url>
     <content><![CDATA[<h5 id="电脑安装maven"><a href="#电脑安装maven" class="headerlink" title="电脑安装maven"></a>电脑安装maven</h5><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">从 Maven 官方地址：http://maven.apache.org/download.cgi 下载最新版的zip包，解压缩后配置环境变量</span><br></pre></td></tr></table></figure>
@@ -2049,100 +2090,6 @@
       </tags>
   </entry>
   <entry>
-    <title>mysql关于变量记录</title>
-    <url>/2022/02/21/mysql-%E5%8F%98%E9%87%8F%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><h5 id="系统变量"><a href="#系统变量" class="headerlink" title="系统变量"></a>系统变量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">全局变量	</span><br><span class="line">	服务器每次启动都会为所有的全局变量赋初始值，跨链接有效，但是不能跨重启</span><br><span class="line">会话变量	</span><br><span class="line">	仅仅本次会话有效</span><br></pre></td></tr></table></figure>
-<p><code>变量由系统提供的，不是用户自己定义的，属于服务器层面</code></p>
-<ul>
-<li><p>查看变量 </p>
-<ol>
-<li><code>show variables</code>  默认 <code>session</code></li>
-</ol>
-<p><img src="https://s2.loli.net/2022/03/07/O15Hcx6yCkrAFqt.png" alt="image-20220307163006571"></p>
-<ol start="2">
-<li><code>SHOW GLOBAL VARIABLES</code> 查看全局</li>
-<li><code>SHOW SESSION VARIABLES</code> 查看回话 ，同 1. </li>
-</ol>
-</li>
-</ul>
-<h5 id="自定义变量"><a href="#自定义变量" class="headerlink" title="自定义变量"></a>自定义变量</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">用户变量</span><br><span class="line">	针对当前会有有效</span><br><span class="line">局部变量</span><br><span class="line">	仅仅在定义它的begin end中有效</span><br></pre></td></tr></table></figure>
-<ul>
-<li>变量声明、赋值<ol>
-<li><code>SET @userId = &#39;123&#39;</code></li>
-<li><code>SET @userId := &#39;123&#39;</code></li>
-<li><code>SELECT @userId := &#39;123&#39;</code></li>
-<li><code>select 字段 into @变量名 from 表</code></li>
-</ol>
-</li>
-</ul>
-<p><img src="https://s2.loli.net/2022/03/07/mNelT2PoGjwqHZa.png" alt="image-20220307171334362"></p>
-<h5 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h5><ol>
-<li>declare 变量名 类型  declare a int;</li>
-</ol>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><p><a href="https://blog.csdn.net/qq_44105778/article/details/86632858?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~Rate-1.pc_relevant_default&utm_relevant_index=1">参考1</a></p>
-]]></content>
-      <categories>
-        <category>mysql</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/2021/12/29/aws-cicd-permission/</url>
-    <content><![CDATA[<h3 id="CodeBuild"><a href="#CodeBuild" class="headerlink" title="CodeBuild"></a>CodeBuild</h3><h4 id="创建构建项目"><a href="#创建构建项目" class="headerlink" title="创建构建项目"></a>创建构建项目</h4><img src="/Users/libo/typora_image_workspace/image-20211229153413539.png" alt="image-20211229153413539" style="zoom:67%;" />
-
-
-
-
-
-<img src="/Users/libo/typora_image_workspace/image-20211229154509074.png" alt="image-20211229154509074" style="zoom: 67%;" />
-
-<img src="/Users/libo/typora_image_workspace/image-20211229154653659.png" alt="image-20211229154653659" style="zoom:67%;" />
-![image-20211229154732137](/Users/libo/typora_image_workspace/image-20211229154732137.png)
-![image-20211229154937026](/Users/libo/typora_image_workspace/image-20211229154937026.png)
-![image-20211229155048138](/Users/libo/typora_image_workspace/image-20211229155048138.png)
-![image-20211229155213561](/Users/libo/typora_image_workspace/image-20211229155213561.png)
-![image-20211229155304445](/Users/libo/typora_image_workspace/image-20211229155304445.png)
-![image-20211229155534047](/Users/libo/typora_image_workspace/image-20211229155534047.png)
-
-<h4 id="创建通知规则"><a href="#创建通知规则" class="headerlink" title="创建通知规则"></a>创建通知规则</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229155844496.png" alt="image-20211229155844496"><br> <img src="/Users/libo/typora_image_workspace/image-20211229160432525.png" alt="image-20211229160432525"><br><img src="/Users/libo/typora_image_workspace/image-20211229160037955.png" alt="image-20211229160037955"><br><img src="/Users/libo/typora_image_workspace/image-20211229160520661.png" alt="image-20211229160520661"><br><img src="/Users/libo/typora_image_workspace/image-20211229160701133.png" alt="image-20211229160701133"><br><img src="/Users/libo/typora_image_workspace/image-20211229160722839.png" alt="image-20211229160722839"><br><img src="/Users/libo/typora_image_workspace/image-20211229160957976.png" alt="image-20211229160957976"><br><img src="/Users/libo/typora_image_workspace/image-20211229160948709.png" alt="image-20211229160948709"><br><img src="/Users/libo/typora_image_workspace/image-20211229161519847.png" alt="image-20211229161519847"></p>
-<h4 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h4><p><img src="/Users/libo/typora_image_workspace/image-20211229161719813.png" alt="image-20211229161719813"><br><img src="/Users/libo/typora_image_workspace/image-20211229161900563.png" alt="image-20211229161900563"><br><img src="/Users/libo/typora_image_workspace/image-20211229161925793.png" alt="image-20211229161925793"></p>
-<h3 id="CodePipeline"><a href="#CodePipeline" class="headerlink" title="CodePipeline"></a>CodePipeline</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229162211486.png" alt="image-20211229162211486"><br><img src="/Users/libo/typora_image_workspace/image-20211229162311617.png" alt="image-20211229162311617"><br><img src="/Users/libo/typora_image_workspace/image-20211229162414702.png" alt="image-20211229162414702"><br><img src="/Users/libo/typora_image_workspace/image-20211229162510118.png" alt="image-20211229162510118"><br><img src="/Users/libo/typora_image_workspace/image-20211229162633103.png" alt="image-20211229162633103"><br><img src="/Users/libo/typora_image_workspace/image-20211229162751997.png" alt="image-20211229162751997"><br><img src="/Users/libo/typora_image_workspace/image-20211229162807971.png" alt="image-20211229162807971"><br><img src="/Users/libo/typora_image_workspace/image-20211229163014897.png" alt="image-20211229163014897"><br><img src="/Users/libo/typora_image_workspace/image-20211229163110827.png" alt="image-20211229163110827"><br><img src="/Users/libo/typora_image_workspace/image-20211229163210642.png" alt="image-20211229163210642"><br><img src="/Users/libo/typora_image_workspace/image-20211229163546214.png" alt="image-20211229163546214"><br><img src="/Users/libo/typora_image_workspace/image-20211229163645923.png" alt="image-20211229163645923"><br><img src="/Users/libo/typora_image_workspace/image-20211229165228204.png" alt="image-20211229165228204"><br><img src="/Users/libo/typora_image_workspace/image-20211229165158975.png" alt="image-20211229165158975"><br><img src="/Users/libo/typora_image_workspace/image-20211229165314764.png" alt="image-20211229165314764"><br><img src="/Users/libo/typora_image_workspace/image-20211229165454220.png" alt="image-20211229165454220"><br><img src="/Users/libo/typora_image_workspace/image-20211229170037684.png" alt="image-20211229170037684"></p>
-<h2 id="权限汇总"><a href="#权限汇总" class="headerlink" title="权限汇总"></a>权限汇总</h2><p><img src="/Users/libo/typora_image_workspace/image-20211229171107269.png" alt="image-20211229171107269"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171212820.png" alt="image-20211229171212820"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171237219.png" alt="image-20211229171237219"></p>
-<p><img src="/Users/libo/typora_image_workspace/image-20211229171258974.png" alt="image-20211229171258974"></p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><img src="/Users/libo/typora_image_workspace/image-20211229172353825.png" alt="image-20211229172353825"></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>3大特性5大原则</title>
-    <url>/2021/05/21/object-feature-principle/</url>
-    <content><![CDATA[<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><p><code>封装</code> 隐藏对象的属性和实现细节，仅对外提供公共访问方式，将变化隔离，便于使用，提高复用性和安全性</p>
-<p><code>继承</code> 提高代码复用性；继承是多态的前提</p>
-<p><code>多态</code> 父类或接口定义的引用变量可以指向子类或具体实现类的实例对象。提高了程序的拓展性</p>
-<h5 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h5><p><code>单一职责原则</code> 类的功能要单一，不能包罗万象，跟杂货铺似的</p>
-<p><code>开放封闭原则</code> 一个模块对于拓展是开放的，对于修改是封闭的</p>
-<p><code>里式替换原则</code> 子类可以替换父类出现在父类能够出现的任何地方</p>
-<p><code>依赖倒置原则</code> 高层次的模块不应该依赖于低层次的模块，他们都应该依赖于抽象。抽象不应该依赖于具体实现，具体实现应该依赖于抽象</p>
-<p><code>接口分离原则</code> 设计时采用多个与特定客户类有关的接口比采用一个通用的接口要好</p>
-<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ul>
-<li>抽象会使复杂的问题更加简单化</li>
-<li>从以前面向过程的执行者，变成了张张嘴的指挥者</li>
-<li>面向对象更符合人类的思维，面向过程则是机器的思想</li>
-</ul>
-<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://segmentfault.com/a/1190000021898422">参考</a></p>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>okhttp请求记录</title>
     <url>/2021/03/07/okhttp-%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<ul>
@@ -2182,6 +2129,47 @@
       </tags>
   </entry>
   <entry>
+    <title>3大特性5大原则</title>
+    <url>/2021/05/21/object-feature-principle/</url>
+    <content><![CDATA[<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><p><code>封装</code> 隐藏对象的属性和实现细节，仅对外提供公共访问方式，将变化隔离，便于使用，提高复用性和安全性</p>
+<p><code>继承</code> 提高代码复用性；继承是多态的前提</p>
+<p><code>多态</code> 父类或接口定义的引用变量可以指向子类或具体实现类的实例对象。提高了程序的拓展性</p>
+<h5 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h5><p><code>单一职责原则</code> 类的功能要单一，不能包罗万象，跟杂货铺似的</p>
+<p><code>开放封闭原则</code> 一个模块对于拓展是开放的，对于修改是封闭的</p>
+<p><code>里式替换原则</code> 子类可以替换父类出现在父类能够出现的任何地方</p>
+<p><code>依赖倒置原则</code> 高层次的模块不应该依赖于低层次的模块，他们都应该依赖于抽象。抽象不应该依赖于具体实现，具体实现应该依赖于抽象</p>
+<p><code>接口分离原则</code> 设计时采用多个与特定客户类有关的接口比采用一个通用的接口要好</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ul>
+<li>抽象会使复杂的问题更加简单化</li>
+<li>从以前面向过程的执行者，变成了张张嘴的指挥者</li>
+<li>面向对象更符合人类的思维，面向过程则是机器的思想</li>
+</ul>
+<h5 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h5><p><a href="https://segmentfault.com/a/1190000021898422">参考</a></p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RecyclerView嵌套滑动</title>
+    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
+<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
+<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>recyclerview</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python-vscode调试备注</title>
     <url>/2022/03/21/python-vscode%E8%B0%83%E8%AF%95%E5%A4%87%E6%B3%A8/</url>
     <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">vscode中python代码调试</span><br></pre></td></tr></table></figure>
@@ -2201,22 +2189,6 @@
       <tags>
         <tag>vscode</tag>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RecyclerView嵌套滑动</title>
-    <url>/2021/04/11/recyclerview-nestedscrollview/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">有时候为了省事图方便，会使用到嵌套滑动，比如NestedScrollView，其本身就是为了解决嵌套滑动，但是这样有时候</span><br><span class="line">会带来一些麻烦，例如上面的小问题，此时我们有两种处理方式。1是放弃嵌套布局， 2是想法处理掉。</span><br><span class="line">下面是记录2的处理方式，以做备注</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/04/10/NOabutcKTefXnLm.png" alt="iShot2021-04-10下午05.22.40.png"></p>
-<p>运行程序后会发现RecyclerView会把它上面的视图顶出屏幕，然后要手动向下滑才能看到，出现这个问题是因为RecyclerView抢了焦点，此时我们只需要把RecyclerView的父布局添加<code>android:descendantFocusability=&quot;blocksDescendants&quot;</code> 即可解决<br><code>android:descendantFocusability</code>该属性是当一个为view获取焦点时，定义ViewGroup和其子控件两者之间的关系。有三种属性值</p>
-<p><code>beforeDescendants</code>  表示ViewGroup会优先其子类控件而获取到焦点<br><code>afterDescendants</code>     表示ViewGroup只有当其子类控件不需要获取焦点时才获取焦点<br><code>blocksDescendants</code>  表示ViewGroup会覆盖子类控件而直接获得焦点</p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>recyclerview</tag>
       </tags>
   </entry>
   <entry>
@@ -2636,6 +2608,43 @@
       </tags>
   </entry>
   <entry>
+    <title>xposed模块 hello world编写</title>
+    <url>/2021/03/18/xposed%E6%A8%A1%E5%9D%97%E5%85%A5%E9%97%A8%E5%A4%87%E6%B3%A8/</url>
+    <content><![CDATA[<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>Xposed的执行原理，可以参考<a href="https://www.bilibili.com/read/cv884141?from=category_17">这篇文章</a>的介绍。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xposed劫持了Zygote进程。原本是zygote调用【app_process】来运行程序，现在有了xposed后，zygote调用</span><br><span class="line">【被xposed替换后的app_process】来运行程序，使得程序在开启时，额外加载一个jar包，从而改变APP的运行结果。</span><br><span class="line">我们通过xposed框架编写hook代码，这些hook代码实际上是运行在宿主app进程内的，所以如果想要调试hook代码，</span><br><span class="line">需要以debug模式运行宿主app。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">手机最好有root权限，确保上安装magsik和EdXposed等相关框架（测试设备是一加8 android 10系统），</span><br><span class="line">xposed框架在android 8.0之后就不再维护更新，都转战到magisk和EdXposed上了，具体的安装方式自行百度。</span><br></pre></td></tr></table></figure>
+<h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过Android Studio 新建一个Android Application项目，模板自行选择。</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/BtnzoJ3waXuvMbC.png" alt="iShot2021-03-18下午04.23.04.png"></p>
+<h3 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修改新建的Android项目中AndroidManifest.xml文件，在application标签下增加下面三句话，以让xposed框架识别</span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedmodule&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;true&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposeddescription&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;Hello Xposed&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedminversion&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;53&quot;</span> /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/BOSXHbMqo1rvLZj.png" alt="iShot2021-03-18下午04.29.17.png"></p>
+<h3 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">在app项目中增加xposed相应的jar包支持</span><br><span class="line">  </span><br><span class="line"> compileOnly<span class="string">&#x27;de.robv.android.xposed:api:82&#x27;</span></span><br><span class="line"> compileOnly <span class="string">&#x27;de.robv.android.xposed:api:82:sources&#x27;</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/IYfhPDkeb73wNGW.png" alt="iShot2021-03-18下午04.35.12.png"></p>
+<h3 id="步骤4"><a href="#步骤4" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">编写xposed模块的入口，新建一个java类实现xposed框架中的接口 `IXposedHookLoadPackage` </span><br><span class="line">  中的`handleLoadPackage`,在`handleLoadPackage`处理相关的逻辑</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IXposedHookLoadPackage</span> <span class="keyword">extends</span> <span class="title">IXposedMod</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * This method is called when an app is loaded. It&#x27;s called very early, even before</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> Application#onCreate&#125; is called.</span></span><br><span class="line"><span class="comment">	 * Modules can set up their app-specific hooks here.</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> lpparam Information about the app.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Throwable Everything the callback throws is caught and logged.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">	<span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Wrapper</span> <span class="keyword">extends</span> <span class="title">XC_LoadPackage</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">final</span> IXposedHookLoadPackage instance;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Wrapper</span><span class="params">(IXposedHookLoadPackage instance)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.instance = instance;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">			instance.handleLoadPackage(lpparam);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/g4crnvSKlA3ZoMC.png" alt="iShot2021-03-18下午04.42.16.png"></p>
+<h3 id="步骤4-1"><a href="#步骤4-1" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">告诉xposed框架入口class,在android项目中的资产目录(asset)中新建一个文件 &#96;xposed_init&#96; 没有扩展名，</span><br><span class="line">在 &#96;xposed_init&#96; 中写入上面实现 &#96;IXposedHookLoadPackage&#96; 接口类的全路径(包名+类名)</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/HLAa9k7qjh1RpWG.png" alt="iShot2021-03-18下午04.49.42.png"></p>
+<h3 id="步骤5"><a href="#步骤5" class="headerlink" title="步骤5"></a>步骤5</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">运行安装到手机上， 在EdXposed中找到刚才编写的模块，打开模块开关，必要时可以重启一下手机</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/P2Fy8CY5dsEnwZV.png" alt="iShot2021-03-18下午04.52.25.png"></p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过xposed框架，只有你愿意并研究，可以写成很多实用的东西，比如禁用广告，绕过vip才能使用的功能……，例如下面</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2021/03/18/cVEwdeY9CshTlOP.png" alt="iShot2021-03-18下午05.03.59.png"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.xda-developers.com/how-to-install-magisk/">how-to-install-magisk</a></p>
+<p><a href="https://github.com/topjohnwu/Magisk">Magisk</a></p>
+<p><a href="https://github.com/ElderDrivers/EdXposed">EdXposed</a></p>
+<p><a href="https://repo.xposed.info/module-overview">xposed仓库</a></p>
+<p><a href="http://blog.fuguicun.com/articles/2020/12/31/1609386370453.html">Xposed用于生产部署实践</a></p>
+<p><a href="https://github.com/NanoHttpd/nanohttpd">NanoHTTPD</a></p>
+<p><a href="http://91fans.com.cn/post/zysignfour/">参考</a></p>
+<p><a href="https://my.oschina.net/u/4579293/blog/4345442">参考2</a></p>
+]]></content>
+      <categories>
+        <category>android</category>
+      </categories>
+      <tags>
+        <tag>android</tag>
+        <tag>xposed</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>查看so库的方法</title>
     <url>/2021/06/30/%E6%9F%A5%E7%9C%8Bso%E5%BA%93%E7%9A%84%E6%96%B9%E6%B3%95/</url>
     <content><![CDATA[<h4 id="查看so库的方法"><a href="#查看so库的方法" class="headerlink" title="查看so库的方法"></a>查看so库的方法</h4><ol>
@@ -2710,43 +2719,6 @@
       <tags>
         <tag>android</tag>
         <tag>adb</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>xposed模块 hello world编写</title>
-    <url>/2021/03/18/xposed%E6%A8%A1%E5%9D%97%E5%85%A5%E9%97%A8%E5%A4%87%E6%B3%A8/</url>
-    <content><![CDATA[<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>Xposed的执行原理，可以参考<a href="https://www.bilibili.com/read/cv884141?from=category_17">这篇文章</a>的介绍。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">xposed劫持了Zygote进程。原本是zygote调用【app_process】来运行程序，现在有了xposed后，zygote调用</span><br><span class="line">【被xposed替换后的app_process】来运行程序，使得程序在开启时，额外加载一个jar包，从而改变APP的运行结果。</span><br><span class="line">我们通过xposed框架编写hook代码，这些hook代码实际上是运行在宿主app进程内的，所以如果想要调试hook代码，</span><br><span class="line">需要以debug模式运行宿主app。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">手机最好有root权限，确保上安装magsik和EdXposed等相关框架（测试设备是一加8 android 10系统），</span><br><span class="line">xposed框架在android 8.0之后就不再维护更新，都转战到magisk和EdXposed上了，具体的安装方式自行百度。</span><br></pre></td></tr></table></figure>
-<h3 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过Android Studio 新建一个Android Application项目，模板自行选择。</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/BtnzoJ3waXuvMbC.png" alt="iShot2021-03-18下午04.23.04.png"></p>
-<h3 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">修改新建的Android项目中AndroidManifest.xml文件，在application标签下增加下面三句话，以让xposed框架识别</span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedmodule&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;true&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposeddescription&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;Hello Xposed&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:name=<span class="string">&quot;xposedminversion&quot;</span></span><br><span class="line">      android:value=<span class="string">&quot;53&quot;</span> /&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/BOSXHbMqo1rvLZj.png" alt="iShot2021-03-18下午04.29.17.png"></p>
-<h3 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">在app项目中增加xposed相应的jar包支持</span><br><span class="line">  </span><br><span class="line"> compileOnly<span class="string">&#x27;de.robv.android.xposed:api:82&#x27;</span></span><br><span class="line"> compileOnly <span class="string">&#x27;de.robv.android.xposed:api:82:sources&#x27;</span></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/IYfhPDkeb73wNGW.png" alt="iShot2021-03-18下午04.35.12.png"></p>
-<h3 id="步骤4"><a href="#步骤4" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">编写xposed模块的入口，新建一个java类实现xposed框架中的接口 `IXposedHookLoadPackage` </span><br><span class="line">  中的`handleLoadPackage`,在`handleLoadPackage`处理相关的逻辑</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IXposedHookLoadPackage</span> <span class="keyword">extends</span> <span class="title">IXposedMod</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * This method is called when an app is loaded. It&#x27;s called very early, even before</span></span><br><span class="line"><span class="comment">	 * &#123;<span class="doctag">@link</span> Application#onCreate&#125; is called.</span></span><br><span class="line"><span class="comment">	 * Modules can set up their app-specific hooks here.</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> lpparam Information about the app.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Throwable Everything the callback throws is caught and logged.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">	<span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Wrapper</span> <span class="keyword">extends</span> <span class="title">XC_LoadPackage</span> </span>&#123;</span><br><span class="line">		<span class="keyword">private</span> <span class="keyword">final</span> IXposedHookLoadPackage instance;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Wrapper</span><span class="params">(IXposedHookLoadPackage instance)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.instance = instance;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">			instance.handleLoadPackage(lpparam);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/g4crnvSKlA3ZoMC.png" alt="iShot2021-03-18下午04.42.16.png"></p>
-<h3 id="步骤4-1"><a href="#步骤4-1" class="headerlink" title="步骤4"></a>步骤4</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">告诉xposed框架入口class,在android项目中的资产目录(asset)中新建一个文件 &#96;xposed_init&#96; 没有扩展名，</span><br><span class="line">在 &#96;xposed_init&#96; 中写入上面实现 &#96;IXposedHookLoadPackage&#96; 接口类的全路径(包名+类名)</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/HLAa9k7qjh1RpWG.png" alt="iShot2021-03-18下午04.49.42.png"></p>
-<h3 id="步骤5"><a href="#步骤5" class="headerlink" title="步骤5"></a>步骤5</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">运行安装到手机上， 在EdXposed中找到刚才编写的模块，打开模块开关，必要时可以重启一下手机</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/P2Fy8CY5dsEnwZV.png" alt="iShot2021-03-18下午04.52.25.png"></p>
-<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">通过xposed框架，只有你愿意并研究，可以写成很多实用的东西，比如禁用广告，绕过vip才能使用的功能……，例如下面</span><br></pre></td></tr></table></figure>
-<p><img src="https://i.loli.net/2021/03/18/cVEwdeY9CshTlOP.png" alt="iShot2021-03-18下午05.03.59.png"></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.xda-developers.com/how-to-install-magisk/">how-to-install-magisk</a></p>
-<p><a href="https://github.com/topjohnwu/Magisk">Magisk</a></p>
-<p><a href="https://github.com/ElderDrivers/EdXposed">EdXposed</a></p>
-<p><a href="https://repo.xposed.info/module-overview">xposed仓库</a></p>
-<p><a href="http://blog.fuguicun.com/articles/2020/12/31/1609386370453.html">Xposed用于生产部署实践</a></p>
-<p><a href="https://github.com/NanoHttpd/nanohttpd">NanoHTTPD</a></p>
-<p><a href="http://91fans.com.cn/post/zysignfour/">参考</a></p>
-<p><a href="https://my.oschina.net/u/4579293/blog/4345442">参考2</a></p>
-]]></content>
-      <categories>
-        <category>android</category>
-      </categories>
-      <tags>
-        <tag>android</tag>
-        <tag>xposed</tag>
       </tags>
   </entry>
   <entry>
@@ -2868,8 +2840,6 @@
 <h3 id="重命名分支"><a href="#重命名分支" class="headerlink" title="重命名分支"></a>重命名分支</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git branch -m &lt;old_name&gt; &lt;new_name&gt; 改名字</span><br><span class="line">--- 修改远程分支名称</span><br><span class="line">1. git branch -m oldName newName               - 重命名远程分支对应的本地分支</span><br><span class="line">2. git push --delete origin oldName					   - 删除远程分支</span><br><span class="line">3. git push origin newName									   - 上传新命名的本地分支</span><br><span class="line">4. git branch --set-upstream-to origin&#x2F;newName - 把修改后的本地分支与远程分支关联</span><br></pre></td></tr></table></figure>
 <p><a href="https://blog.csdn.net/qq_31248809/article/details/117551323?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.essearch_pc_relevant&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.essearch_pc_relevant">参考</a></p>
 <h3 id="git-重置相关"><a href="#git-重置相关" class="headerlink" title="git 重置相关"></a>git 重置相关</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">- 工作区、暂存区都重置</span><br><span class="line">git reset --soft HEAD^</span><br><span class="line">- 保留工作区、暂存区，会把reset节点之后修改的内容存放到暂存区</span><br><span class="line">git reset  &#x2F;&#x2F;缺省参数 [ --mixed ]</span><br><span class="line">- 只保留工作区，重置暂存区</span><br></pre></td></tr></table></figure>
-
-
 <p><a href="https://www.jianshu.com/p/c2ec5f06cf1a">参考</a></p>
 <h3 id="git-简写相关"><a href="#git-简写相关" class="headerlink" title="git 简写相关"></a>git 简写相关</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[alias]</span><br><span class="line">          s &#x3D; status</span><br><span class="line">          a &#x3D; !git add . &amp;&amp; git status</span><br><span class="line">          au &#x3D; !git add -u . &amp;&amp; git status</span><br><span class="line">          aa &#x3D; !git add . &amp;&amp; git add -u . &amp;&amp; git status</span><br><span class="line">          c &#x3D; commit</span><br><span class="line">          cm &#x3D; commit -m</span><br><span class="line">          ca &#x3D; commit --amend # careful</span><br><span class="line">          ac &#x3D; !git add . &amp;&amp; git commit</span><br><span class="line">          acm &#x3D; !git add . &amp;&amp; git commit -m</span><br><span class="line">          l &#x3D; log --graph --all --pretty&#x3D;format:&#39;%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset&#39;</span><br><span class="line">          ll &#x3D; log --stat --abbrev-commit</span><br><span class="line">          lg &#x3D; log --color --graph --pretty&#x3D;format:&#39;%C(bold white)%h%Creset -%C(bold green)%d%Creset %s %C(bold green)(%cr)%Creset %C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit --date&#x3D;relative</span><br><span class="line">          llg &#x3D; log --color --graph --pretty&#x3D;format:&#39;%C(bold white)%H %d%Creset%n%s%n%+b%C(bold blue)%an &lt;%ae&gt;%Creset %C(bold green)%cr (%ci)&#39; --abbrev-commit</span><br><span class="line">          d &#x3D; diff</span><br><span class="line">          master &#x3D; checkout master</span><br><span class="line">          spull &#x3D; svn rebase</span><br><span class="line">          spush &#x3D; svn dcommit</span><br><span class="line">          alias &#x3D; !git config --list | grep &#39;alias\\.&#39; | sed &#39;s&#x2F;alias\\.\\([^&#x3D;]*\\)&#x3D;\\(.*\\)&#x2F;\\1\\\t &#x3D;&gt; \\2&#x2F;&#39; | sort</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Aliases for git.</span><br><span class="line">alias g&#x3D;&#39;git&#39;</span><br><span class="line">alias gs&#x3D;&#39;git status&#39;</span><br><span class="line"></span><br><span class="line">alias ga&#x3D;&#39;git add&#39;</span><br><span class="line">alias gaa&#x3D;&#39;git add --all&#39;</span><br><span class="line"></span><br><span class="line">alias gc&#x3D;&#39;git commit&#39;</span><br><span class="line">alias gcm&#x3D;&#39;git commit --message&#39;</span><br><span class="line">alias gca&#x3D;&#39;git commit --add&#39;</span><br><span class="line">alias gcam&#x3D;&#39;git commit --add --message&#39;</span><br><span class="line">alias gce&#x3D;&#39;git commit --amend&#39;  # Edit commit message. &#39;gce&#39; &#x3D; &#39;git commit edit&#39;</span><br><span class="line"></span><br><span class="line">alias gb&#x3D;&#39;git branch&#39;</span><br><span class="line">alias gba&#x3D;&#39;git branch --all&#39;</span><br><span class="line"></span><br><span class="line">alias gd&#x3D;&#39;git diff&#39;</span><br><span class="line">alias gds&#x3D;&#39;git diff --staged&#39;</span><br><span class="line">alias gdt&#x3D;&#39;git difftool&#39;</span><br><span class="line"></span><br><span class="line">alias gmt&#x3D;&#39;git mergetool&#39;</span><br><span class="line"></span><br><span class="line">alias gch&#x3D;&#39;git checkout&#39;</span><br><span class="line">alias gchm&#x3D;&#39;git checkout master&#39;</span><br><span class="line">alias gchb&#x3D;&#39;git checkout -b&#39;</span><br><span class="line"></span><br><span class="line">alias gl&#x3D;&#39;git log --decorate&#39;</span><br><span class="line">alias glo&#x3D;&#39;git log --decorate --graph --oneline&#39;</span><br><span class="line">alias gloa&#x3D;&#39;git log --decorate --graph --oneline --all&#39;</span><br><span class="line">alias glao&#x3D;&#39;gloa&#39;</span><br><span class="line">alias gls&#x3D;&#39;git log --decorate --graph --stat&#39;</span><br><span class="line">alias gla&#x3D;&#39;git log --decorate --graph --all&#39;</span><br><span class="line">alias gld&#x3D;&#39;git log --decorate --graph --patch&#39;  # Show diff. &#39;gld&#39; &#x3D; &#39;git log diff&#39;</span><br><span class="line">alias glda&#x3D;&#39;git log --decorate --graph --patch --all&#39;</span><br><span class="line">alias glad&#x3D;&#39;glda&#39;</span><br><span class="line"></span><br><span class="line">alias gp&#x3D;&#39;git push&#39;</span><br><span class="line">alias gpo&#x3D;&#39;git push origin&#39;</span><br><span class="line">alias gpom&#x3D;&#39;git push origin master&#39;</span><br><span class="line"></span><br><span class="line">alias gri&#x3D;&#39;git rebase --interactive&#39;</span><br><span class="line">alias grc&#x3D;&#39;git rebase --continue&#39;</span><br></pre></td></tr></table></figure>
